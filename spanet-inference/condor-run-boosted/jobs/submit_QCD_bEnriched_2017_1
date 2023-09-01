@@ -1,8 +1,0 @@
-Universe   = vanilla
-request_memory = 7900
-Executable = jobs/job_QCD_bEnriched_2017_1.sh
-Arguments  = $(ClusterId) $(ProcId)
-Log        = log/job_QCD_bEnriched_2017_1.log
-Output     = output/job_QCD_bEnriched_2017_1.out
-Error      = error/job_QCD_bEnriched_2017_1.error
-Queue 1

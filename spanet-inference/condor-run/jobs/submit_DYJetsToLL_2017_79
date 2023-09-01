@@ -1,8 +1,0 @@
-Universe   = vanilla
-request_memory = 7900
-Executable = jobs/job_DYJetsToLL_2017_79.sh
-Arguments  = $(ClusterId) $(ProcId)
-Log        = log/job_DYJetsToLL_2017_79.log
-Output     = output/job_DYJetsToLL_2017_79.out
-Error      = error/job_DYJetsToLL_2017_79.error
-Queue 1

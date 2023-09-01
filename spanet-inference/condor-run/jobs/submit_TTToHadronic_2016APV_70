@@ -1,8 +1,0 @@
-Universe   = vanilla
-request_memory = 7900
-Executable = jobs/job_TTToHadronic_2016APV_70.sh
-Arguments  = $(ClusterId) $(ProcId)
-Log        = log/job_TTToHadronic_2016APV_70.log
-Output     = output/job_TTToHadronic_2016APV_70.out
-Error      = error/job_TTToHadronic_2016APV_70.error
-Queue 1

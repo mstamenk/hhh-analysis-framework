@@ -1,6 +1,0 @@
-WARNING: In non-interactive mode release checks e.g. deprecated releases, production architectures are disabled.
-WARNING: In non-interactive mode release checks e.g. deprecated releases, production architectures are disabled.
-/isilon/data/users/mstamenk/hhh-6b-producer/master/CMSSW_12_5_2/src/hhh-master/hhh-analysis-framework/spanet-inference//predict_spanet.py:154: FutureWarning: arrays to stack must be passed as a "sequence" type such as list or tuple. Support for non-sequence iterables such as generators is deprecated as of NumPy 1.16 and will raise an error in the future.
-  np_arr = np.vstack(np_dict[col] for col in column).T.astype(np.float32)
-/isilon/data/users/mstamenk/hhh-6b-producer/master/CMSSW_12_5_2/src/hhh-master/hhh-analysis-framework/spanet-inference//predict_spanet.py:163: FutureWarning: arrays to stack must be passed as a "sequence" type such as list or tuple. Support for non-sequence iterables such as generators is deprecated as of NumPy 1.16 and will raise an error in the future.
-  np_arr_4vec = np.vstack(np_4vec[col] for col in column_4vec).T

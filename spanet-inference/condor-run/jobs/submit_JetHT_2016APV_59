@@ -1,8 +1,0 @@
-Universe   = vanilla
-request_memory = 7900
-Executable = jobs/job_JetHT_2016APV_59.sh
-Arguments  = $(ClusterId) $(ProcId)
-Log        = log/job_JetHT_2016APV_59.log
-Output     = output/job_JetHT_2016APV_59.out
-Error      = error/job_JetHT_2016APV_59.error
-Queue 1

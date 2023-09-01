@@ -1,8 +1,0 @@
-Universe   = vanilla
-request_memory = 7900
-Executable = jobs/job_QCD_bEnriched_2016APV_14.sh
-Arguments  = $(ClusterId) $(ProcId)
-Log        = log/job_QCD_bEnriched_2016APV_14.log
-Output     = output/job_QCD_bEnriched_2016APV_14.out
-Error      = error/job_QCD_bEnriched_2016APV_14.error
-Queue 1

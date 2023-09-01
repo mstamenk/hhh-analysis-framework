@@ -1,8 +1,0 @@
-Universe   = vanilla
-request_memory = 7900
-Executable = jobs/job_TTToSemiLeptonic_2018_201.sh
-Arguments  = $(ClusterId) $(ProcId)
-Log        = log/job_TTToSemiLeptonic_2018_201.log
-Output     = output/job_TTToSemiLeptonic_2018_201.out
-Error      = error/job_TTToSemiLeptonic_2018_201.error
-Queue 1

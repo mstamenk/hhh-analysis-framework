@@ -1,8 +1,0 @@
-Universe   = vanilla
-request_memory = 7900
-Executable = jobs/job_BTagCSV_2017_4.sh
-Arguments  = $(ClusterId) $(ProcId)
-Log        = log/job_BTagCSV_2017_4.log
-Output     = output/job_BTagCSV_2017_4.out
-Error      = error/job_BTagCSV_2017_4.error
-Queue 1

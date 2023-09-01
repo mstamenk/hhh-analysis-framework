@@ -1,8 +1,0 @@
-Universe   = vanilla
-request_memory = 7900
-Executable = jobs/job_GluGluToHHHTo6B_SM_2017_18.sh
-Arguments  = $(ClusterId) $(ProcId)
-Log        = log/job_GluGluToHHHTo6B_SM_2017_18.log
-Output     = output/job_GluGluToHHHTo6B_SM_2017_18.out
-Error      = error/job_GluGluToHHHTo6B_SM_2017_18.error
-Queue 1

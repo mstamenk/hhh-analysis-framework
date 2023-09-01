@@ -1,8 +1,0 @@
-Universe   = vanilla
-request_memory = 7900
-Executable = jobs/job_WJetsToQQ_2016APV_5.sh
-Arguments  = $(ClusterId) $(ProcId)
-Log        = log/job_WJetsToQQ_2016APV_5.log
-Output     = output/job_WJetsToQQ_2016APV_5.out
-Error      = error/job_WJetsToQQ_2016APV_5.error
-Queue 1

@@ -1,8 +1,0 @@
-Universe   = vanilla
-request_memory = 7900
-Executable = jobs/job_WWZ_2016APV_0.sh
-Arguments  = $(ClusterId) $(ProcId)
-Log        = log/job_WWZ_2016APV_0.log
-Output     = output/job_WWZ_2016APV_0.out
-Error      = error/job_WWZ_2016APV_0.error
-Queue 1
