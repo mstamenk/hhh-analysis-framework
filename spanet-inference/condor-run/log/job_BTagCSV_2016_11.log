@@ -1,0 +1,89 @@
+000 (837561.000.000) 08/15 12:24:15 Job submitted from host: <172.20.3.187:9618?addrs=172.20.3.187-9618&noUDP&sock=2043_e813_3>
+...
+001 (837561.000.000) 08/15 12:31:59 Job executing on host: <172.20.225.6:9618?addrs=172.20.225.6-9618&noUDP&sock=3382_5963_3>
+...
+006 (837561.000.000) 08/15 12:32:08 Image size of job updated: 20804
+	21  -  MemoryUsage of job (MB)
+	20804  -  ResidentSetSize of job (KB)
+...
+005 (837561.000.000) 08/15 12:32:36 Job terminated.
+	(1) Normal termination (return value 1)
+		Usr 0 00:00:17, Sys 0 00:00:02  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:17, Sys 0 00:00:02  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	1435  -  Run Bytes Sent By Job
+	394  -  Run Bytes Received By Job
+	1435  -  Total Bytes Sent By Job
+	394  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     0.04        1         1 
+	   Disk (KB)            :   802           1 479749220 
+	   Memory (MB)          :    21        7900      8033 
+...
+000 (838860.000.000) 08/15 13:24:08 Job submitted from host: <172.20.3.187:9618?addrs=172.20.3.187-9618&noUDP&sock=2043_e813_3>
+...
+001 (838860.000.000) 08/15 13:34:57 Job executing on host: <172.20.225.6:9618?addrs=172.20.225.6-9618&noUDP&sock=3382_5963_3>
+...
+006 (838860.000.000) 08/15 13:35:05 Image size of job updated: 21120
+	21  -  MemoryUsage of job (MB)
+	21120  -  ResidentSetSize of job (KB)
+...
+005 (838860.000.000) 08/15 13:35:27 Job terminated.
+	(1) Normal termination (return value 1)
+		Usr 0 00:00:11, Sys 0 00:00:01  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:11, Sys 0 00:00:01  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	1435  -  Run Bytes Sent By Job
+	394  -  Run Bytes Received By Job
+	1435  -  Total Bytes Sent By Job
+	394  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     0.11        1         1 
+	   Disk (KB)            :   802           1 479749220 
+	   Memory (MB)          :    21        7900      8033 
+...
+000 (845062.000.000) 08/16 03:52:26 Job submitted from host: <172.20.3.187:9618?addrs=172.20.3.187-9618&noUDP&sock=2043_e813_3>
+...
+001 (845062.000.000) 08/16 03:52:50 Job executing on host: <172.20.225.4:9618?addrs=172.20.225.4-9618&noUDP&sock=3366_5fdf_3>
+...
+006 (845062.000.000) 08/16 03:52:58 Image size of job updated: 20804
+	21  -  MemoryUsage of job (MB)
+	20804  -  ResidentSetSize of job (KB)
+...
+006 (845062.000.000) 08/16 03:57:59 Image size of job updated: 5078776
+	4960  -  MemoryUsage of job (MB)
+	5078776  -  ResidentSetSize of job (KB)
+...
+006 (845062.000.000) 08/16 04:02:59 Image size of job updated: 5078876
+	4960  -  MemoryUsage of job (MB)
+	5078876  -  ResidentSetSize of job (KB)
+...
+006 (845062.000.000) 08/16 04:07:59 Image size of job updated: 6035244
+	5894  -  MemoryUsage of job (MB)
+	6035244  -  ResidentSetSize of job (KB)
+...
+006 (845062.000.000) 08/16 04:12:59 Image size of job updated: 6138036
+	5994  -  MemoryUsage of job (MB)
+	6137664  -  ResidentSetSize of job (KB)
+...
+006 (845062.000.000) 08/16 04:16:20 Image size of job updated: 13229336
+	5994  -  MemoryUsage of job (MB)
+	6137680  -  ResidentSetSize of job (KB)
+...
+005 (845062.000.000) 08/16 04:16:20 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:22:38, Sys 0 00:00:30  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:22:38, Sys 0 00:00:30  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	1217  -  Run Bytes Sent By Job
+	394  -  Run Bytes Received By Job
+	1217  -  Total Bytes Sent By Job
+	394  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     0.92        1         1 
+	   Disk (KB)            :   802           1 479779449 
+	   Memory (MB)          :  5994        7900      8033 
+...

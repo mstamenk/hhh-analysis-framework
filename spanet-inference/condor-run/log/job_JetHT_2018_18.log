@@ -1,0 +1,89 @@
+000 (838537.000.000) 08/15 12:25:20 Job submitted from host: <172.20.3.187:9618?addrs=172.20.3.187-9618&noUDP&sock=2043_e813_3>
+...
+001 (838537.000.000) 08/15 12:47:22 Job executing on host: <172.20.225.2:9618?addrs=172.20.225.2-9618&noUDP&sock=3424_285d_3>
+...
+006 (838537.000.000) 08/15 12:47:31 Image size of job updated: 21104
+	21  -  MemoryUsage of job (MB)
+	21104  -  ResidentSetSize of job (KB)
+...
+005 (838537.000.000) 08/15 12:49:01 Job terminated.
+	(1) Normal termination (return value 1)
+		Usr 0 00:00:18, Sys 0 00:00:03  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:18, Sys 0 00:00:03  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	1435  -  Run Bytes Sent By Job
+	392  -  Run Bytes Received By Job
+	1435  -  Total Bytes Sent By Job
+	392  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     0.55        1         1 
+	   Disk (KB)            :   803           1 479786084 
+	   Memory (MB)          :    21        7900      8033 
+...
+000 (843470.000.000) 08/15 13:29:08 Job submitted from host: <172.20.3.187:9618?addrs=172.20.3.187-9618&noUDP&sock=2043_e813_3>
+...
+001 (843470.000.000) 08/15 17:48:05 Job executing on host: <172.20.225.4:9618?addrs=172.20.225.4-9618&noUDP&sock=3366_5fdf_3>
+...
+006 (843470.000.000) 08/15 17:48:14 Image size of job updated: 21120
+	21  -  MemoryUsage of job (MB)
+	21120  -  ResidentSetSize of job (KB)
+...
+005 (843470.000.000) 08/15 17:49:06 Job terminated.
+	(1) Normal termination (return value 1)
+		Usr 0 00:00:11, Sys 0 00:00:01  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:11, Sys 0 00:00:01  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	1435  -  Run Bytes Sent By Job
+	392  -  Run Bytes Received By Job
+	1435  -  Total Bytes Sent By Job
+	392  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     0.41        1         1 
+	   Disk (KB)            :   803           1 479779449 
+	   Memory (MB)          :    21        7900      8033 
+...
+000 (846736.000.000) 08/16 03:54:33 Job submitted from host: <172.20.3.187:9618?addrs=172.20.3.187-9618&noUDP&sock=2043_e813_3>
+...
+001 (846736.000.000) 08/16 05:56:13 Job executing on host: <172.20.225.8:9618?addrs=172.20.225.8-9618&noUDP&sock=3440_21e1_3>
+...
+006 (846736.000.000) 08/16 05:56:21 Image size of job updated: 21120
+	21  -  MemoryUsage of job (MB)
+	21120  -  ResidentSetSize of job (KB)
+...
+006 (846736.000.000) 08/16 06:01:21 Image size of job updated: 5009896
+	4893  -  MemoryUsage of job (MB)
+	5009896  -  ResidentSetSize of job (KB)
+...
+006 (846736.000.000) 08/16 06:06:22 Image size of job updated: 5966064
+	5827  -  MemoryUsage of job (MB)
+	5966064  -  ResidentSetSize of job (KB)
+...
+006 (846736.000.000) 08/16 06:11:23 Image size of job updated: 5966368
+	5827  -  MemoryUsage of job (MB)
+	5966368  -  ResidentSetSize of job (KB)
+...
+006 (846736.000.000) 08/16 06:16:24 Image size of job updated: 6935560
+	6753  -  MemoryUsage of job (MB)
+	6914516  -  ResidentSetSize of job (KB)
+...
+006 (846736.000.000) 08/16 06:19:20 Image size of job updated: 6935560
+	6754  -  MemoryUsage of job (MB)
+	6915240  -  ResidentSetSize of job (KB)
+...
+005 (846736.000.000) 08/16 06:19:20 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:22:36, Sys 0 00:00:31  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:22:36, Sys 0 00:00:31  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	1215  -  Run Bytes Sent By Job
+	392  -  Run Bytes Received By Job
+	1215  -  Total Bytes Sent By Job
+	392  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     0.65        1         1 
+	   Disk (KB)            :   802           1 479737977 
+	   Memory (MB)          :  6754        7900      8033 
+...

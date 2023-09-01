@@ -1,0 +1,8 @@
+Universe   = vanilla
+request_memory = 7900
+Executable = jobs/job_SingleMuon_2017_69.sh
+Arguments  = $(ClusterId) $(ProcId)
+Log        = log/job_SingleMuon_2017_69.log
+Output     = output/job_SingleMuon_2017_69.out
+Error      = error/job_SingleMuon_2017_69.error
+Queue 1

@@ -1,0 +1,8 @@
+Universe   = vanilla
+request_memory = 7900
+Executable = jobs/job_GluGluToHHHTo4B2Tau_SM_2016_15.sh
+Arguments  = $(ClusterId) $(ProcId)
+Log        = log/job_GluGluToHHHTo4B2Tau_SM_2016_15.log
+Output     = output/job_GluGluToHHHTo4B2Tau_SM_2016_15.out
+Error      = error/job_GluGluToHHHTo4B2Tau_SM_2016_15.error
+Queue 1

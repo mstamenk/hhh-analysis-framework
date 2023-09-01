@@ -1,0 +1,8 @@
+Universe   = vanilla
+request_memory = 7900
+Executable = jobs/job_ZJetsToQQ_2016APV_7.sh
+Arguments  = $(ClusterId) $(ProcId)
+Log        = log/job_ZJetsToQQ_2016APV_7.log
+Output     = output/job_ZJetsToQQ_2016APV_7.out
+Error      = error/job_ZJetsToQQ_2016APV_7.error
+Queue 1

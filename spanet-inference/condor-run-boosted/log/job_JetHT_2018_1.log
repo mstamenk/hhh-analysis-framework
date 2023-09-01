@@ -1,0 +1,51 @@
+000 (859112.000.000) 08/18 04:59:52 Job submitted from host: <172.20.3.187:9618?addrs=172.20.3.187-9618&noUDP&sock=2043_e813_3>
+...
+001 (859112.000.000) 08/18 14:40:13 Job executing on host: <172.20.225.8:9618?addrs=172.20.225.8-9618&noUDP&sock=3440_21e1_3>
+...
+006 (859112.000.000) 08/18 14:40:22 Image size of job updated: 21116
+	21  -  MemoryUsage of job (MB)
+	21116  -  ResidentSetSize of job (KB)
+...
+006 (859112.000.000) 08/18 14:45:24 Image size of job updated: 4535420
+	4430  -  MemoryUsage of job (MB)
+	4535420  -  ResidentSetSize of job (KB)
+...
+006 (859112.000.000) 08/18 14:50:24 Image size of job updated: 5318332
+	5194  -  MemoryUsage of job (MB)
+	5318332  -  ResidentSetSize of job (KB)
+...
+006 (859112.000.000) 08/18 14:55:24 Image size of job updated: 5318452
+	5194  -  MemoryUsage of job (MB)
+	5318452  -  ResidentSetSize of job (KB)
+...
+006 (859112.000.000) 08/18 15:00:25 Image size of job updated: 5318612
+	5194  -  MemoryUsage of job (MB)
+	5318612  -  ResidentSetSize of job (KB)
+...
+006 (859112.000.000) 08/18 15:05:25 Image size of job updated: 5319276
+	5195  -  MemoryUsage of job (MB)
+	5319276  -  ResidentSetSize of job (KB)
+...
+006 (859112.000.000) 08/18 15:10:25 Image size of job updated: 6366780
+	6218  -  MemoryUsage of job (MB)
+	6366628  -  ResidentSetSize of job (KB)
+...
+006 (859112.000.000) 08/18 15:12:37 Image size of job updated: 13480952
+	6218  -  MemoryUsage of job (MB)
+	6366628  -  ResidentSetSize of job (KB)
+...
+005 (859112.000.000) 08/18 15:12:37 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:32:38, Sys 0 00:00:35  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:32:38, Sys 0 00:00:35  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	2096  -  Run Bytes Sent By Job
+	399  -  Run Bytes Received By Job
+	2096  -  Total Bytes Sent By Job
+	399  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     0.67        1         1 
+	   Disk (KB)            :   803           1 479737977 
+	   Memory (MB)          :  6218        7900      8033 
+...

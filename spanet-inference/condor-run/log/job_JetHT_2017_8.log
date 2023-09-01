@@ -1,0 +1,89 @@
+000 (838265.000.000) 08/15 12:25:02 Job submitted from host: <172.20.3.187:9618?addrs=172.20.3.187-9618&noUDP&sock=2043_e813_3>
+...
+001 (838265.000.000) 08/15 12:41:29 Job executing on host: <172.20.225.4:9618?addrs=172.20.225.4-9618&noUDP&sock=3366_5fdf_3>
+...
+006 (838265.000.000) 08/15 12:41:37 Image size of job updated: 21112
+	21  -  MemoryUsage of job (MB)
+	21112  -  ResidentSetSize of job (KB)
+...
+005 (838265.000.000) 08/15 12:42:36 Job terminated.
+	(1) Normal termination (return value 1)
+		Usr 0 00:00:11, Sys 0 00:00:02  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:11, Sys 0 00:00:02  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	1434  -  Run Bytes Sent By Job
+	391  -  Run Bytes Received By Job
+	1434  -  Total Bytes Sent By Job
+	391  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     0.40        1         1 
+	   Disk (KB)            :   803           1 479779449 
+	   Memory (MB)          :    21        7900      8033 
+...
+000 (842213.000.000) 08/15 13:27:45 Job submitted from host: <172.20.3.187:9618?addrs=172.20.3.187-9618&noUDP&sock=2043_e813_3>
+...
+001 (842213.000.000) 08/15 16:08:02 Job executing on host: <172.20.225.4:9618?addrs=172.20.225.4-9618&noUDP&sock=3366_5fdf_3>
+...
+006 (842213.000.000) 08/15 16:08:11 Image size of job updated: 21124
+	21  -  MemoryUsage of job (MB)
+	21124  -  ResidentSetSize of job (KB)
+...
+006 (842213.000.000) 08/15 16:08:56 Image size of job updated: 21600
+	21  -  MemoryUsage of job (MB)
+	21124  -  ResidentSetSize of job (KB)
+...
+005 (842213.000.000) 08/15 16:08:56 Job terminated.
+	(1) Normal termination (return value 1)
+		Usr 0 00:00:10, Sys 0 00:00:01  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:00:10, Sys 0 00:00:01  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	1432  -  Run Bytes Sent By Job
+	391  -  Run Bytes Received By Job
+	1432  -  Total Bytes Sent By Job
+	391  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     0.03        1         1 
+	   Disk (KB)            :   802           1 479779449 
+	   Memory (MB)          :    21        7900      8033 
+...
+000 (846556.000.000) 08/16 03:54:22 Job submitted from host: <172.20.3.187:9618?addrs=172.20.3.187-9618&noUDP&sock=2043_e813_3>
+...
+001 (846556.000.000) 08/16 05:42:10 Job executing on host: <172.20.225.4:9618?addrs=172.20.225.4-9618&noUDP&sock=3366_5fdf_3>
+...
+006 (846556.000.000) 08/16 05:42:18 Image size of job updated: 21124
+	21  -  MemoryUsage of job (MB)
+	21124  -  ResidentSetSize of job (KB)
+...
+006 (846556.000.000) 08/16 05:47:19 Image size of job updated: 4921376
+	4807  -  MemoryUsage of job (MB)
+	4921376  -  ResidentSetSize of job (KB)
+...
+006 (846556.000.000) 08/16 05:52:19 Image size of job updated: 5877544
+	5740  -  MemoryUsage of job (MB)
+	5877544  -  ResidentSetSize of job (KB)
+...
+006 (846556.000.000) 08/16 05:57:19 Image size of job updated: 5878948
+	5742  -  MemoryUsage of job (MB)
+	5878948  -  ResidentSetSize of job (KB)
+...
+006 (846556.000.000) 08/16 06:02:19 Image size of job updated: 6439544
+	6287  -  MemoryUsage of job (MB)
+	6437032  -  ResidentSetSize of job (KB)
+...
+005 (846556.000.000) 08/16 06:04:13 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:22:28, Sys 0 00:00:32  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:22:28, Sys 0 00:00:32  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	1211  -  Run Bytes Sent By Job
+	391  -  Run Bytes Received By Job
+	1211  -  Total Bytes Sent By Job
+	391  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     0.46        1         1 
+	   Disk (KB)            :   802           1 479779449 
+	   Memory (MB)          :  6287        7900      8033 
+...

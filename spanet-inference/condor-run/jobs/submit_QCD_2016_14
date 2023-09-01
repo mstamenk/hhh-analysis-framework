@@ -1,0 +1,8 @@
+Universe   = vanilla
+request_memory = 7900
+Executable = jobs/job_QCD_2016_14.sh
+Arguments  = $(ClusterId) $(ProcId)
+Log        = log/job_QCD_2016_14.log
+Output     = output/job_QCD_2016_14.out
+Error      = error/job_QCD_2016_14.error
+Queue 1

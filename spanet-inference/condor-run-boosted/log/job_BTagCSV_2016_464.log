@@ -1,0 +1,47 @@
+000 (854972.000.000) 08/18 04:57:33 Job submitted from host: <172.20.3.187:9618?addrs=172.20.3.187-9618&noUDP&sock=2043_e813_3>
+...
+001 (854972.000.000) 08/18 05:32:03 Job executing on host: <172.20.225.2:9618?addrs=172.20.225.2-9618&noUDP&sock=3424_285d_3>
+...
+006 (854972.000.000) 08/18 05:32:11 Image size of job updated: 21116
+	21  -  MemoryUsage of job (MB)
+	21116  -  ResidentSetSize of job (KB)
+...
+006 (854972.000.000) 08/18 05:37:12 Image size of job updated: 3808296
+	3719  -  MemoryUsage of job (MB)
+	3807780  -  ResidentSetSize of job (KB)
+...
+006 (854972.000.000) 08/18 05:42:12 Image size of job updated: 4631816
+	4523  -  MemoryUsage of job (MB)
+	4631300  -  ResidentSetSize of job (KB)
+...
+006 (854972.000.000) 08/18 05:47:12 Image size of job updated: 5387684
+	5262  -  MemoryUsage of job (MB)
+	5387684  -  ResidentSetSize of job (KB)
+...
+006 (854972.000.000) 08/18 05:52:13 Image size of job updated: 5387716
+	5262  -  MemoryUsage of job (MB)
+	5387716  -  ResidentSetSize of job (KB)
+...
+006 (854972.000.000) 08/18 05:57:13 Image size of job updated: 5388196
+	5262  -  MemoryUsage of job (MB)
+	5388196  -  ResidentSetSize of job (KB)
+...
+006 (854972.000.000) 08/18 06:02:14 Image size of job updated: 5388520
+	5263  -  MemoryUsage of job (MB)
+	5388520  -  ResidentSetSize of job (KB)
+...
+005 (854972.000.000) 08/18 06:06:08 Job terminated.
+	(1) Normal termination (return value 0)
+		Usr 0 00:32:53, Sys 0 00:00:33  -  Run Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Run Local Usage
+		Usr 0 00:32:53, Sys 0 00:00:33  -  Total Remote Usage
+		Usr 0 00:00:00, Sys 0 00:00:00  -  Total Local Usage
+	2104  -  Run Bytes Sent By Job
+	403  -  Run Bytes Received By Job
+	2104  -  Total Bytes Sent By Job
+	403  -  Total Bytes Received By Job
+	Partitionable Resources :    Usage  Request Allocated 
+	   Cpus                 :     0.02        1         1 
+	   Disk (KB)            :   803           1 479786084 
+	   Memory (MB)          :  5263        7900      8033 
+...
