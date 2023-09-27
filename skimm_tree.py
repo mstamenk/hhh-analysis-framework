@@ -36,6 +36,7 @@ parser.add_option("--do_SR", action="store_true", dest="do_SR", help="Write...",
 parser.add_option("--do_CR", action="store_true", dest="do_CR", help="Write...", default=False)
 parser.add_option("--process ", type="string", dest="process_to_compute", help="Process to compute it. if no argument is given will do all", default='none')
 parser.add_option("--do_limit_input ", type="string", dest="do_limit_input", help="If given it will do the histograms only in that variable with all the uncertainties", default='none')
+
 ## separate SR_CR as an option, this option would add _SR and _CR to the subfolder name
 ## add option to enter a process and if that is given to make the trees and histos only to it
 ## add option to add BDT computation here -- or not, we leave this only to MVA input variables -- the prefit plots already do data/MC
@@ -50,68 +51,87 @@ skip_do_histograms = options.skip_do_histograms
 skip_do_plots      = options.skip_do_plots
 input_tree         = options.base
 cat                = options.category
-
 if do_SR and do_CR :
     print("You should chose to signal region OR control region")
     exit()
 
 selections = {
-    #"final_selection_jetMultiplicity" : "(nbtags > 4 && nfatjets == 0) || (nbtags > 2 && nfatjets > 0)",
-    "gt5bloose_test"                : {
-        "sel" : "(nloosebtags > 5 )",
-        "label" : "6L",
-        "dataset" : "resolved",
-        },
+    ########################### categories for resolved ###############################
+    # SR for resolved 6L (bdt > 0.6 can change)
     "gt5bloose_0PFfat"              : {
-        "sel" : "(nloosebtags > 5 && nprobejets == 0)",
+        "sel" : "(nloosebtags > 5 && nprobejets == 0  && nleps == 0 && ntaus ==0 && mva[0] > 0.6)",
         "label" : "Resolved 6L",
         "doSR" : "&& (h_fit_mass > 80 && h_fit_mass < 150)",
         "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
         "dataset" : "resolved",
 
         },
-    "gt5bloose_gt0medium_0PFfat"    : {
-        "sel" : "(nloosebtags > 5 && nmediumbtags >0 && nprobejets == 0)",
-        "label" : "Resolved 1M 5L",
+    #SR for resolved 6L(exclude 6M from it) in order to combine 6L(veto 6M) and 6M
+    "gt5bloose_0PFfat_orthogonal"              : {
+        "sel" : "(nloosebtags > 5  && nmediumbtags <6  && nleps == 0 && ntaus ==0 && nprobejets == 0  && mva[0] > 0.6 )",
+        "label" : "Resolved 6L(orthogonal)",
         "doSR" : "&& (h_fit_mass > 80 && h_fit_mass < 150)",
         "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
         "dataset" : "resolved",
+
         },
-    "gt5bloose_gt1medium_0PFfat"    : {
-        "sel" : "(nloosebtags > 5 && nmediumbtags >1 && nprobejets == 0)",
-        "label" : "Resolved 2M 4L",
-        "doSR" : "&& (h_fit_mass > 80 && h_fit_mass < 150)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved",
-        },
-    "gt5bloose_gt2medium_0PFfat"    : {
-        "sel" : "(nloosebtags > 5 && nmediumbtags >2 && nprobejets == 0)",
-        "label" : "Resolved 3M 3L",
-        "doSR" : "&& (h_fit_mass > 80 && h_fit_mass < 150)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved",
-        },
-    "gt5bloose_gt3medium_0PFfat"    : {
-        "sel" : "(nloosebtags > 5 && nmediumbtags >3 && nprobejets == 0)",
-        "label" : "Resolved 4M 2L",
-        "doSR" : "&& (h_fit_mass > 80 && h_fit_mass < 150)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved",
-        },
-    "gt5bloose_gt4medium_0PFfat"    : {
-        "sel" : "(nloosebtags > 5 && nmediumbtags >4 && nprobejets == 0)",
-        "label" : "Resolved 5M 1L",
-        "doSR" : "&& (h_fit_mass > 80 && h_fit_mass < 150)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved",
-        },
+    
+    #SR for resolved 6M in order to combine 6L(veto 6M) and 6M
     "gt5bmedium_0PFfat"             : {
-        "sel" : "(nmediumbtags > 5 && nprobejets == 0)",
+        "sel" : "(nmediumbtags > 5  && nleps == 0 && ntaus ==0 && nprobejets == 0 && mva[0] > 0.6 )",
         "label" : "Resolved 6M",
         "doSR" : "&& (h_fit_mass > 80 && h_fit_mass < 150)",
         "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
         "dataset" : "resolved",
         },
+    #CR for purer ttbar need at least 2 leptons (still need some cut to make it purer)
+    "6l_mt2l"              : {
+        "sel" : "(nloosebtags >= 6 && nprobejets == 0 && nleps >= 2 && ntaus ==0)",
+        "label" : "6l_mt2l",
+        "doSR" : "&& (h_fit_mass > 80 && h_fit_mass < 150)",
+        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
+        "dataset" : "resolved",
+
+        },
+
+    #CR for ttbar need at least one lepton (the cut is loose than 6l_mt2l)
+    "6l_mt1l"              : {
+        "sel" : "(nloosebtags >= 6 && nprobejets == 0 && nleps >= 1 && ntaus ==0 )",
+        "label" : "6l_mt1l",
+        "doSR" : "&& (h_fit_mass > 80 && h_fit_mass < 150)",
+        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
+        "dataset" : "resolved",
+
+        },
+
+    #CR for W +jets need 1 lepton (still need cut for met to make it purer)
+    "6l_1l"              : {
+        "sel" : "(nloosebtags >= 6 && nprobejets == 0 && nleps == 1 && ntaus ==0 )",
+        "label" : "6l_1l",
+        "doSR" : "&& (h_fit_mass > 80 && h_fit_mass < 150)",
+        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
+        "dataset" : "resolved",
+
+        },
+
+    #CR for Z + jets need 2 lepton (need cut for met to distinguish it from ttbar)
+    "6l_2l"              : {
+        "sel" : "(nloosebtags >= 6 && nprobejets == 0 && nleps == 2 && ntaus ==0 )",
+        "label" : "6l_2l",
+        "doSR" : "&& (h_fit_mass > 80 && h_fit_mass < 150)",
+        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
+        "dataset" : "resolved",
+
+        },
+
+    
+   
+   
+    
+
+
+
+    #########################boosted categories####################
     "1PFfat"                        : {
         "sel" : "(nprobejets == 1)",
         "label" : "Boosted (1 PN fat jet)",
