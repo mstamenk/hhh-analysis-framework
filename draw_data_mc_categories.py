@@ -43,6 +43,7 @@ labels = addLabel_CMS_preliminary(luminosities[year])
 iPeriod = 0
 datahist   = 'data_obs'
 signalhist = 'GluGluToHHHTo6B_SM'
+signalhist2 = 'GluGluToHHTo4B_cHHH1'
 inputTree = 'Events'
 
 if not os.path.isdir(output_folder):
@@ -50,20 +51,27 @@ if not os.path.isdir(output_folder):
 
 file_data   = "{}/{}.root".format(input_folder, datahist)
 file_signal = "{}/{}.root".format(input_folder, signalhist)
+file_signal2 = "{}/{}.root".format(input_folder, signalhist2)
+
+
 
 chunk_data   = ROOT.RDataFrame(inputTree, file_data)
 chunk_signal = ROOT.RDataFrame(inputTree, file_signal)
+chunk_signal2 = ROOT.RDataFrame(inputTree, file_signal2)
 variables = chunk_data.GetColumnNames()
+variables = ROOT.std.vector['string'](['fatJet1Mass','mvaBoosted','h1_spanet_boosted_mass','h2_spanet_boosted_mass','h3_spanet_boosted_mass','ProbHHH','ProbMultiH','ProbHH4b','ProbHHH4b2tau','ProbVV'])
 
 #file_data = ROOT.TFile(input_folder + '/' + 'histograms_%s.root'%(datahist))
 #variables = [v.GetName() for v in file_data.GetListOfKeys()]
 #file_data.Close()
 
 if do_log :
-    scale_sig = 1.0
+    scale_sig = 1000.0
+    scale_sig2 = 15
     ypos     = 0.095
 else :
-    scale_sig = 350.0
+    scale_sig = 1000.0
+    scale_sig2 = 15
     ypos     = 0.9
 
 for var in variables:
@@ -100,7 +108,7 @@ for var in variables:
     #file_signal = ROOT.TFile(input_folder + '/' + 'histograms_%s.root'%('GluGluToHHHTo6B_SM'))
 
     files_bkg = {}
-    for bkg in ['ZZZ','WWW','WZZ','ZZTo4Q', 'WWTo4Q', 'WWTo4Q','ZJetsToQQ', 'WJetsToQQ', 'TTToHadronic','TTToSemiLeptonic', 'QCD']:
+    for bkg in ['DYJetsToLL','GluGluToHHTo2B2Tau','ZZZ','WWW','WZZ','ZZTo4Q', 'WWTo4Q', 'WWTo4Q','ZJetsToQQ', 'WJetsToQQ', 'TTToHadronic','TTToSemiLeptonic','QCD','QCD_bEnriched']:
         #f_tmp = ROOT.TFile(input_folder + '/' + 'histograms_%s.root'%bkg)
         f_tmp = "{}/{}.root".format(input_folder, bkg)
         if os.path.exists(f_tmp) :
@@ -139,29 +147,56 @@ for var in variables:
             h_data.SetBinError(bin_m,-100000.0)
 
     if 'bdt' in str(var) or 'mva' in str(var):
-        blind_bdt = [x*0.05 + 0.5 for x in range(20)]
+        blind_bdt = [x*0.01 + 0.5 for x in range(20)]
         for value in blind_bdt:
             bin_blind = h_data.FindBin(value)
             h_data.SetBinContent(bin_blind,-3.0000001)
             h_data.SetBinError(bin_blind,0)
+
+    if 'ProbHHH' in str(var) or 'ProbMultiH' in str(var):
+        blind_bdt = [x*0.001 + 0.95 for x in range(1000)]
+        for value in blind_bdt:
+            bin_blind = h_data.FindBin(value)
+            h_data.SetBinContent(bin_blind,-10000.0000001)
+            h_data.SetBinError(bin_blind,0)
+
+
 
     #h_signal = template.Clone()
     #h_signal = chunk_signal.Fill(template, [char_var, 'totalWeight'])
     h_signal = chunk_signal.Histo1D((char_var,char_var,nbins,xmin,xmax),char_var, 'totalWeight')
     h_signal.Draw()
     h_signal = h_signal.GetValue()
+
+    h_signal2 = chunk_signal2.Histo1D((char_var,char_var,nbins,xmin,xmax),char_var, 'totalWeight')
+    h_signal2.Draw()
+    h_signal2 = h_signal2.GetValue()
     #h_signal = file_signal.Get(var)
     h_signal.SetDirectory(0)
     h_signal.SetMarkerColor(hist_properties[signalhist][0])
     h_signal.SetLineColor(hist_properties[signalhist][0])
     h_signal.SetMarkerSize(hist_properties[signalhist][1])
     h_signal.SetLineWidth(hist_properties[signalhist][2])
+
+    h_signal2.SetMarkerColor(hist_properties[signalhist2][0])
+    h_signal2.SetLineColor(hist_properties[signalhist2][0])
+    h_signal2.SetMarkerSize(hist_properties[signalhist2][1])
+    h_signal2.SetLineWidth(hist_properties[signalhist2][2])
+
+
     h_signal.Scale(scale_sig)
+    h_signal2.Scale(scale_sig2)
+
     label_sig = hist_properties[signalhist][3]
     if not scale_sig == 1.0 :
         label_sig =  "%s (X %s)" % (label_sig, str(scale_sig))
+
+    label_sig2 = hist_properties[signalhist2][3]
+    if not scale_sig2 == 1.0 :
+        label_sig2 =  "%s (X %s)" % (label_sig2, str(scale_sig2))
     #legend.AddEntry(h_signal, label_sig, 'l')
     legend.AddEntry(h_signal, label_sig, 'l')
+    legend.AddEntry(h_signal2, label_sig2, 'l')
 
     h_stack = ROOT.THStack()
 
@@ -257,6 +292,7 @@ for var in variables:
     h_data.Draw('e')
     h_stack.Draw('hist e same')
     h_signal.Draw('hist e same')
+    h_signal2.Draw('hist e same')
     h_data.Draw('e same')
     legend.Draw()
 
