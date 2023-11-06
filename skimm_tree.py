@@ -21,7 +21,7 @@ import gc
 ROOT.gROOT.SetBatch(ROOT.kTRUE)
 ROOT.ROOT.EnableImplicitMT()
 
-from utils import histograms_dict, wps_years, wps, tags, luminosities, hlt_paths, triggersCorrections, hist_properties, init_mhhh, addMHHH, clean_variables, initialise_df, save_variables
+from utils import histograms_dict, wps_years, wps, tags, luminosities, hlt_paths, triggersCorrections, hist_properties, init_mhhh, addMHHH, clean_variables, initialise_df, save_variables, init_get_max_prob, init_get_max_cat
 from machinelearning import init_bdt, add_bdt, init_bdt_boosted, add_bdt_boosted
 from calibrations import btag_init, addBTagSF, addBTagEffSF
 from hhh_variables import add_hhh_variables
@@ -781,6 +781,238 @@ selections = {
         "doCR" : "&& (ProbHHH > 0.2 && nleps != 0)",
         "dataset" : "boosted-weights",
         },
+        "ProbHHH6b_3bh0h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 1 )",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0.2)",
+        "dataset" : "-weights",
+        },
+
+        "ProbHHH6b_2bh1h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 2 )",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0.2)",
+        "dataset" : "-weights",
+        },
+
+        "ProbHHH6b_1bh2h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 3 )",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0.2)",
+        "dataset" : "-weights",
+        },
+
+        "ProbHHH6b_0bh3h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 4 )",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0.2)",
+        "dataset" : "-weights",
+        },
+
+        "ProbHHH6b_2bh0h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 5)",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0.2)",
+        "dataset" : "-weights",
+        },
+
+        "ProbHHH6b_1bh1h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 6)",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0.2)",
+        "dataset" : "-weights",
+        },
+        "ProbHHH6b_0bh2h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 7)",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0.2)",
+        "dataset" : "-weights",
+        },
+        "ProbHHH6b_1bh0h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 8)",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0.2)",
+        "dataset" : "-weights",
+        },
+        "ProbHHH6b_0bh1h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 9)",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0.2)",
+        "dataset" : "-weights",
+        },
+        "ProbHHH6b_0bh0h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 0)",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0.2)",
+        "dataset" : "-weights",
+        },
+        "ProbHHH6b_3Higgs_inclusive"              : {
+        "sel" : "(IndexMaxProb == 1 && (IndexMaxCat == 1 || IndexMaxCat == 2 || IndexMaxCat == 3 || IndexMaxCat == 4))",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0.2)",
+        "dataset" : "-weights",
+        },
+        "ProbHHH6b_2Higgs_inclusive"              : {
+        "sel" : "(IndexMaxProb == 1 && (IndexMaxCat == 5 || IndexMaxCat == 6 || IndexMaxCat == 7 ))",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0.2)",
+        "dataset" : "-weights",
+        },
+        "ProbHHH6b_1Higgs_inclusive"              : {
+        "sel" : "(IndexMaxProb == 1 && (IndexMaxCat == 8 || IndexMaxCat == 9 ))",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0.2)",
+        "dataset" : "-weights",
+        },
+# HH
+        "ProbHH4b_3bh0h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 1 )",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0.0 && nmediumbtags >= 4)",
+        "dataset" : "-weights",
+        },
+
+        "ProbHH4b_2bh1h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 2 )",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0. && nmediumbtags >= 4)",
+        "dataset" : "-weights",
+        },
+
+        "ProbHH4b_1bh2h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 3 )",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0. && nmediumbtags >= 4)",
+        "dataset" : "-weights",
+        },
+
+        "ProbHH4b_0bh3h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 4 )",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0. && nmediumbtags >= 4)",
+        "dataset" : "-weights",
+        },
+
+        "ProbHH4b_2bh0h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 5)",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0  ",
+        "doCR" : "&& (ProbHHH > 0. && ht > 450 && (nmediumbtags >= 4 || nprobejets >= 1) )",
+        "dataset" : "-weights",
+        },
+
+        "ProbHH4b_1bh1h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 6)",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0. && ht > 450 && (nmediumbtags >= 4 || nprobejets >= 1) )",
+        "dataset" : "-weights",
+        },
+        "ProbHH4b_0bh2h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 7)",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0. && ht > 450 && (nmediumbtags >= 4 || nprobejets >= 1) )",
+        "dataset" : "-weights",
+        },
+        "ProbHH4b_1bh0h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 8)",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0. && nmediumbtags >= 4)",
+        "dataset" : "-weights",
+        },
+        "ProbHH4b_0bh1h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 9)",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0. && nmediumbtags >= 4)",
+        "dataset" : "-weights",
+        },
+        "ProbHH4b_0bh0h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 0)",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0. && nmediumbtags >= 4)",
+        "dataset" : "-weights",
+        },
+        "ProbHH4b_3Higgs_inclusive"              : {
+        "sel" : "(IndexMaxProb == 7 && (IndexMaxCat == 1 || IndexMaxCat == 2 || IndexMaxCat == 3 || IndexMaxCat == 4))",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0  ",
+        "doCR" : "&& (ProbHHH > 0. && (nmediumbtags >= 4 || nprobejets >= 2))",
+        "dataset" : "-weights",
+        },
+        "ProbHH4b_2Higgs_inclusive"              : {
+        "sel" : "(IndexMaxProb == 7 && (IndexMaxCat == 5 || IndexMaxCat == 6 || IndexMaxCat == 7 ))",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0  ",
+        "doCR" : "&& (ProbHHH > 0. && ht > 450 && (nmediumbtags >= 4 || nprobejets >= 2) )",
+        "dataset" : "-weights",
+        },
+        "ProbHH4b_1Higgs_inclusive"              : {
+        "sel" : "(IndexMaxProb == 7 && (IndexMaxCat == 8 || IndexMaxCat == 9 ))",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0. && (nmediumbtags >= 4 || nprobejets >= 2) )",
+        "dataset" : "-weights",
+        },
+
+        "ProbVV_2Higgs_inclusive"              : {
+        "sel" : "(IndexMaxProb == 5 && (IndexMaxCat == 5 || IndexMaxCat == 6 || IndexMaxCat == 7 ))",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0  ",
+        "doCR" : "&& (ProbHHH > 0. && ht > 450 && (nmediumbtags >= 4 || nprobejets >= 2) )",
+        "dataset" : "-weights",
+        },
+        "ProbVV_2bh0h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 5 && (IndexMaxCat == 5 ))",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0. && ht > 450 && (nmediumbtags >= 4 || nprobejets >= 2) )",
+        "dataset" : "-weights",
+        },
+        "ProbVV_1bh1h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 5 && (IndexMaxCat == 6))",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0. && ht > 450 && (nmediumbtags >= 4 || nprobejets >= 2) )",
+        "dataset" : "-weights",
+        },
+        "ProbVV_0bh2h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 5 && (IndexMaxCat == 7))",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbHHH > 0.0 ",
+        "doCR" : "&& (ProbHHH > 0. && ht > 450 && (nmediumbtags >= 4 || nprobejets >= 2) )",
+        "dataset" : "-weights",
+        },
+
+        "test"              : {
+        "sel" : "(nsmalljets >= 4)",
+        "label" : "ProbHHH ",
+        "doSR" : "&& nprobejets > 0",
+        "doCR" : "&&  nprobejets == 0",
+        "dataset" : "-weights",
+        },
+
+
 
     ## you can add here categories with PN score
 }
@@ -796,7 +1028,7 @@ if do_CR :
 
 inputTree = 'Events'
 
-procstodo = ["ZZZ", "WZZ", "WWZ", "WWW", "ZZTo4Q", "WWTo4Q", "ZJetsToQQ", "WJetsToQQ", "TTToHadronic","TTo2L2Nu","TTToSemiLeptonic", "QCD", "data_obs","DYJetsToLL","GluGluToHHHTo6B_SM","GluGluToHHTo4B_cHHH1","GluGluToHHTo2B2Tau","GluGluToHHHTo4B2Tau_SM"]
+procstodo = ["ZZZ", "WZZ", "WWZ", "WWW", "ZZTo4Q", "WWTo4Q", "ZJetsToQQ", "WJetsToQQ", "TTToHadronic","TTo2L2Nu","TTToSemiLeptonic", "QCD", "data_obs","DYJetsToLL","GluGluToHHHTo6B_SM","GluGluToHHTo4B_cHHH1","GluGluToHHTo2B2Tau","GluGluToHHHTo4B2Tau_SM", "QCD_modelling"]
 if not process_to_compute == 'none' :
     procstodo     = [process_to_compute]
     skip_do_plots = True
@@ -818,6 +1050,9 @@ init_mhhh()
 #    ROOT.gInterpreter.Declare(triggersCorrections['2016'][0])
 #else:
 #    ROOT.gInterpreter.Declare(triggersCorrections[year][0])
+init_get_max_prob()
+init_get_max_cat()
+
 
 # define b-tagging
 if '2016APV' in year:
@@ -829,10 +1064,7 @@ else:
 
 
 csv_saved = False
-#for selection in selections.keys() :
-for selection in ['ProbHHH_single_0tau_jets', 'ProbHHH_double_0tau_jets','ProbHHH_inclusive_2tau_jets','ProbHHH_inclusive_1tau_jets']:
-#for selection in ['ProbHHH_single_0tau', 'ProbHHH_single_1tau', 'ProbHHH_single_2tau' ]:
-#for selection in ['ProbHHH_resolved']:
+for selection in selections.keys() :
   if not cat == 'none' :
       if not selection == cat :
           continue
@@ -869,7 +1101,7 @@ for selection in ['ProbHHH_single_0tau_jets', 'ProbHHH_double_0tau_jets','ProbHH
     outtree = "{}/{}_{}/{}.root".format(input_tree,selection,additional_label,proctodo)
 
     dataset = selections[selection]["dataset"] # inclusive_resolved or inclusive_boosted
-    list_proc=glob.glob("{}/inclusive_{}/{}.root".format(input_tree,dataset,datahist))
+    list_proc=glob.glob("{}/inclusive{}/{}.root".format(input_tree,dataset,datahist))
     print("Will create %s" % outtree)
 
 
@@ -885,6 +1117,8 @@ for selection in ['ProbHHH_single_0tau_jets', 'ProbHHH_double_0tau_jets','ProbHH
 
         chunk_df = ROOT.RDataFrame(inputTree, proc)
         chunk_df = chunk_df.Define('ProbMultiH','ProbHHH + ProbHHH4b2tau + ProbHH4b + ProbHH2b2tau')
+        chunk_df = chunk_df.Define('IndexMaxProb', 'get_max_prob(ProbHHH, ProbQCD, ProbTT, ProbVJets, ProbVV, ProbHHH4b2tau, ProbHH4b, ProbHH2b2tau)')
+        chunk_df = chunk_df.Define('IndexMaxCat', 'get_max_cat(Prob3bh0h, Prob2bh1h, Prob1bh2h, Prob0bh3h, Prob2bh0h, Prob1bh1h, Prob0bh2h, Prob1bh0h, Prob0bh1h, Prob0bh0h)')
         # initialise df - so we don't need make_selection_rdataframes.py anymore
         print(dataset)
         if 'mvacut0' not in dataset and 'weights' not in dataset:
@@ -894,6 +1128,7 @@ for selection in ['ProbHHH_single_0tau_jets', 'ProbHHH_double_0tau_jets','ProbHH
             #init_bdt(chunk_df,year)
             init_bdt(chunk_df,year)
             init_bdt_boosted(chunk_df,year)
+
             firstProc = False
         try:
             entries_no_filter = int(chunk_df.Count().GetValue())
@@ -927,7 +1162,7 @@ for selection in ['ProbHHH_single_0tau_jets', 'ProbHHH_double_0tau_jets','ProbHH
         ## Maybe because I do not source CMSSW
 
         ## symetrize angle variables
-        for type_obj in ['bcand', 'fatJet', 'jet'] :
+        for type_obj in ['fatJet', 'jet'] :
             for jet_number in range(1,11) :
                 for angle in ['Eta', 'Phi'] :
                     obj = '{}{}{}'.format(type_obj,jet_number,angle)
@@ -964,20 +1199,34 @@ for selection in ['ProbHHH_single_0tau_jets', 'ProbHHH_double_0tau_jets','ProbHH
                 to_multiply = to_multiply + ['jet{}MediumBTagEffSF'.format(jet_number)]
             for jet_number in range(nmedium_cut+1,7) :
                 to_multiply = to_multiply + ['jet{}LooseBTagEffSF'.format(jet_number)]
-        string_multiply = 'eventWeight'
+        string_multiply = 'eventWeight2'
         for ss in to_multiply :
             string_multiply = string_multiply + ' * {}'.format(ss)
 
         print( "Redefine eventWeight = {}".format(string_multiply))
+        lumi = luminosities[year]
+        # Re-definition of event weight to be used on v28 - will be fixed
+        if 'JetHT' in datahist: cutWeight = '1' 
+        else: cutWeight = '(%f * xsecWeight * l1PreFiringWeight * puWeight * genWeight * triggerSF)'%(lumi)
+        chunk_df = chunk_df.Define('eventWeight2', cutWeight)
         chunk_df = chunk_df.Define('totalWeight', string_multiply)
 
         proc_yield = chunk_df.Sum('totalWeight')
         print("Yield:", proc_yield.GetValue())
 
         print(variables)
+        #if 'JetHT' in proctodo or 'data_obs' in proctodo:
+        #    chunk_df = chunk_df.Define('jet1HadronFlavour', '-1')
+        #    chunk_df = chunk_df.Define('jet2HadronFlavour', '-1')
+        #    chunk_df = chunk_df.Define('jet3HadronFlavour', '-1')
+        #    chunk_df = chunk_df.Define('jet4HadronFlavour', '-1')
+        #    chunk_df = chunk_df.Define('jet5HadronFlavrou', '-1')
+        #    chunk_df = chunk_df.Define('jet6HadronFlavrou', '-1')
 
         #chunk_df.Snapshot(inputTree, outtree, variables + ['totalWeight'])
-        chunk_df.Snapshot(inputTree, outtree)
+        to_save = [str(el) for el in chunk_df.GetColumnNames() if 'mva' not in str(el)]
+
+        chunk_df.Snapshot(inputTree, outtree,to_save)
 
         gc.collect() # clean menory
         sys.stdout.flush() # extra clean
