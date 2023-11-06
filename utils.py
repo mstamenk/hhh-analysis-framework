@@ -16,16 +16,16 @@ luminosities = {#'2016' : 36330.0,
 
 
 hlt_paths = {
-#        '2016' : '( HLT_QuadJet45_TripleBTagCSV_p087||  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056||  HLT_PFHT450_SixJet40_BTagCSV_p056||  HLT_AK8PFJet360_TrimMass30||  HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20||  HLT_AK8PFJet450||  HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200||  HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20||  HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20||  HLT_PFJet450 ||  HLT_QuadJet45_DoubleBTagCSV_p087 )',
-        '2016' : '( HLT_QuadJet45_TripleBTagCSV_p087)',
-        '2016PostAPV' : '( HLT_QuadJet45_TripleBTagCSV_p087)',
-#        '2016APV' : '( HLT_QuadJet45_TripleBTagCSV_p087||  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056||  HLT_PFHT450_SixJet40_BTagCSV_p056||  HLT_AK8PFJet360_TrimMass30||  HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20||  HLT_AK8PFJet450||  HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200||  HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20||  HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20||  HLT_PFJet450||  HLT_PFMET120_BTagCSV_p067||  HLT_QuadJet45_DoubleBTagCSV_p087 )',
-        '2016APV' : '( HLT_QuadJet45_TripleBTagCSV_p087)',
+       '2016' : '( HLT_QuadJet45_TripleBTagCSV_p087||  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056||  HLT_PFHT450_SixJet40_BTagCSV_p056||  HLT_AK8PFJet360_TrimMass30||  HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20||  HLT_AK8PFJet450||  HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200||  HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20||  HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20||  HLT_PFJet450 ||  HLT_QuadJet45_DoubleBTagCSV_p087 )',
+        #'2016' : '( HLT_QuadJet45_TripleBTagCSV_p087 || HLT_DoubleJet90_Double30_TripleBTagCSV_p087)',
+        #'2016PostAPV' : '( HLT_QuadJet45_TripleBTagCSV_p087 || HLT_DoubleJet90_Double30_TripleBTagCSV_p087)',
+        '2016APV' : '( HLT_QuadJet45_TripleBTagCSV_p087||  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056||  HLT_PFHT450_SixJet40_BTagCSV_p056||  HLT_AK8PFJet360_TrimMass30||  HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20||  HLT_AK8PFJet450||  HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200||  HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20||  HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20||  HLT_PFJet450||  HLT_PFMET120_BTagCSV_p067||  HLT_QuadJet45_DoubleBTagCSV_p087 )',
+        #'2016APV' : '( HLT_QuadJet45_TripleBTagCSV_p087)',
 #        '2016PostAPV' : '( HLT_QuadJet45_TripleBTagCSV_p087||  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056||  HLT_PFHT450_SixJet40_BTagCSV_p056||  HLT_AK8PFJet360_TrimMass30||  HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20||  HLT_AK8PFJet450||  HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200||  HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20||  HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20||  HLT_PFJet450||  HLT_QuadJet45_DoubleBTagCSV_p087 )',
-#             '2017' : '(HLT_PFJet450 || HLT_PFJet500 || HLT_PFHT1050 || HLT_AK8PFJet550 || HLT_AK8PFJet360_TrimMass30 || HLT_AK8PFJet400_TrimMass30 || HLT_AK8PFHT750_TrimMass50 || HLT_AK8PFJet330_PFAK8BTagCSV_p17 || HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0 || HLT_PFMET100_PFMHT100_IDTight_CaloBTagCSV_3p1 || HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2 || HLT_PFHT380_SixPFJet32_DoublePFBTagDeepCSV_2p2 || HLT_PFHT430_SixPFJet40_PFBTagCSV_1p5 || HLT_QuadPFJet98_83_71_15_DoubleBTagCSV_p013_p08_VBF1 || HLT_QuadPFJet98_83_71_15_BTagCSV_p013_VBF2 )',
-             '2017' : '(HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0 )',
-             #'2018' : '(HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCSV_4p5||HLT_PFHT1050||HLT_PFJet500||HLT_AK8PFJet500||HLT_AK8PFJet400_TrimMass30||HLT_AK8PFHT800_TrimMass50||HLT_AK8PFJet330_TrimMass30_PFAK8BoostedDoubleB_np4||HLT_QuadPFJet103_88_75_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1||HLT_QuadPFJet103_88_75_15_PFBTagDeepCSV_1p3_VBF2||HLT_PFHT400_SixPFJet32_DoublePFBTagDeepCSV_2p94||HLT_PFHT450_SixPFJet36_PFBTagDeepCSV_1p59||HLT_AK8PFJet330_TrimMass30_PFAK8BTagDeepCSV_p17||HLT_QuadPFJet98_83_71_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1||HLT_QuadPFJet98_83_71_15_PFBTagDeepCSV_1p3_VBF2|| HLT_PFMET100_PFMHT100_IDTight_CaloBTagDeepCSV_3p1)',
-             '2018' : '(HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCSV_4p5)',
+             '2017' : '(HLT_PFJet450 || HLT_PFJet500 || HLT_PFHT1050 || HLT_AK8PFJet550 || HLT_AK8PFJet360_TrimMass30 || HLT_AK8PFJet400_TrimMass30 || HLT_AK8PFHT750_TrimMass50 || HLT_AK8PFJet330_PFAK8BTagCSV_p17 || HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0 || HLT_PFMET100_PFMHT100_IDTight_CaloBTagCSV_3p1 || HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2 || HLT_PFHT380_SixPFJet32_DoublePFBTagDeepCSV_2p2 || HLT_PFHT430_SixPFJet40_PFBTagCSV_1p5 || HLT_QuadPFJet98_83_71_15_DoubleBTagCSV_p013_p08_VBF1 || HLT_QuadPFJet98_83_71_15_BTagCSV_p013_VBF2 )',
+             #'2017' : '(HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0 )',
+             '2018' : '(HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCSV_4p5||HLT_PFHT1050||HLT_PFJet500||HLT_AK8PFJet500||HLT_AK8PFJet400_TrimMass30||HLT_AK8PFHT800_TrimMass50||HLT_AK8PFJet330_TrimMass30_PFAK8BoostedDoubleB_np4||HLT_QuadPFJet103_88_75_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1||HLT_QuadPFJet103_88_75_15_PFBTagDeepCSV_1p3_VBF2||HLT_PFHT400_SixPFJet32_DoublePFBTagDeepCSV_2p94||HLT_PFHT450_SixPFJet36_PFBTagDeepCSV_1p59||HLT_AK8PFJet330_TrimMass30_PFAK8BTagDeepCSV_p17||HLT_QuadPFJet98_83_71_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1||HLT_QuadPFJet98_83_71_15_PFBTagDeepCSV_1p3_VBF2|| HLT_PFMET100_PFMHT100_IDTight_CaloBTagDeepCSV_3p1)',
+             #'2018' : '(HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCSV_4p5)',
         }
 
 
@@ -33,9 +33,17 @@ hlt_paths = {
 phi_bins = 5
 eta_bins = 10
 histograms_dict = {
-        'h1_t3_mass'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H1) (GeV)'},
-        'h2_t3_mass'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H2) (GeV)'},
-        'h3_t3_mass'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H3) (GeV)'},
+        'h1_t3_mass'  : { "nbins" : 13 , "xmin" : 70 , "xmax" : 200, "label" : 'm(H1) (GeV)'},
+        'h2_t3_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H2) (GeV)'},
+        'h3_t3_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H3) (GeV)'},
+
+        #'h1_spanet_boosted_mass'  : { "nbins" : 13 , "xmin" : 70 , "xmax" : 200, "label" : 'm(H1) (GeV)'},
+        #'h2_spanet_boosted_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H2) (GeV)'},
+        #'h3_spanet_boosted_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H3) (GeV)'},
+
+        #'h1_spanet_mass'  : { "nbins" : 13 , "xmin" : 70 , "xmax" : 200, "label" : 'm(H1) (GeV)'},
+        #'h2_spanet_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H2) (GeV)'},
+        #'h3_spanet_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H3) (GeV)'},
 
         'h_fit_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H) fitted (GeV)'},
 
@@ -43,13 +51,37 @@ histograms_dict = {
         'h2_t3_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H2)'},
         'h3_t3_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H3)'},
 
+        #'h1_spanet_boosted_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H1)'},
+        #'h2_spanet_boosted_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H2)'},
+        #'h3_spanet_boosted_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H3)'},
+
+        #'h1_spanet_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H1)'},
+        #'h2_spanet_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H2)'},
+        #'h3_spanet_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H3)'},
+
         'h1_t3_eta'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 3, "label" : '#eta(H1)'},
         'h2_t3_eta'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 3, "label" : '#eta(H2)'},
         'h3_t3_eta'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 3, "label" : '#eta(H3)'},
 
+        #'h1_spanet_boosted_eta'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 3, "label" : '#eta(H1)'},
+        #'h2_spanet_boosted_eta'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 3, "label" : '#eta(H2)'},
+        #'h3_spanet_boosted_eta'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 3, "label" : '#eta(H3)'},
+
+        #'h1_spanet_eta'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 3, "label" : '#eta(H1)'},
+        #'h2_spanet_eta'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 3, "label" : '#eta(H2)'},
+        #'h3_spanet_eta'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 3, "label" : '#eta(H3)'},
+
         'h1_t3_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H1)'},
         'h2_t3_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H2)'},
         'h3_t3_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H3)'},
+
+        #'h1_spanet_boosted_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H1)'},
+        #'h2_spanet_boosted_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H2)'},
+        #'h3_spanet_boosted_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H3)'},
+
+        #'h1_spanet_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H1)'},
+        #'h2_spanet_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H2)'},
+        #'h3_spanet_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H3)'},
 
         'h1_t3_dRjets'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 5.0, "label" : '#Delta R(j1,j2) H1'},
         'h2_t3_dRjets'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 5.0, "label" : '#Delta R(j3,j4) H2'},
@@ -58,6 +90,14 @@ histograms_dict = {
         'h1_t3_match'  : { "nbins" : 2 , "xmin" : 0 , "xmax" : 2, "label" : 'H1 truth matched'},
         'h2_t3_match'  : { "nbins" : 2 , "xmin" : 0 , "xmax" : 2, "label" : 'H2 truth matched'},
         'h3_t3_match'  : { "nbins" : 2 , "xmin" : 0 , "xmax" : 2, "label" : 'H3 truth matched'},
+
+        #'h1_spanet_boosted_match'  : { "nbins" : 2 , "xmin" : 0 , "xmax" : 2, "label" : 'H1 truth matched'},
+        #'h2_spanet_boosted_match'  : { "nbins" : 2 , "xmin" : 0 , "xmax" : 2, "label" : 'H2 truth matched'},
+        #'h3_spanet_boosted_match'  : { "nbins" : 2 , "xmin" : 0 , "xmax" : 2, "label" : 'H3 truth matched'},
+
+        #'h1_spanet_match'  : { "nbins" : 2 , "xmin" : 0 , "xmax" : 2, "label" : 'H1 truth matched'},
+        #'h2_spanet_match'  : { "nbins" : 2 , "xmin" : 0 , "xmax" : 2, "label" : 'H2 truth matched'},
+        #'h3_spanet_match'  : { "nbins" : 2 , "xmin" : 0 , "xmax" : 2, "label" : 'H3 truth matched'},
 
         'bcand1Pt'  : { "nbins" : 50 , "xmin" : 0 , "xmax" : 500, "label" : 'b-candidate 1 p_{T} (GeV)'},
         'bcand2Pt'  : { "nbins" : 50 , "xmin" : 0 , "xmax" : 500, "label" : 'b-candidate 2 p_{T} (GeV)'},
@@ -94,7 +134,7 @@ histograms_dict = {
         #'bcand5HiggsMatched'  : { "nbins" : 2 , "xmin" : 0 , "xmax" : 2, "label" : 'Jet 5 truth matched'},
         #'bcand6HiggsMatched'  : { "nbins" : 2 , "xmin" : 0 , "xmax" : 2, "label" : 'Jet 6 truth matched'},
 
-        'fatJet1Mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'fatJet1 mass regressed (GeV)'},
+        'fatJet1Mass'  : { "nbins" : 13 , "xmin" : 70 , "xmax" : 200, "label" : 'fatJet1 mass regressed (GeV)'},
         'fatJet2Mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'fatJet2 mass regressed (GeV)'},
         'fatJet3Mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'fatJet3 mass regressed (GeV)'},
 
@@ -130,15 +170,23 @@ histograms_dict = {
         'nprobejets'  : { "nbins" : 5 , "xmin" : 0 , "xmax" : 5, "label" : 'N fat-jets'},
         'nbtags'      : { "nbins" : 10 , "xmin" : 0 , "xmax" : 10, "label" : 'N b-tags'},
 
-        'nloosebtags'   : { "nbins" : 5 , "xmin" : 5 , "xmax" : 10, "label" : 'N loose b-tags'},
+        'nloosebtags'   : { "nbins" : 10 , "xmin" : 0 , "xmax" : 10, "label" : 'N loose b-tags'},
         'nmediumbtags'  : { "nbins" : 10 , "xmin" : 0 , "xmax" : 10, "label" : 'N meidum b-tags'},
         'ntightbtags'   : { "nbins" : 10 , "xmin" : 0 , "xmax" : 10, "label" : 'N tight b-tags'},
+
+        'nsmalljets' : { "nbins" : 12 , "xmin" : 0 , "xmax" : 12, "label" : 'NAK4 jets'},
+        'nfatjets' :  { "nbins" : 7 , "xmin" : 0 , "xmax" : 7, "label" : 'NAK8 jets'},
 
         'ht'   : { "nbins" : 90 , "xmin" : 0 , "xmax" : 1800, "label" : 'Event HT [GeV]'},
         'met'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'E_{T}^{miss} [GeV]'},
         'bdt'  : { "nbins" : 20 , "xmin" : -1 , "xmax" : 1, "label" : 'BDT output score'},
-        'mva'  : { "nbins" : 20 , "xmin" : -0.6 , "xmax" : 0.8, "label" : 'BDT output score'},
-        'mvaBoosted'  : { "nbins" : 20 , "xmin" : -0.6 , "xmax" : 0.8, "label" : 'BDT output score (boosted)'},
+        #'mva'  : { "nbins" : 10 , "xmin" : 0.0 , "xmax" : 1.0, "label" : 'BDT output score'},
+        #'mvaBoosted'  : { "nbins" : 20 , "xmin" : -0.6 , "xmax" : 0.8, "label" : 'BDT output score (boosted)'},
+        'ProbHHH'  : { "nbins" : 40, "xmin" : 0 , "xmax" : 1.0, "label" : 'ProbHHH'},
+        'ProbHH4b'  : { "nbins" : 40, "xmin" : 0 , "xmax" : 1.0, "label" : 'ProbHH4b'},
+        'ProbHHH4b2tau'  : { "nbins" : 40, "xmin" : 0 , "xmax" : 1.0, "label" : 'ProbHHH4b2tau'},
+        'ProbMultiH'  : { "nbins" : 40, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'Prob multi-Higgs'},
+        'ProbVV'  : { "nbins" : 40, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'ProbVV'},
 
         'jet1DeepFlavB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 1 DeepJet b-score'},
         'jet2DeepFlavB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 2 DeepJet b-score'},
@@ -150,6 +198,14 @@ histograms_dict = {
         'jet8DeepFlavB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 8 DeepJet b-score'},
         'jet9DeepFlavB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 9 DeepJet b-score'},
         'jet10DeepFlavB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 10 DeepJet b-score'},
+
+        'jet1HadronFlavour'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 20, "label" : 'jet 1 hadron flavour'},
+        'jet2HadronFlavour'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 20, "label" : 'jet 2 hadron flavour'},
+        'jet3HadronFlavour'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 20, "label" : 'jet 3 hadron flavour'},
+        'jet4HadronFlavour'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 20, "label" : 'jet 4 hadron flavour'},
+        'jet5HadronFlavour'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 20, "label" : 'jet 5 hadron flavour'},
+        'jet6HadronFlavour'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 20, "label" : 'jet 6 hadron flavour'},
+
 
         'jet1Pt'  : { "nbins" : 50 , "xmin" : 0 , "xmax" : 500, "label" : 'jet 1 p_{T} (GeV)'},
         'jet2Pt'  : { "nbins" : 50 , "xmin" : 0 , "xmax" : 500, "label" : 'jet 2 p_{T} (GeV)'},
@@ -196,8 +252,15 @@ hist_properties = {'JetHT' : [ROOT.kBlack, 0.8, 0, 'Data', True] ,
                    'ZJetsToQQ'   : [ROOT.kCyan, 0, 0, 'V+jets', True],
                    'WJetsToQQ'   : [ROOT.kCyan, 0, 0, 'V+jets', False],
                    'QCD'   : [ROOT.kOrange, 0, 0, 'QCD', True],
+                   'QCD_bEnriched'   : [ROOT.kOrange + 1, 0, 0, 'QCD b-enriched', True],
                    'QCD6B'   : [ROOT.kOrange + 2, 0, 0, 'QCD6B', True],
+                   'DYJetsToLL'   : [ROOT.kYellow + 2, 0, 0, 'DY + jets', True],
                    'GluGluToHHHTo6B_SM' : [ROOT.kRed, 0,3, 'SM HHH', True],
+                   'GluGluToHHHTo4B2Tau_SM' : [ROOT.kRed, 0,3, 'SM HHH4b2tau', True],
+                   'GluGluToHHH' : [ROOT.kRed, 0,3, 'SM HHH', True],
+                   'GluGluToHHTo4B_cHHH1' : [ROOT.kViolet + 2, 0,3, 'SM HH', True],
+                    'GluGluToHHTo2B2Tau' : [ROOT.kViolet + 3, 0,3, 'SM HH2b2tau', True],
+
         }
 
 def addLabel_CMS_preliminary(luminosity) :
@@ -421,13 +484,13 @@ tags = {'5tag' :  'bcand1DeepFlavB > %s && bcand2DeepFlavB > %s && bcand3DeepFla
 
 
 hlt_sf_2016 = """
-float getTriggerSF(int HLT_QuadJet45_TripleBTagCSV_p087, int HLT_PFHT400_SixJet30_DoubleBTagCSV_p056, int HLT_PFHT450_SixJet40_BTagCSV_p056, int HLT_AK8PFJet360_TrimMass30, int HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20, int HLT_AK8PFJet450, int HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200, int HLT_QuadPFJet_BTagCSV_p016_VBF_Mqq460, int HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20, int HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20, int HLT_PFJet450, int HLT_PFMET120_BTagCSV_p067, int HLT_QuadJet45_DoubleBTagCSV_p087 ){
+float getTriggerSF(int HLT_QuadJet45_TripleBTagCSV_p087, int HLT_PFHT400_SixJet30_DoubleBTagCSV_p056, int HLT_PFHT450_SixJet40_BTagCSV_p056, int HLT_AK8PFJet360_TrimMass30, int HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20, int HLT_AK8PFJet450, int HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200, int HLT_QuadPFJet_BTagCSV_p016_VBF_Mqq460, int HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20, int HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20, int HLT_PFJet450, int HLT_QuadJet45_DoubleBTagCSV_p087 ){
     float triggerSF = 1;
         if (HLT_QuadJet45_TripleBTagCSV_p087 || HLT_PFHT400_SixJet30_DoubleBTagCSV_p056 || HLT_PFHT450_SixJet40_BTagCSV_p056 || HLT_AK8PFJet360_TrimMass30 || HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20) {triggerSF = 1;}
         else if (HLT_AK8PFJet450) {triggerSF = 33.64/36.47;}
         else if (HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200 || HLT_QuadPFJet_BTagCSV_p016_VBF_Mqq460) {triggerSF=25.36/36.47;}
         else if (HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20 || HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20) {triggerSF = 20.20/36.47;}
-        else if (HLT_PFJet450 || HLT_PFMET120_BTagCSV_p067) {triggerSF = 16.94/36.47;}
+        else if (HLT_PFJet450) {triggerSF = 16.94/36.47;}
         else if (HLT_QuadJet45_DoubleBTagCSV_p087) {triggerSF=1.29/36.47;}
 
     return triggerSF;
@@ -437,15 +500,15 @@ float getTriggerSF(int HLT_QuadJet45_TripleBTagCSV_p087, int HLT_PFHT400_SixJet3
 hlt_sf_2017 = """
 float getTriggerSF(int HLT_PFJet450, int HLT_PFJet500, int HLT_PFHT1050, int HLT_AK8PFJet550, int HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0, int HLT_AK8PFJet360_TrimMass30, int HLT_AK8PFHT750_TrimMass50, int HLT_AK8PFJet400_TrimMass30, int HLT_PFMET100_PFMHT100_IDTight_CaloBTagCSV_3p1, int HLT_PFHT380_SixPFJet32_DoublePFBTagDeepCSV_2p2, int HLT_AK8PFJet330_PFAK8BTagCSV_p17, int HLT_QuadPFJet98_83_71_15_BTagCSV_p013_VBF2, int HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2, int HLT_PFHT430_SixPFJet40_PFBTagCSV_1p5, int HLT_QuadPFJet98_83_71_15_DoubleBTagCSV_p013_p08_VBF1 ){
     float triggerSF = 1;
-        if (HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0) {triggerSF = 36.67/41.48;}
-        //if (HLT_PFJet500 || HLT_PFHT1050 || HLT_AK8PFJet550) {triggerSF = 1;}
-        //else if (HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0 || HLT_AK8PFJet400_TrimMass30 ) {triggerSF = 36.67/41.48;}
-        //else if (HLT_AK8PFHT750_TrimMass50) {triggerSF=30.90/41.48;}
-        //else if (HLT_AK8PFJet360_TrimMass30 || HLT_PFMET100_PFMHT100_IDTight_CaloBTagCSV_3p1) {triggerSF = 28.23/41.48;}
-        //else if (HLT_PFHT380_SixPFJet32_DoublePFBTagDeepCSV_2p2) {triggerSF = 17.68/41.48;}
-        //else if (HLT_PFJet450) {triggerSF=10.45/41.48;}
-        //else if (HLT_AK8PFJet330_PFAK8BTagCSV_p17 || HLT_QuadPFJet98_83_71_15_BTagCSV_p013_VBF2) {triggerSF=7.73/41.48;}
-        //else if (HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2 || HLT_PFHT430_SixPFJet40_PFBTagCSV_1p5 || HLT_QuadPFJet98_83_71_15_DoubleBTagCSV_p013_p08_VBF1) {triggerSF=5.30/41.48;}
+        //if (HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0) {triggerSF = 36.67/41.48;}
+        if (HLT_PFJet500 || HLT_PFHT1050 || HLT_AK8PFJet550) {triggerSF = 1;}
+        else if (HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0 || HLT_AK8PFJet400_TrimMass30 ) {triggerSF = 36.67/41.48;}
+        else if (HLT_AK8PFHT750_TrimMass50) {triggerSF=30.90/41.48;}
+        else if (HLT_AK8PFJet360_TrimMass30 || HLT_PFMET100_PFMHT100_IDTight_CaloBTagCSV_3p1) {triggerSF = 28.23/41.48;}
+        else if (HLT_PFHT380_SixPFJet32_DoublePFBTagDeepCSV_2p2) {triggerSF = 17.68/41.48;}
+        else if (HLT_PFJet450) {triggerSF=10.45/41.48;}
+        else if (HLT_AK8PFJet330_PFAK8BTagCSV_p17 || HLT_QuadPFJet98_83_71_15_BTagCSV_p013_VBF2) {triggerSF=7.73/41.48;}
+        else if (HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2 || HLT_PFHT430_SixPFJet40_PFBTagCSV_1p5 || HLT_QuadPFJet98_83_71_15_DoubleBTagCSV_p013_p08_VBF1) {triggerSF=5.30/41.48;}
 
     return triggerSF;
 }
@@ -468,7 +531,7 @@ float getTriggerSF( int HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCS
 
 
 
-hlt_method_2016 = 'getTriggerSF( HLT_QuadJet45_TripleBTagCSV_p087,  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056,  HLT_PFHT450_SixJet40_BTagCSV_p056,  HLT_AK8PFJet360_TrimMass30,  HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20,  HLT_AK8PFJet450,  HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200,  HLT_QuadPFJet_BTagCSV_p016_VBF_Mqq460,  HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20,  HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20,  HLT_PFJet450,  HLT_PFMET120_BTagCSV_p067,  HLT_QuadJet45_DoubleBTagCSV_p087 );'
+hlt_method_2016 = 'getTriggerSF( HLT_QuadJet45_TripleBTagCSV_p087,  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056,  HLT_PFHT450_SixJet40_BTagCSV_p056,  HLT_AK8PFJet360_TrimMass30,  HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20,  HLT_AK8PFJet450,  HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200,  HLT_QuadPFJet_BTagCSV_p016_VBF_Mqq460,  HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20,  HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20,  HLT_PFJet450,  HLT_QuadJet45_DoubleBTagCSV_p087 );'
 
 hlt_method_2017 = ' getTriggerSF( HLT_PFJet450,  HLT_PFJet500,  HLT_PFHT1050,  HLT_AK8PFJet550,  HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0,  HLT_AK8PFJet360_TrimMass30,  HLT_AK8PFHT750_TrimMass50,  HLT_AK8PFJet400_TrimMass30,  HLT_PFMET100_PFMHT100_IDTight_CaloBTagCSV_3p1,  HLT_PFHT380_SixPFJet32_DoublePFBTagDeepCSV_2p2,  HLT_AK8PFJet330_PFAK8BTagCSV_p17,  HLT_QuadPFJet98_83_71_15_BTagCSV_p013_VBF2,  HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2,  HLT_PFHT430_SixPFJet40_PFBTagCSV_1p5,  HLT_QuadPFJet98_83_71_15_DoubleBTagCSV_p013_p08_VBF1 );'
 
@@ -523,20 +586,26 @@ def drawText(x, y, text, color = ROOT.kBlack, fontsize = 0.05, font = 42, doNDC 
     tex.SetTextColor(color)
     tex.DrawLatex(x, y, text)
 
-mva_variables = ['h2_t3_mass','h3_t3_mass','h2_t3_dRjets','h3_t3_dRjets','jet1Pt','jet2Pt','jet3Pt','jet4Pt','jet5Pt','jet6Pt','jet1Eta','jet2Eta','jet3Eta','jet4Eta','jet5Eta','jet6Eta','jet1Phi','jet2Phi','jet3Phi','jet4Phi','jet5Phi','jet6Phi','jet1DeepFlavB','jet2DeepFlavB','jet3DeepFlavB','jet4DeepFlavB','jet5DeepFlavB','jet6DeepFlavB','fatJet1Pt','fatJet1Eta','fatJet2Mass','fatJet2Pt','fatJet2Eta','fatJet2PNetXbb','fatJet3Mass','fatJet3Pt','fatJet3Eta','fatJet3PNetXbb','fatJet2PNetQCD','fatJet3PNetQCD','jet7Pt','jet7Eta','jet7Phi','jet7DeepFlavB','jet8Pt','jet8Eta','jet8Phi','jet8DeepFlavB','jet9Pt','jet9Eta','jet9Phi','jet9DeepFlavB','jet10Pt','jet10Eta','jet10Phi','jet10DeepFlavB','mHHH','nloosebtags','nmediumbtags','ntightbtags','ht','met','lep1Pt','lep1Eta','lep1Phi','lep2Pt','lep2Eta','lep2Phi','nsmalljets','nfatjets']
+mva_variables = ['h_fit_mass','h1_t3_mass','h2_t3_mass','h3_t3_mass','h2_t3_dRjets','h3_t3_dRjets','jet1Pt','jet2Pt','jet3Pt','jet4Pt','jet5Pt','jet6Pt','jet1Eta','jet2Eta','jet3Eta','jet4Eta','jet5Eta','jet6Eta','jet1Phi','jet2Phi','jet3Phi','jet4Phi','jet5Phi','jet6Phi','jet1DeepFlavB','jet2DeepFlavB','jet3DeepFlavB','jet4DeepFlavB','jet5DeepFlavB','jet6DeepFlavB','fatJet1Mass','fatJet1Pt','fatJet1Eta','fatJet1PNetXbb','fatJet1PNetQCD','fatJet2Mass','fatJet2Pt','fatJet2Eta','fatJet2PNetXbb','fatJet3Mass','fatJet3Pt','fatJet3Eta','fatJet3PNetXbb','fatJet2PNetQCD','fatJet3PNetQCD','jet7Pt','jet7Eta','jet7Phi','jet7DeepFlavB','jet8Pt','jet8Eta','jet8Phi','jet8DeepFlavB','jet9Pt','jet9Eta','jet9Phi','jet9DeepFlavB','jet10Pt','jet10Eta','jet10Phi','jet10DeepFlavB','mHHH','nloosebtags','nmediumbtags','ntightbtags','ht','met','lep1Pt','lep1Eta','lep1Phi','lep2Pt','lep2Eta','lep2Phi','nsmalljets','nfatjets','ntaus','nleps','tau1Pt','tau1Eta','tau1Phi','tau1Mass', 'tau2Pt','tau2Eta','tau2Phi','tau2Mass','lep1Pt','lep1Eta','lep1Phi','lep2Pt','lep2Eta','lep2Phi']
 
 #save_variables = ['h_fit_mass','h1_t3_mass','h2_t3_mass','h3_t3_mass','h2_t3_dRjets','h3_t3_dRjets','jet1Pt','jet2Pt','jet3Pt','jet4Pt','jet5Pt','jet6Pt','jet1Eta','jet2Eta','jet3Eta','jet4Eta','jet5Eta','jet6Eta','jet1Phi','jet2Phi','jet3Phi','jet4Phi','jet5Phi','jet6Phi','jet1DeepFlavB','jet2DeepFlavB','jet3DeepFlavB','jet4DeepFlavB','jet5DeepFlavB','jet6DeepFlavB','fatJet1Mass','fatJet1Pt','fatJet1Eta','fatJet2Mass','fatJet1PNetXbb','fatJet2Pt','fatJet2Eta','fatJet2PNetXbb','fatJet3Mass','fatJet3Pt','fatJet3Eta','fatJet3PNetXbb','fatJet2PNetQCD','fatJet3PNetQCD','jet7Pt','jet7Eta','jet7Phi','jet7DeepFlavB','jet8Pt','jet8Eta','jet8Phi','jet8DeepFlavB','jet9Pt','jet9Eta','jet9Phi','jet9DeepFlavB','jet10Pt','jet10Eta','jet10Phi','jet10DeepFlavB','mHHH','nloosebtags','nmediumbtags','ntightbtags','ht','met','lep1Pt','lep1Eta','lep1Phi','lep2Pt','lep2Eta','lep2Phi','nsmalljets','nfatjets','event']
 
-save_variables = list(histograms_dict.keys()) + ['event','nsmalljets','nfatjets','mva','mvaBoosted']
+save_variables = list(histograms_dict.keys()) + ['event','nsmalljets','nfatjets','bcand1Mass','bcand2Mass','bcand1bRegCorr','bcand2bRegCorr','bcand1DeepFlavB','bcand2DeepFlavB','ntaus','nleps','tau1Pt','tau1Eta','tau1Phi','tau1Mass', 'tau2Pt','tau2Eta','tau2Phi','tau2Mass','lep1Pt','lep1Eta','lep1Phi','lep2Pt','lep2Eta','lep2Phi']#,'ProbHHH','ProbQCD','ProbTT','ProbVV','ProbVJets','ProbHH4b','ProbHH2b2tau','ProbHHH4b2tau','ProbDY']
 
 from calibrations import btag_init, addBTagSF, addBTagEffSF
 
 def initialise_df(df,year,proc):
 
     lumi = luminosities[year]
-    df = df.Define('triggerSF', triggersCorrections[year][1] )
-    cutWeight = '(%f * weight * xsecWeight * l1PreFiringWeight * puWeight * genWeight * triggerSF)'%(lumi)
-    if 'JetHT' in proc or 'BTagCSV' in proc:
+    if '2016' in year:
+        #df = df.Define('triggerSF', triggersCorrections['2016'][1] )
+        df = df.Define('triggerSF', '1')
+        print('2016 buggy to be fixed in v32')
+    else:
+        df = df.Define('triggerSF', triggersCorrections[year][1] )
+    #cutWeight = '(%f * weight * xsecWeight * l1PreFiringWeight * puWeight * genWeight * triggerSF)'%(lumi)
+    cutWeight = '(%f * xsecWeight * l1PreFiringWeight * puWeight * genWeight * triggerSF)'%(lumi)
+    if 'JetHT' in proc or 'BTagCSV' in proc or 'SingleMuon' in proc:
         df = df.Define('eventWeight','1')
     else:
         df = df.Define('eventWeight',cutWeight)
@@ -571,3 +640,141 @@ def initialise_df(df,year,proc):
     return df
 
 
+
+
+getmax = '''
+int get_max_prob(float ProbHHH, float ProbQCD, float ProbTT, float ProbVJets, float ProbVV, float ProbHHH4b2tau, float ProbHH4b, float ProbHH2b2tau){
+    std::vector<float> probs;
+    probs.push_back(ProbHHH);
+    probs.push_back(ProbQCD);
+    probs.push_back(ProbTT);
+    probs.push_back(ProbVJets);
+    probs.push_back(ProbVV);
+    probs.push_back(ProbHHH4b2tau);
+    probs.push_back(ProbHH4b);
+    probs.push_back(ProbHH2b2tau);
+    //probs.push_back(ProbDY);
+
+    auto it = std::max_element(probs.begin(), probs.end());
+    int index = std::distance(probs.begin(), it);
+
+    //std::cout << index << " " << probs[index] << std::endl;
+
+    return index + 1;
+
+}
+
+'''
+
+def init_get_max_prob():
+    ROOT.gInterpreter.Declare(getmax)
+
+
+getmaxcat = '''
+int get_max_cat(float Prob3bh0h, float Prob2bh1h, float Prob1bh2h, float Prob0bh3h, float Prob2bh0h, float Prob1bh1h, float Prob0bh2h, float Prob1bh0h, float Prob0bh1h, float Prob0bh0h){
+    std::vector<float> probs;
+    probs.push_back(Prob0bh0h);
+    probs.push_back(Prob3bh0h);
+    probs.push_back(Prob2bh1h);
+    probs.push_back(Prob1bh2h);
+    probs.push_back(Prob0bh3h);
+    probs.push_back(Prob2bh0h);
+    probs.push_back(Prob1bh1h);
+    probs.push_back(Prob0bh2h);
+    probs.push_back(Prob1bh0h);
+    probs.push_back(Prob0bh1h);
+
+    auto it = std::max_element(probs.begin(), probs.end());
+    int index = std::distance(probs.begin(), it);
+
+    //std::cout << index << " " << probs[index] << std::endl;
+
+    return index;
+
+}
+
+'''
+
+def init_get_max_cat():
+    ROOT.gInterpreter.Declare(getmaxcat)
+
+
+
+
+
+
+cat = '''
+    int categorisation(int nAK4HiggsReco, int nAK8HiggsReco){
+        int ret(0);
+
+        // 3 reco Higgs
+        if (nAK8HiggsReco == 3 &&  nAK4HiggsReco == 0) {ret = 1;}
+        else if (nAK8HiggsReco == 2 && nAK4HiggsReco == 1) {ret = 2;}
+        else if (nAK8HiggsReco == 1 && nAK4HiggsReco == 2) {ret = 3;}
+        else if (nAK8HiggsReco == 0 && nAK4HiggsReco == 3) {ret = 4;}
+
+        // 2 reco Higgs
+        else if (nAK8HiggsReco == 2 && nAK4HiggsReco == 0) {ret = 5;}
+        else if (nAK8HiggsReco == 1 && nAK4HiggsReco == 1) {ret = 6;}
+        else if (nAK8HiggsReco == 0 && nAK4HiggsReco == 2) {ret = 7;}
+
+        // 1 reco Higgs
+        else if (nAK8HiggsReco == 1 && nAK4HiggsReco == 0) {ret = 8;}
+        else if (nAK8HiggsReco == 0 && nAK4HiggsReco == 1) {ret = 9;}
+
+        // 0 reco Higgs
+        else  {ret = 0;}
+
+        return ret;
+
+    }
+'''
+
+ROOT.gInterpreter.Declare(cat)
+
+
+def matching_variables(df):
+    higgsmatched = []
+    h1match = []
+    h2match = []
+    h3match = []
+    for j in ['jet1','jet2','jet3','jet4','jet5','jet6','jet7','jet8','jet9','jet10']:
+        higgsmatched.append('int(%sHiggsMatched)'%j)
+        h1match.append('int(%sHiggsMatchedIndex == 1 && %sFatJetMatched == 0)'%(j,j))
+        h2match.append('int(%sHiggsMatchedIndex == 2 && %sFatJetMatched == 0)'%(j,j))
+        h3match.append('int(%sHiggsMatchedIndex == 3 && %sFatJetMatched == 0)'%(j,j))
+
+    higgsMatchVar = '+'.join(higgsmatched)
+    h1MatchVar = '+'.join(h1match)
+    h2MatchVar = '+'.join(h2match)
+    h3MatchVar = '+'.join(h3match)
+
+    fatjetmatched = []
+    fj_h1match = []
+    fj_h2match = []
+    fj_h3match = []
+    for j in ['fatJet1','fatJet2','fatJet3']:
+        fatjetmatched.append('int(%sHiggsMatched)'%j)
+        fj_h1match.append('int(%sHiggsMatchedIndex == 1)'%j)
+        fj_h2match.append('int(%sHiggsMatchedIndex == 2)'%j)
+        fj_h3match.append('int(%sHiggsMatchedIndex == 3)'%j)
+
+    fjMatchVar = '+'.join(fatjetmatched)
+    fj_h1MatchVar = '+'.join(fj_h1match)
+    fj_h2MatchVar = '+'.join(fj_h2match)
+    fj_h3MatchVar = '+'.join(fj_h3match)
+
+    df = df.Define('nAK4matched', higgsMatchVar)
+    df = df.Define('nAK8matched', fjMatchVar)
+    df = df.Define('h1Match',h1MatchVar)
+    df = df.Define('h2Match',h2MatchVar)
+    df = df.Define('h3Match',h3MatchVar)
+    df = df.Define('fj_h1Match',fj_h1MatchVar)
+    df = df.Define('fj_h2Match',fj_h2MatchVar)
+    df = df.Define('fj_h3Match',fj_h3MatchVar)
+
+    df = df.Define('nAK4HiggsReco', 'int(h1Match >= 2)+ int(h2Match >= 2)+ int(h3Match >= 2)')
+    df = df.Define('nAK8HiggsReco', 'int(fj_h1Match >= 1)+ int(fj_h2Match >= 1)+ int(fj_h3Match >= 1)')
+    df = df.Define('categorisation','categorisation( nAK4HiggsReco,nAK8HiggsReco)')
+
+    return df
