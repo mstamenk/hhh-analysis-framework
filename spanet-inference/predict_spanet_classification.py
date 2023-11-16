@@ -10,7 +10,7 @@ import numpy as np
 import argparse
 parser = argparse.ArgumentParser(description='Args')
 parser.add_argument('--f_in', default = 'GluGluToHHHTo6B_SM') # input samples
-parser.add_argument('-v','--version', default='v27') # version of NanoNN production
+parser.add_argument('-v','--version', default='v28') # version of NanoNN production
 parser.add_argument('--year', default='2018') # year
 parser.add_argument('--batch_size', default='1000000') # year
 parser.add_argument('--batch_number',default = '0')
@@ -131,12 +131,20 @@ unsigned counter = 0;
 
 # Open RDF and onnx session
 
-session = onnxruntime.InferenceSession("/isilon/data/users/mstamenk/hhh-6b-producer/master/CMSSW_12_5_2/src/hhh-master/hhh-analysis-framework/spanet-inference/spanet_classification_test.onnx")
+#session = onnxruntime.InferenceSession("/HEP/mstamenk/hhh-6b-producer/master/CMSSW_12_5_2/src/hhh-master/hhh-analysis-framework/spanet-inference/spanet_classification_test.onnx")
+
+sess_options = onnxruntime.SessionOptions()
+sess_options.intra_op_num_threads = 23
+sess_options.execution_mode = onnxruntime.ExecutionMode.ORT_PARALLEL
+
+
+
+session = onnxruntime.InferenceSession("/users/mstamenk/hhh-analysis-framework/spanet-inference/spanet_classification_test.onnx",sess_options)
 
 input_name = session.get_inputs()[0].name
 output_name = session.get_outputs()[0].name
 
-path = '/isilon/data/users/mstamenk/eos-triple-h/samples-%s-%s-nanoaod/'%(args.version,args.year)
+path = '/users/mstamenk/scratch/mstamenk/samples-%s-%s-nanoaod/'%(args.version,args.year)
 path_f_in = path + '/' + '%s.root'%args.f_in
 
 df = ROOT.RDataFrame("Events", path_f_in)

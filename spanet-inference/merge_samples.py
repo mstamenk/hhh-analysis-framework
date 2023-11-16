@@ -5,17 +5,20 @@ import os, glob
 # argument parser
 import argparse
 parser = argparse.ArgumentParser(description='Args')
-parser.add_argument('-v','--version', default='v27') # version of NanoNN production
+parser.add_argument('-v','--version', default='v28-QCD-modelling') # version of NanoNN production
 parser.add_argument('--year', default='2018') # year
 args = parser.parse_args()
 
 year = args.year
 version = args.version
-typename = 'spanet-boosted'
+typename = 'spanet-boosted-classification'
 
-path = '/isilon/data/users/mstamenk/eos-triple-h/samples-%s-%s-%s-nanoaod/'%(version,year,typename)
+regime = 'inclusive-weights'
+path = '/users/mstamenk/scratch/mstamenk/%s/mva-inputs-%s-%s/%s/'%(version,year,typename,regime)
 
 files = glob.glob(path +'/*.root')
+
+#files = [f for f in files if 'HHH' in f or 'HH' in f]
 
 samples = []
 
@@ -43,7 +46,7 @@ samples = list(set(samples))
 
 print(samples)
 
-output_path = '/isilon/data/users/mstamenk/eos-triple-h/samples-%s-%s-%s-variables-nanoaod/'%(version,year,typename)
+output_path = '/users/mstamenk/scratch/mstamenk/eos-triple-h/%s-merged-selection/mva-inputs-%s-%s/%s/'%(version,year,typename,regime)
 
 if not os.path.isdir(output_path):
     os.makedirs(output_path)
@@ -51,13 +54,14 @@ if not os.path.isdir(output_path):
 for sample in samples:
     cmd = 'hadd -f -j -n 0 %s/%s.root %s/%s_*.root'%(output_path,sample,path,sample)
     print(cmd)
-    if 'QCD' in sample and "bEnriched" not in sample: continue
-    if 'TTToSemiLeptonic' in sample: continue
-    if 'BTagCSV' in sample: continue
+    #if 'QCD' in sample and "bEnriched" not in sample: continue
+    #if 'TTToSemiLeptonic' in sample: continue
+    #if 'BTagCSV' in sample: continue
     os.system(cmd)
 
 # Special case for TTToSemiLeptonic because files too large
-
+'''
+print(ttsemileptonic)
 third_index = len(ttsemileptonic) // 3
 
 print(third_index)
@@ -132,3 +136,4 @@ if len(btagcsv) > 0:
     cmd_3 = 'hadd -f %s/BTagCSV.root %s/BTagCSV_part1.root %s/BTagCSV_part2.root'%(output_path,output_path,output_path)
     print(cmd_3)
     os.system(cmd_3)
+'''
