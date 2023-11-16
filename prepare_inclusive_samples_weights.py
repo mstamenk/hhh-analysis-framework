@@ -15,8 +15,8 @@ ROOT.ROOT.EnableImplicitMT()
 
 import argparse
 parser = argparse.ArgumentParser(description='Args')
-parser.add_argument('-v','--version', default='v31')
-parser.add_argument('--year', default='2017')
+parser.add_argument('-v','--version', default='v28')
+parser.add_argument('--year', default='2018')
 parser.add_argument('--f_in', default = 'GluGluToHHHTo6B_SM')
 args = parser.parse_args()
 
@@ -31,16 +31,18 @@ path = '/isilon/data/users/mstamenk/hhh-6b-producer/CMSSW_11_1_0_pre5_PY3/src/Ph
 
 print(path)
 
-output = '/isilon/data/users/mstamenk/eos-triple-h/%s-parts/mva-inputs-%s/'%(version,year)
+output = '/isilon/data/users/mstamenk/eos-triple-h/%s-parts-no-lhe/mva-inputs-%s/'%(version,year)
 
 
 inclusive_resolved = 'inclusive_resolved-weights'
 inclusive_boosted = 'inclusive-weights'
 #inclusive_boosted = 'inclusive_boosted'
 
-cut_resolved = 'nsmalljets >= 4 && nprobejets == 0 && nloosebtags >= 4'
+cut_resolved = 'nsmalljets >= 4 && nprobejets == 0'
 #cut_boosted = 'nprobejets > 0 '
 cut_boosted = '(nprobejets > 0) || (nsmalljets >= 4 && nprobejets == 0 && nloosebtags >= 4)'
+
+#cut_boosted = '(nprobejets > -1)'
 
 if not os.path.isdir(output + '/' + inclusive_resolved):
     print("Creating %s"%(output + '/' + inclusive_resolved))
@@ -139,8 +141,13 @@ if 'HLT_PFHT380_SixPFJet32_DoublePFBTagDeepCSV_2p2' not in list_inputs:
     df = df.Define('HLT_PFHT380_SixPFJet32_DoublePFBTagDeepCSV_2p2','get_false()')
 if 'HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2' not in list_inputs:
     df = df.Define('HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2','get_false()')
+
 if 'HLT_PFHT430_SixPFJet40_PFBTagCSV_1p5' not in list_inputs:
     df = df.Define('HLT_PFHT430_SixPFJet40_PFBTagCSV_1p5','get_false()')
+
+
+if 'HLT_AK8PFJet450' not in list_inputs:
+    df = df.Define('HLT_AK8PFJet450','get_false()')
 
 hlt = hlt_paths[year]
 df = df.Filter(hlt)
@@ -167,7 +174,8 @@ df_boosted = df.Filter(cut_boosted)
 print("Running on %s"%f_in)
 print("Doing resolved")
 
-to_save = [str(el) for el in df_boosted.GetColumnNames() if 'L1_' not in str(el) and 'v_' not in str(el) and 'MassRegressed' not in str(el) and 'bcand' not in str(el) and 'boostedTau_' not in str(el)]
+#to_save = [str(el) for el in df_boosted.GetColumnNames() if 'L1_' not in str(el) and 'v_' not in str(el) and 'MassRegressed' not in str(el) and 'bcand' not in str(el) and 'boostedTau_' not in str(el) and 'PNet' not in str(el)]
+to_save = [str(el) for el in df_boosted.GetColumnNames() if 'L1_' not in str(el) and 'v_' not in str(el) and 'MassRegressed' not in str(el) and 'bcand' not in str(el) and 'boostedTau_' not in str(el) and 'LHE' not in str(el)]
 print(to_save)
 print(len(to_save))
 #if not os.path.isfile( output + '/' + inclusive_resolved + '/' + f_name):
