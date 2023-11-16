@@ -19,6 +19,7 @@ computem = '''
         else if (type == 1) return (j1+j2).Pt();
         else if (type == 2) return (j1+j2).Eta();
         else if (type == 3) return (j1+j2).Phi();
+        else if (type == 4) return j1.DeltaR(j2);
         else return 0;
     }
 
@@ -45,12 +46,20 @@ for j in ['jet1','jet2','jet3','jet4','jet5','jet6','jet7','jet8','jet9','jet10'
 #print(unique)
 #print(len(unique))
 
+def add_h1_mass_corrected(df):
+    j1 = 'bcand1'
+    j2 = 'bcand2'
+    variables = ['%sPt'%j1,'%sEta'%j1,'%sPhi'%j1,'%sMass'%j1,'%sbRegCorr'%j1,'%sPt'%j2,'%sEta'%j2,'%sPhi'%j2,'%    sMass'%j2,'%sbRegCorr'%j2]
+    df = df.Define('h1_breg_mass','computemH(0,%s)'%','.join(variables))
+    return df
+
 
 def add_hhh_variables(df):
     masses = []
     pts = []
     etas = []
     phis = []
+    drs = []
     for i in range(len(unique)):
         perm = unique[i]
         j1,j2 = perm
@@ -59,16 +68,51 @@ def add_hhh_variables(df):
         pt = 'pt%s%s'%(j1,j2)
         eta = 'eta%s%s'%(j1,j2)
         phi = 'phi%s%s'%(j1,j2)
+        dr = 'dr%s%s'%(j1,j2)
         df = df.Define(mass, 'computemH(0,%s)'%','.join(variables))
         df = df.Define(pt, 'computemH(1,%s)'%','.join(variables))
         df = df.Define(eta, 'computemH(2,%s)'%','.join(variables))
         df = df.Define(phi, 'computemH(3,%s)'%','.join(variables))
+        df = df.Define(dr, 'computemH(4,%s)'%','.join(variables))
 
         masses.append(mass)
         pts.append(pt)
         etas.append(eta)
         phis.append(phi)
-    return df,masses,pts,etas,phis
+        drs.append(dr)
+    return df,masses,pts,etas,phis,drs
+
+def add_hhh_variables_resolved(df):
+    masses = []
+    pts = []
+    etas = []
+    phis = []
+    drs = []
+    for i in range(len(unique)):
+        perm = unique[i]
+        j1,j2 = perm
+        variables = ['%sPt'%j1,'%sEta'%j1,'%sPhi'%j1,'%sMass'%j1,'%sbRegCorr'%j1,'%sPt'%j2,'%sEta'%j2,'%sPhi'%j2,'%sMass'%j2,'%sbRegCorr'%j2]
+        mass = 'mass%s%s'%(j1,j2)
+        pt = 'pt%s%s'%(j1,j2)
+        eta = 'eta%s%s'%(j1,j2)
+        phi = 'phi%s%s'%(j1,j2)
+        dr = 'dr%s%s'%(j1,j2)
+        #df = df.Define(mass, 'computemH(0,%s)/h1_t3_mass'%','.join(variables))
+        df = df.Define(mass, 'computemH(0,%s)'%','.join(variables))
+        #df = df.Define(pt, 'computemH(1,%s)/h1_t3_pt'%','.join(variables))
+        df = df.Define(pt, 'computemH(1,%s)'%','.join(variables))
+        df = df.Define(eta, 'computemH(2,%s)'%','.join(variables))
+        df = df.Define(phi, 'computemH(3,%s)'%','.join(variables))
+        df = df.Define(dr, 'computemH(4,%s)'%','.join(variables))
+
+        masses.append(mass)
+        pts.append(pt)
+        etas.append(eta)
+        phis.append(phi)
+        drs.append(dr)
+    return df,masses,pts,etas,phis,drs
+
+
 
 
 #df.Snapshot('Events', 'GluGluToHHHTo6B_SM_spanet.root')
