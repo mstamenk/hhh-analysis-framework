@@ -7,12 +7,55 @@ import ROOT
 q = random.uniform(0,1)
 
 luminosities = {#'2016' : 36330.0,
-                '2016APV' : 19207.0,
-                '2016PostAPV' : 17122.0,
-                '2016' : 17122.0,
+                '2016APV' : 19520.0,
+                '2016PostAPV' : 16810.0,
+                '2016' : 16810.0,
                 '2017' : 41480.0,
                 '2018' : 59830.0,
+                '2022' : 7880.0,
+                '2022EE' : 26340.0,
         }
+
+
+# Nice list to construct "hlt_paths", "hlt_sf_20XX" and "hlt_method_20XX" from.
+# Currently only made for 2018/2022/2022EE
+AllHLTsWithSFs = {
+    '2018': {
+        'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCSV_4p5': 1.0,
+        'HLT_PFHT1050': 1.0,
+        'HLT_PFJet500': 1.0,
+        'HLT_AK8PFJet500': 1.0,
+        'HLT_AK8PFJet400_TrimMass30': 1.0,
+        'HLT_AK8PFHT800_TrimMass50': 1.0,
+        'HLT_AK8PFJet330_TrimMass30_PFAK8BoostedDoubleB_np4': 54.44/59.74,
+        'HLT_QuadPFJet103_88_75_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1': 54.44/59.74,
+        'HLT_QuadPFJet103_88_75_15_PFBTagDeepCSV_1p3_VBF2': 54.44/59.74,
+        'HLT_PFHT400_SixPFJet32_DoublePFBTagDeepCSV_2p94': 42.28/59.96,
+        'HLT_PFHT450_SixPFJet36_PFBTagDeepCSV_1p59': 42.28/59.96,
+        'HLT_AK8PFJet330_TrimMass30_PFAK8BTagDeepCSV_p17': 22.74/59.96,
+        'HLT_QuadPFJet98_83_71_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1': 9.25/59.96,
+        'HLT_QuadPFJet98_83_71_15_PFBTagDeepCSV_1p3_VBF2': 9.25/59.96,
+        'HLT_PFMET100_PFMHT100_IDTight_CaloBTagDeepCSV_3p1': 1.41/59.96,
+    },
+    '2022': {
+        'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepJet_4p5': 1.0,
+        'HLT_PFHT1050': 1.0,
+        'HLT_PFJet500': 1.0,
+        'HLT_AK8PFJet500': 1.0,
+        'HLT_AK8PFJet400_TrimMass30': 1.0,
+        'HLT_AK8PFHT800_TrimMass50': 1.0,
+        'HLT_AK8PFJet330_TrimMass30_PFAK8BoostedDoubleB_np4': 1.0,
+        'HLT_QuadPFJet103_88_75_15_DoublePFBTagDeepJet_1p3_7p7_VBF1': 1.0,
+        'HLT_QuadPFJet103_88_75_15_PFBTagDeepJet_1p3_VBF2': 1.0,
+        'HLT_PFHT400_SixPFJet32_DoublePFBTagDeepJet_2p94': 1.0,
+        'HLT_PFHT450_SixPFJet36_PFBTagDeepJet_1p59': 1.0,
+        'HLT_AK8PFJet330_TrimMass30_PFAK8BTagDeepCSV_p17': 1.0,
+        'HLT_QuadPFJet98_83_71_15_DoublePFBTagDeepJet_1p3_7p7_VBF1': 1.0,
+        'HLT_QuadPFJet98_83_71_15_PFBTagDeepJet_1p3_VBF2': 1.0,
+        'HLT_PFMET100_PFMHT100_IDTight_CaloBTagDeepCSV_3p1': 1.0,
+    }
+}
+AllHLTsWithSFs['2022EE'] = AllHLTsWithSFs['2022']
 
 
 hlt_paths = {
@@ -24,8 +67,11 @@ hlt_paths = {
 #        '2016PostAPV' : '( HLT_QuadJet45_TripleBTagCSV_p087||  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056||  HLT_PFHT450_SixJet40_BTagCSV_p056||  HLT_AK8PFJet360_TrimMass30||  HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20||  HLT_AK8PFJet450||  HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200||  HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20||  HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20||  HLT_PFJet450||  HLT_QuadJet45_DoubleBTagCSV_p087 )',
              '2017' : '(HLT_PFJet450 || HLT_PFJet500 || HLT_PFHT1050 || HLT_AK8PFJet550 || HLT_AK8PFJet360_TrimMass30 || HLT_AK8PFJet400_TrimMass30 || HLT_AK8PFHT750_TrimMass50 || HLT_AK8PFJet330_PFAK8BTagCSV_p17 || HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0 || HLT_PFMET100_PFMHT100_IDTight_CaloBTagCSV_3p1 || HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2 || HLT_PFHT380_SixPFJet32_DoublePFBTagDeepCSV_2p2 || HLT_PFHT430_SixPFJet40_PFBTagCSV_1p5 || HLT_QuadPFJet98_83_71_15_DoubleBTagCSV_p013_p08_VBF1 || HLT_QuadPFJet98_83_71_15_BTagCSV_p013_VBF2 )',
              #'2017' : '(HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0 )',
-             '2018' : '(HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCSV_4p5||HLT_PFHT1050||HLT_PFJet500||HLT_AK8PFJet500||HLT_AK8PFJet400_TrimMass30||HLT_AK8PFHT800_TrimMass50||HLT_AK8PFJet330_TrimMass30_PFAK8BoostedDoubleB_np4||HLT_QuadPFJet103_88_75_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1||HLT_QuadPFJet103_88_75_15_PFBTagDeepCSV_1p3_VBF2||HLT_PFHT400_SixPFJet32_DoublePFBTagDeepCSV_2p94||HLT_PFHT450_SixPFJet36_PFBTagDeepCSV_1p59||HLT_AK8PFJet330_TrimMass30_PFAK8BTagDeepCSV_p17||HLT_QuadPFJet98_83_71_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1||HLT_QuadPFJet98_83_71_15_PFBTagDeepCSV_1p3_VBF2|| HLT_PFMET100_PFMHT100_IDTight_CaloBTagDeepCSV_3p1)',
+             #'2018' : '(HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCSV_4p5||HLT_PFHT1050||HLT_PFJet500||HLT_AK8PFJet500||HLT_AK8PFJet400_TrimMass30||HLT_AK8PFHT800_TrimMass50||HLT_AK8PFJet330_TrimMass30_PFAK8BoostedDoubleB_np4||HLT_QuadPFJet103_88_75_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1||HLT_QuadPFJet103_88_75_15_PFBTagDeepCSV_1p3_VBF2||HLT_PFHT400_SixPFJet32_DoublePFBTagDeepCSV_2p94||HLT_PFHT450_SixPFJet36_PFBTagDeepCSV_1p59||HLT_AK8PFJet330_TrimMass30_PFAK8BTagDeepCSV_p17||HLT_QuadPFJet98_83_71_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1||HLT_QuadPFJet98_83_71_15_PFBTagDeepCSV_1p3_VBF2|| HLT_PFMET100_PFMHT100_IDTight_CaloBTagDeepCSV_3p1)',
              #'2018' : '(HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCSV_4p5)',
+             '2018' : '('+'||'.join([t for t in AllHLTsWithSFs['2018']])+')',
+             '2022' : '('+'||'.join([t for t in AllHLTsWithSFs['2022']])+')',
+             '2022EE' : '('+'||'.join([t for t in AllHLTsWithSFs['2022EE']])+')',
         }
 
 
@@ -368,14 +414,14 @@ def clean_variables(variables) :
 
 
 # 2018
-wps = { 'loose'  : '0.0490',
-        'medium' : '0.2783',
-        'tight'  : '0.7100',
-        }
+#wps = { 'loose'  : '0.0490',
+#        'medium' : '0.2783',
+#        'tight'  : '0.7100',
+#        }
 
-wps_years = { 'loose' : {'2016APV': 0.0508, '2016': 0.0480, '2016PostAPV': 0.0480, '2017': 0.0532, '2018': 0.0490},
-              'medium': {'2016APV': 0.2598, '2016': 0.2489, '2016PostAPV': 0.2489, '2017': 0.3040, '2018': 0.2783},
-              'tight' : {'2016APV': 0.6502, '2016': 0.6377, '2016PostAPV': 0.6377, '2017': 0.7476, '2018': 0.7100},
+wps_years = { 'loose' : {'2016APV': 0.0508, '2016': 0.0480, '2016PostAPV': 0.0480, '2017': 0.0532, '2018': 0.0490, '2022': 0.0583, '2022EE': 0.0614},
+              'medium': {'2016APV': 0.2598, '2016': 0.2489, '2016PostAPV': 0.2489, '2017': 0.3040, '2018': 0.2783, '2022': 0.3086, '2022EE': 0.3196},
+              'tight' : {'2016APV': 0.6502, '2016': 0.6377, '2016PostAPV': 0.6377, '2017': 0.7476, '2018': 0.7100, '2022': 0.7183, '2022EE': 0.7300},
         }
 
 label_dict = {'L': [wps_years['loose'],'Loose'],
@@ -527,21 +573,54 @@ float getTriggerSF( int HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCS
     return triggerSF;
 }
 """
+hlt_sf_2018 = """
+float getTriggerSF( %s ){
+    float triggerSF = 1;
+        if (%s) {triggerSF = 1;}%s
 
+    return triggerSF;
+}
+"""%(', '.join(['int '+t for t in AllHLTsWithSFs['2018']]), ' || '.join([t for t,sf in AllHLTsWithSFs['2018'].items() if sf==1.0]), ''.join(['\n        else if ('+t+') {triggerSF = '+str(sf)+';}' for t,sf in AllHLTsWithSFs['2018'].items() if sf!=1.0]))
 
+hlt_sf_2022 = """
+float getTriggerSF( %s ){
+    float triggerSF = 1;
+        if (%s) {triggerSF = 1;}%s
+
+    return triggerSF;
+}
+"""%(', '.join(['int '+t for t in AllHLTsWithSFs['2022']]), ' || '.join([t for t,sf in AllHLTsWithSFs['2022'].items() if sf==1.0]), ''.join(['\n        else if ('+t+') {triggerSF = '+str(sf)+';}' for t,sf in AllHLTsWithSFs['2022'].items() if sf!=1.0]))
+
+hlt_sf_2022EE = """
+float getTriggerSF( %s ){
+    float triggerSF = 1;
+        if (%s) {triggerSF = 1;}%s
+
+    return triggerSF;
+}
+"""%(', '.join(['int '+t for t in AllHLTsWithSFs['2022EE']]), ' || '.join([t for t,sf in AllHLTsWithSFs['2022EE'].items() if sf==1.0]), ''.join(['\n        else if ('+t+') {triggerSF = '+str(sf)+';}' for t,sf in AllHLTsWithSFs['2022EE'].items() if sf!=1.0]))
 
 
 hlt_method_2016 = 'getTriggerSF( HLT_QuadJet45_TripleBTagCSV_p087,  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056,  HLT_PFHT450_SixJet40_BTagCSV_p056,  HLT_AK8PFJet360_TrimMass30,  HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20,  HLT_AK8PFJet450,  HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200,  HLT_QuadPFJet_BTagCSV_p016_VBF_Mqq460,  HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20,  HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20,  HLT_PFJet450,  HLT_QuadJet45_DoubleBTagCSV_p087 );'
 
 hlt_method_2017 = ' getTriggerSF( HLT_PFJet450,  HLT_PFJet500,  HLT_PFHT1050,  HLT_AK8PFJet550,  HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0,  HLT_AK8PFJet360_TrimMass30,  HLT_AK8PFHT750_TrimMass50,  HLT_AK8PFJet400_TrimMass30,  HLT_PFMET100_PFMHT100_IDTight_CaloBTagCSV_3p1,  HLT_PFHT380_SixPFJet32_DoublePFBTagDeepCSV_2p2,  HLT_AK8PFJet330_PFAK8BTagCSV_p17,  HLT_QuadPFJet98_83_71_15_BTagCSV_p013_VBF2,  HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2,  HLT_PFHT430_SixPFJet40_PFBTagCSV_1p5,  HLT_QuadPFJet98_83_71_15_DoubleBTagCSV_p013_p08_VBF1 );'
 
-hlt_method_2018 = ' getTriggerSF(HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCSV_4p5,HLT_PFHT1050,HLT_PFJet500,HLT_AK8PFJet500,HLT_AK8PFJet400_TrimMass30,HLT_AK8PFHT800_TrimMass50,HLT_AK8PFJet330_TrimMass30_PFAK8BoostedDoubleB_np4,HLT_QuadPFJet103_88_75_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1,HLT_QuadPFJet103_88_75_15_PFBTagDeepCSV_1p3_VBF2,HLT_PFHT400_SixPFJet32_DoublePFBTagDeepCSV_2p94,HLT_PFHT450_SixPFJet36_PFBTagDeepCSV_1p59,HLT_AK8PFJet330_TrimMass30_PFAK8BTagDeepCSV_p17,HLT_QuadPFJet98_83_71_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1,HLT_QuadPFJet98_83_71_15_PFBTagDeepCSV_1p3_VBF2, HLT_PFMET100_PFMHT100_IDTight_CaloBTagDeepCSV_3p1);'
+#hlt_method_2018 = ' getTriggerSF(HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCSV_4p5,HLT_PFHT1050,HLT_PFJet500,HLT_AK8PFJet500,HLT_AK8PFJet400_TrimMass30,HLT_AK8PFHT800_TrimMass50,HLT_AK8PFJet330_TrimMass30_PFAK8BoostedDoubleB_np4,HLT_QuadPFJet103_88_75_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1,HLT_QuadPFJet103_88_75_15_PFBTagDeepCSV_1p3_VBF2,HLT_PFHT400_SixPFJet32_DoublePFBTagDeepCSV_2p94,HLT_PFHT450_SixPFJet36_PFBTagDeepCSV_1p59,HLT_AK8PFJet330_TrimMass30_PFAK8BTagDeepCSV_p17,HLT_QuadPFJet98_83_71_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1,HLT_QuadPFJet98_83_71_15_PFBTagDeepCSV_1p3_VBF2, HLT_PFMET100_PFMHT100_IDTight_CaloBTagDeepCSV_3p1);'
+
+hlt_method_2018 = 'getTriggerSF(%s);'%(','.join([t for t in AllHLTsWithSFs['2018']]))
+hlt_method_2022 = 'getTriggerSF(%s);'%(','.join([t for t in AllHLTsWithSFs['2022']]))
+hlt_method_2022EE = 'getTriggerSF(%s);'%(','.join([t for t in AllHLTsWithSFs['2022EE']]))
+
+
 
 
 triggersCorrections = {
+                       '2016APV' : [hlt_sf_2016,hlt_method_2016],
                        '2016' : [hlt_sf_2016,hlt_method_2016],
                        '2017' : [hlt_sf_2017,hlt_method_2017],
                        '2018' : [hlt_sf_2018,hlt_method_2018],
+                       '2022' : [hlt_sf_2022,hlt_method_2022],
+                       '2022EE' : [hlt_sf_2022EE,hlt_method_2022EE],
         }
 
 computeMHHH = '''
@@ -601,6 +680,9 @@ def initialise_df(df,year,proc):
         #df = df.Define('triggerSF', triggersCorrections['2016'][1] )
         df = df.Define('triggerSF', '1')
         print('2016 buggy to be fixed in v32')
+    if '2022' in year:
+        df = df.Define('triggerSF', '1')
+        print("2022 doesn't work and I don't understand why")
     else:
         df = df.Define('triggerSF', triggersCorrections[year][1] )
     #cutWeight = '(%f * weight * xsecWeight * l1PreFiringWeight * puWeight * genWeight * triggerSF)'%(lumi)

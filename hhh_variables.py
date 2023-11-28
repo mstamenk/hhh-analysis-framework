@@ -112,6 +112,19 @@ def add_hhh_variables_resolved(df):
         drs.append(dr)
     return df,masses,pts,etas,phis,drs
 
+def add_missing_variables():
+    # Missing variables for Run3
+    added = []
+    for i in range(len(unique)):
+        perm = unique[i]
+        j1,j2 = perm
+        if j1 not in added:
+            added.append(j1)
+            ROOT.gInterpreter.Declare('float %sbRegCorr = 1.0;'%j1)
+        if j2 not in added:
+            added.append(j2)
+            ROOT.gInterpreter.Declare('float %sbRegCorr = 1.0;'%j2)
+
 
 
 

@@ -12,8 +12,13 @@ parser = argparse.ArgumentParser(description='Args')
 parser.add_argument('--f_in', default = 'GluGluToHHHTo6B_SM') # input samples
 parser.add_argument('-v','--version', default='v28-QCD-modelling') # version of NanoNN production
 parser.add_argument('--year', default='2018') # year
-parser.add_argument('--batch_size', default='100') # year
+parser.add_argument('--batch_size', default='100')
 parser.add_argument('--batch_number',default = '0')
+parser.add_argument('--regime',default = 'inclusive-weights')
+parser.add_argument('--path',default = '/users/mstamenk/scratch/mstamenk')
+args = parser.parse_args()
+parser.add_argument('--input',default = os.path.join(args.path, args.version, 'mva-inputs-%s-spanet-boosted-classification'%(args.year), args.regime))
+parser.add_argument('--output',default = os.path.join(args.path, args.version, 'mva-inputs-%s-categorisation-spanet-boosted-classification'%(args.year), args.regime))
 args = parser.parse_args()
 
 
@@ -139,20 +144,21 @@ sess_options.execution_mode = onnxruntime.ExecutionMode.ORT_PARALLEL
 
 
 #session = onnxruntime.InferenceSession("/users/mstamenk/hhh-analysis-framework/spanet-inference/spanet_classification_categorisation_pairing.onnx",sess_options)
-session = onnxruntime.InferenceSession("/users/mstamenk/hhh-analysis-framework/spanet-inference/spanet_categorisation_v6.onnx",sess_options)
+session = onnxruntime.InferenceSession(os.path.join(os.environ["CMSSW_BASE"], "src/hhh-analysis-framework/spanet-inference/spanet_categorisation_v6.onnx"),sess_options)
 
 input_name = session.get_inputs()[0].name
 output_name = session.get_outputs()[0].name
 
 regime = 'inclusive-weights'
 
-path = '/users/mstamenk/scratch/mstamenk/%s/mva-inputs-%s-spanet-boosted-classification/%s/'%(args.version,args.year,regime)
-path_f_in = path + '/' + '%s.root'%args.f_in
+path = args.input
+path_f_in = path + '/' + '%s_%s.root'%(args.f_in, args.batch_number)
 
 df = ROOT.RDataFrame("Events", path_f_in)
 entries = df.Count().GetValue()
 
-event_min = int(args.batch_size) * int(args.batch_number)
+assert(entries<=int(args.batch_size)) # Assuming no re-merging/re-hadding is done after the first script. If this is input from the "all_vars" script output, batchsize should be the upper limit on entires
+event_min = 0
 event_max = event_min + int(args.batch_size)
 
 print(entries, event_min, event_max)
@@ -598,11 +604,22 @@ df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_prob_0bh0h, "Prob0bh0h")
 
 
 print("Saving output")
-output_path = path.replace('%s'%args.year,'%s-categorisation'%args.year)
+output_path = args.output
 if not os.path.isdir(output_path):
     os.makedirs(output_path)
 
 output_name = args.f_in + '_%s'%args.batch_number + '.root'
 print(output_path,output_name)
 
-df.Snapshot('Events',output_path + '/' + output_name)
+# Before saving:
+# Need to save branches used to determine length of other branches FIRST!
+fullbranchlist = df.GetColumnNames()
+branchlist = ROOT.vector('string')()
+for b in fullbranchlist:
+  if str(b).startswith('n'):
+    branchlist.push_back(b)
+for b in fullbranchlist:
+  if not str(b).startswith('n'):
+    branchlist.push_back(b)
+
+df.Snapshot('Events',os.path.join(output_path, output_name), branchlist)

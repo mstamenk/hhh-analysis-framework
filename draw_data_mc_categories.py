@@ -35,7 +35,7 @@ output_folder=options.output_folder
 if output_folder == "none" :
     output_folder = input_folder
 
-for era in ['2016APV', '2016', '2017', '2018' ] :
+for era in ['2016APV', '2016', '2017', '2018', '2022', '2022EE'] :
     if era in input_folder : year = era
 
 labels = addLabel_CMS_preliminary(luminosities[year])
