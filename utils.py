@@ -16,10 +16,41 @@ luminosities = {#'2016' : 36330.0,
                 '2022EE' : 26340.0,
         }
 
-
-# Nice list to construct "hlt_paths", "hlt_sf_20XX" and "hlt_method_20XX" from.
-# Currently only made for 2018/2022/2022EE
-AllHLTsWithSFs = {
+def GetAllTriggers():
+  # Nice list to construct "hlt_paths", "hlt_sf_20XX" and "hlt_method_20XX" from.
+  AllHLTsWithSFs = {
+    '2016': {
+        'HLT_QuadJet45_TripleBTagCSV_p087': 36.47/36.47,
+        'HLT_PFHT400_SixJet30_DoubleBTagCSV_p056': 1.0,
+        'HLT_PFHT450_SixJet40_BTagCSV_p056': 1.0,
+        'HLT_AK8PFJet360_TrimMass30': 1.0,
+        'HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20': 1.0,
+        'HLT_AK8PFJet450': 33.64/36.47,
+        'HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200': 25.36/36.47,
+        'HLT_QuadPFJet_BTagCSV_p016_VBF_Mqq460': 25.36/36.47,
+        'HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20': 20.20/36.47,
+        'HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20': 20.20/36.47,
+        'HLT_PFJet450': 16.94/36.47,
+        'HLT_PFMET120_BTagCSV_p067': 16.94/36.47,
+        'HLT_QuadJet45_DoubleBTagCSV_p087': 1.29/36.47,
+    },
+    '2017': {
+        'HLT_PFJet450': 10.45/41.48,
+        'HLT_PFJet500': 1.0,
+        'HLT_PFHT1050': 1.0,
+        'HLT_AK8PFJet550': 1.0,
+        'HLT_AK8PFJet360_TrimMass30': 28.23/41.48,
+        'HLT_AK8PFJet400_TrimMass30': 36.67/41.48,
+        'HLT_AK8PFHT750_TrimMass50': 30.90/41.48,
+        'HLT_AK8PFJet330_PFAK8BTagCSV_p17': 7.73/41.48,
+        'HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0': 36.67/41.48,
+        'HLT_PFMET100_PFMHT100_IDTight_CaloBTagCSV_3p1': 28.23/41.48,
+        'HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2': 5.30/41.48,
+        'HLT_PFHT380_SixPFJet32_DoublePFBTagDeepCSV_2p2': 17.68/41.48,
+        'HLT_PFHT430_SixPFJet40_PFBTagCSV_1p5': 5.30/41.48,
+        'HLT_QuadPFJet98_83_71_15_DoubleBTagCSV_p013_p08_VBF1': 5.30/41.48,
+        'HLT_QuadPFJet98_83_71_15_BTagCSV_p013_VBF2': 7.73/41.48,
+    },
     '2018': {
         'HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCSV_4p5': 1.0,
         'HLT_PFHT1050': 1.0,
@@ -53,22 +84,43 @@ AllHLTsWithSFs = {
         'HLT_QuadPFJet98_83_71_15_DoublePFBTagDeepJet_1p3_7p7_VBF1': 1.0,
         'HLT_QuadPFJet98_83_71_15_PFBTagDeepJet_1p3_VBF2': 1.0,
         'HLT_PFMET100_PFMHT100_IDTight_CaloBTagDeepCSV_3p1': 1.0,
+        # Tau-Tau:
+        'HLT_DoubleMediumDeepTauPFTauHPS35_L2NN_eta2p1': 1.0,
+        'HLT_VBF_DoubleMediumDeepTauPFTauHPS20_eta2p1': 1.0,
+        'HLT_DoublePFJets40_Mass500_MediumDeepTauPFTauHPS45_L2NN_MediumDeepTauPFTauHPS20_eta2p1': 1.0,
+        'HLT_DoubleMediumDeepTauPFTauHPS30_L2NN_eta2p1_PFJet60': 1.0,
+        'HLT_DoubleMediumDeepTauPFTauHPS30_L2NN_eta2p1_PFJet75': 1.0,
+        # Mu-Tau:
+        'HLT_IsoMu20_eta2p1_LooseDeepTauPFTauHPS27_eta2p1_CrossL1': 1.0,
+        # El-Tau:
+        'HLT_Ele24_eta2p1_WPTight_Gsf_LooseDeepTauPFTauHPS30_eta2p1_CrossL1': 1.0,
+        # El-Mu:
+        'HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ': 1.0, 
+        'HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ': 1.0,
+
     }
-}
-AllHLTsWithSFs['2022EE'] = AllHLTsWithSFs['2022']
+  }
+  AllHLTsWithSFs['2016APV'] = AllHLTsWithSFs['2016']
+  AllHLTsWithSFs['2022EE'] = AllHLTsWithSFs['2022']
+  return AllHLTsWithSFs
+
+AllHLTsWithSFs = GetAllTriggers()
 
 
 hlt_paths = {
-       '2016' : '( HLT_QuadJet45_TripleBTagCSV_p087||  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056||  HLT_PFHT450_SixJet40_BTagCSV_p056||  HLT_AK8PFJet360_TrimMass30||  HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20||  HLT_AK8PFJet450||  HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200||  HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20||  HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20||  HLT_PFJet450 ||  HLT_QuadJet45_DoubleBTagCSV_p087 )',
+       #'2016' : '( HLT_QuadJet45_TripleBTagCSV_p087||  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056||  HLT_PFHT450_SixJet40_BTagCSV_p056||  HLT_AK8PFJet360_TrimMass30||  HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20||  HLT_AK8PFJet450||  HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200||  HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20||  HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20||  HLT_PFJet450 ||  HLT_QuadJet45_DoubleBTagCSV_p087 )',
         #'2016' : '( HLT_QuadJet45_TripleBTagCSV_p087 || HLT_DoubleJet90_Double30_TripleBTagCSV_p087)',
         #'2016PostAPV' : '( HLT_QuadJet45_TripleBTagCSV_p087 || HLT_DoubleJet90_Double30_TripleBTagCSV_p087)',
-        '2016APV' : '( HLT_QuadJet45_TripleBTagCSV_p087||  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056||  HLT_PFHT450_SixJet40_BTagCSV_p056||  HLT_AK8PFJet360_TrimMass30||  HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20||  HLT_AK8PFJet450||  HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200||  HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20||  HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20||  HLT_PFJet450||  HLT_PFMET120_BTagCSV_p067||  HLT_QuadJet45_DoubleBTagCSV_p087 )',
+        #'2016APV' : '( HLT_QuadJet45_TripleBTagCSV_p087||  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056||  HLT_PFHT450_SixJet40_BTagCSV_p056||  HLT_AK8PFJet360_TrimMass30||  HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20||  HLT_AK8PFJet450||  HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200||  HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20||  HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20||  HLT_PFJet450||  HLT_PFMET120_BTagCSV_p067||  HLT_QuadJet45_DoubleBTagCSV_p087 )',
         #'2016APV' : '( HLT_QuadJet45_TripleBTagCSV_p087)',
 #        '2016PostAPV' : '( HLT_QuadJet45_TripleBTagCSV_p087||  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056||  HLT_PFHT450_SixJet40_BTagCSV_p056||  HLT_AK8PFJet360_TrimMass30||  HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20||  HLT_AK8PFJet450||  HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200||  HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20||  HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20||  HLT_PFJet450||  HLT_QuadJet45_DoubleBTagCSV_p087 )',
-             '2017' : '(HLT_PFJet450 || HLT_PFJet500 || HLT_PFHT1050 || HLT_AK8PFJet550 || HLT_AK8PFJet360_TrimMass30 || HLT_AK8PFJet400_TrimMass30 || HLT_AK8PFHT750_TrimMass50 || HLT_AK8PFJet330_PFAK8BTagCSV_p17 || HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0 || HLT_PFMET100_PFMHT100_IDTight_CaloBTagCSV_3p1 || HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2 || HLT_PFHT380_SixPFJet32_DoublePFBTagDeepCSV_2p2 || HLT_PFHT430_SixPFJet40_PFBTagCSV_1p5 || HLT_QuadPFJet98_83_71_15_DoubleBTagCSV_p013_p08_VBF1 || HLT_QuadPFJet98_83_71_15_BTagCSV_p013_VBF2 )',
+             #'2017' : '(HLT_PFJet450 || HLT_PFJet500 || HLT_PFHT1050 || HLT_AK8PFJet550 || HLT_AK8PFJet360_TrimMass30 || HLT_AK8PFJet400_TrimMass30 || HLT_AK8PFHT750_TrimMass50 || HLT_AK8PFJet330_PFAK8BTagCSV_p17 || HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0 || HLT_PFMET100_PFMHT100_IDTight_CaloBTagCSV_3p1 || HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2 || HLT_PFHT380_SixPFJet32_DoublePFBTagDeepCSV_2p2 || HLT_PFHT430_SixPFJet40_PFBTagCSV_1p5 || HLT_QuadPFJet98_83_71_15_DoubleBTagCSV_p013_p08_VBF1 || HLT_QuadPFJet98_83_71_15_BTagCSV_p013_VBF2 )',
              #'2017' : '(HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0 )',
              #'2018' : '(HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCSV_4p5||HLT_PFHT1050||HLT_PFJet500||HLT_AK8PFJet500||HLT_AK8PFJet400_TrimMass30||HLT_AK8PFHT800_TrimMass50||HLT_AK8PFJet330_TrimMass30_PFAK8BoostedDoubleB_np4||HLT_QuadPFJet103_88_75_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1||HLT_QuadPFJet103_88_75_15_PFBTagDeepCSV_1p3_VBF2||HLT_PFHT400_SixPFJet32_DoublePFBTagDeepCSV_2p94||HLT_PFHT450_SixPFJet36_PFBTagDeepCSV_1p59||HLT_AK8PFJet330_TrimMass30_PFAK8BTagDeepCSV_p17||HLT_QuadPFJet98_83_71_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1||HLT_QuadPFJet98_83_71_15_PFBTagDeepCSV_1p3_VBF2|| HLT_PFMET100_PFMHT100_IDTight_CaloBTagDeepCSV_3p1)',
              #'2018' : '(HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCSV_4p5)',
+             '2016APV' : '('+'||'.join([t for t in AllHLTsWithSFs['2016APV']])+')',
+             '2016' : '('+'||'.join([t for t in AllHLTsWithSFs['2016']])+')',
+             '2017' : '('+'||'.join([t for t in AllHLTsWithSFs['2017']])+')',
              '2018' : '('+'||'.join([t for t in AllHLTsWithSFs['2018']])+')',
              '2022' : '('+'||'.join([t for t in AllHLTsWithSFs['2022']])+')',
              '2022EE' : '('+'||'.join([t for t in AllHLTsWithSFs['2022EE']])+')',
@@ -573,6 +625,34 @@ float getTriggerSF( int HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCS
     return triggerSF;
 }
 """
+
+hlt_sf_2016APV = """
+float getTriggerSF( %s ){
+    float triggerSF = 1;
+        if (%s) {triggerSF = 1;}%s
+
+    return triggerSF;
+}
+"""%(', '.join(['int '+t for t in AllHLTsWithSFs['2016APV']]), ' || '.join([t for t,sf in AllHLTsWithSFs['2016APV'].items() if sf==1.0]), ''.join(['\n        else if ('+t+') {triggerSF = '+str(sf)+';}' for t,sf in AllHLTsWithSFs['2016APV'].items() if sf!=1.0]))
+
+hlt_sf_2016 = """
+float getTriggerSF( %s ){
+    float triggerSF = 1;
+        if (%s) {triggerSF = 1;}%s
+
+    return triggerSF;
+}
+"""%(', '.join(['int '+t for t in AllHLTsWithSFs['2016']]), ' || '.join([t for t,sf in AllHLTsWithSFs['2016'].items() if sf==1.0]), ''.join(['\n        else if ('+t+') {triggerSF = '+str(sf)+';}' for t,sf in AllHLTsWithSFs['2016'].items() if sf!=1.0]))
+
+hlt_sf_2017 = """
+float getTriggerSF( %s ){
+    float triggerSF = 1;
+        if (%s) {triggerSF = 1;}%s
+
+    return triggerSF;
+}
+"""%(', '.join(['int '+t for t in AllHLTsWithSFs['2017']]), ' || '.join([t for t,sf in AllHLTsWithSFs['2017'].items() if sf==1.0]), ''.join(['\n        else if ('+t+') {triggerSF = '+str(sf)+';}' for t,sf in AllHLTsWithSFs['2017'].items() if sf!=1.0]))
+
 hlt_sf_2018 = """
 float getTriggerSF( %s ){
     float triggerSF = 1;
@@ -601,12 +681,15 @@ float getTriggerSF( %s ){
 """%(', '.join(['int '+t for t in AllHLTsWithSFs['2022EE']]), ' || '.join([t for t,sf in AllHLTsWithSFs['2022EE'].items() if sf==1.0]), ''.join(['\n        else if ('+t+') {triggerSF = '+str(sf)+';}' for t,sf in AllHLTsWithSFs['2022EE'].items() if sf!=1.0]))
 
 
-hlt_method_2016 = 'getTriggerSF( HLT_QuadJet45_TripleBTagCSV_p087,  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056,  HLT_PFHT450_SixJet40_BTagCSV_p056,  HLT_AK8PFJet360_TrimMass30,  HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20,  HLT_AK8PFJet450,  HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200,  HLT_QuadPFJet_BTagCSV_p016_VBF_Mqq460,  HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20,  HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20,  HLT_PFJet450,  HLT_QuadJet45_DoubleBTagCSV_p087 );'
+#hlt_method_2016 = 'getTriggerSF( HLT_QuadJet45_TripleBTagCSV_p087,  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056,  HLT_PFHT450_SixJet40_BTagCSV_p056,  HLT_AK8PFJet360_TrimMass30,  HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20,  HLT_AK8PFJet450,  HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200,  HLT_QuadPFJet_BTagCSV_p016_VBF_Mqq460,  HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20,  HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20,  HLT_PFJet450,  HLT_QuadJet45_DoubleBTagCSV_p087 );'
 
-hlt_method_2017 = ' getTriggerSF( HLT_PFJet450,  HLT_PFJet500,  HLT_PFHT1050,  HLT_AK8PFJet550,  HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0,  HLT_AK8PFJet360_TrimMass30,  HLT_AK8PFHT750_TrimMass50,  HLT_AK8PFJet400_TrimMass30,  HLT_PFMET100_PFMHT100_IDTight_CaloBTagCSV_3p1,  HLT_PFHT380_SixPFJet32_DoublePFBTagDeepCSV_2p2,  HLT_AK8PFJet330_PFAK8BTagCSV_p17,  HLT_QuadPFJet98_83_71_15_BTagCSV_p013_VBF2,  HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2,  HLT_PFHT430_SixPFJet40_PFBTagCSV_1p5,  HLT_QuadPFJet98_83_71_15_DoubleBTagCSV_p013_p08_VBF1 );'
+#hlt_method_2017 = ' getTriggerSF( HLT_PFJet450,  HLT_PFJet500,  HLT_PFHT1050,  HLT_AK8PFJet550,  HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0,  HLT_AK8PFJet360_TrimMass30,  HLT_AK8PFHT750_TrimMass50,  HLT_AK8PFJet400_TrimMass30,  HLT_PFMET100_PFMHT100_IDTight_CaloBTagCSV_3p1,  HLT_PFHT380_SixPFJet32_DoublePFBTagDeepCSV_2p2,  HLT_AK8PFJet330_PFAK8BTagCSV_p17,  HLT_QuadPFJet98_83_71_15_BTagCSV_p013_VBF2,  HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2,  HLT_PFHT430_SixPFJet40_PFBTagCSV_1p5,  HLT_QuadPFJet98_83_71_15_DoubleBTagCSV_p013_p08_VBF1 );'
 
 #hlt_method_2018 = ' getTriggerSF(HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCSV_4p5,HLT_PFHT1050,HLT_PFJet500,HLT_AK8PFJet500,HLT_AK8PFJet400_TrimMass30,HLT_AK8PFHT800_TrimMass50,HLT_AK8PFJet330_TrimMass30_PFAK8BoostedDoubleB_np4,HLT_QuadPFJet103_88_75_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1,HLT_QuadPFJet103_88_75_15_PFBTagDeepCSV_1p3_VBF2,HLT_PFHT400_SixPFJet32_DoublePFBTagDeepCSV_2p94,HLT_PFHT450_SixPFJet36_PFBTagDeepCSV_1p59,HLT_AK8PFJet330_TrimMass30_PFAK8BTagDeepCSV_p17,HLT_QuadPFJet98_83_71_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1,HLT_QuadPFJet98_83_71_15_PFBTagDeepCSV_1p3_VBF2, HLT_PFMET100_PFMHT100_IDTight_CaloBTagDeepCSV_3p1);'
 
+hlt_method_2016APV = 'getTriggerSF(%s);'%(','.join([t for t in AllHLTsWithSFs['2016APV']]))
+hlt_method_2016 = 'getTriggerSF(%s);'%(','.join([t for t in AllHLTsWithSFs['2016']]))
+hlt_method_2017 = 'getTriggerSF(%s);'%(','.join([t for t in AllHLTsWithSFs['2017']]))
 hlt_method_2018 = 'getTriggerSF(%s);'%(','.join([t for t in AllHLTsWithSFs['2018']]))
 hlt_method_2022 = 'getTriggerSF(%s);'%(','.join([t for t in AllHLTsWithSFs['2022']]))
 hlt_method_2022EE = 'getTriggerSF(%s);'%(','.join([t for t in AllHLTsWithSFs['2022EE']]))
@@ -652,6 +735,9 @@ def addMHHH(df):
     df = df.Define('HHH_mass', 'computeMHHH(0, h1_t3_mass,h1_t3_pt,h1_t3_eta,h1_t3_phi,h2_t3_mass,h2_t3_pt,h2_t3_eta,h2_t3_phi,h3_t3_mass,h3_t3_pt,h3_t3_eta,h3_t3_phi)')
     df = df.Define('HHH_pt', 'computeMHHH(1, h1_t3_mass,h1_t3_pt,h1_t3_eta,h1_t3_phi,h2_t3_mass,h2_t3_pt,h2_t3_eta,h2_t3_phi,h3_t3_mass,h3_t3_pt,h3_t3_eta,h3_t3_phi)')
     df = df.Define('HHH_eta', 'computeMHHH(2, h1_t3_mass,h1_t3_pt,h1_t3_eta,h1_t3_phi,h2_t3_mass,h2_t3_pt,h2_t3_eta,h2_t3_phi,h3_t3_mass,h3_t3_pt,h3_t3_eta,h3_t3_phi)')
+    df = df.Define('HHH4b2tau_mass', 'computeMHHH(0, h1_4b2t_mass,h1_4b2t_pt,h1_4b2t_eta,h1_4b2t_phi,h2_4b2t_mass,h2_4b2t_pt,h2_4b2t_eta,h2_4b2t_phi,h3_4b2t_mass,h3_4b2t_pt,h3_4b2t_eta,h3_4b2t_phi)')
+    df = df.Define('HHH4b2tau_pt', 'computeMHHH(1, h1_4b2t_mass,h1_4b2t_pt,h1_4b2t_eta,h1_4b2t_phi,h2_4b2t_mass,h2_4b2t_pt,h2_4b2t_eta,h2_4b2t_phi,h3_4b2t_mass,h3_4b2t_pt,h3_4b2t_eta,h3_4b2t_phi)')
+    df = df.Define('HHH4b2tau_eta', 'computeMHHH(2, h1_4b2t_mass,h1_4b2t_pt,h1_4b2t_eta,h1_4b2t_phi,h2_4b2t_mass,h2_4b2t_pt,h2_4b2t_eta,h2_4b2t_phi,h3_4b2t_mass,h3_4b2t_pt,h3_4b2t_eta,h3_4b2t_phi)')
     return df
 
 def drawText(x, y, text, color = ROOT.kBlack, fontsize = 0.05, font = 42, doNDC = True, alignment = 12):
@@ -682,7 +768,7 @@ def initialise_df(df,year,proc):
         print('2016 buggy to be fixed in v32')
     if '2022' in year:
         df = df.Define('triggerSF', '1')
-        print("2022 doesn't work and I don't understand why")
+        print("2022 trigger SF doesn't work and I don't understand why")
     else:
         df = df.Define('triggerSF', triggersCorrections[year][1] )
     #cutWeight = '(%f * weight * xsecWeight * l1PreFiringWeight * puWeight * genWeight * triggerSF)'%(lumi)
@@ -786,7 +872,7 @@ def init_get_max_cat():
 
 
 cat = '''
-    int categorisation(int nAK4HiggsReco, int nAK8HiggsReco){
+    int categorisationfunc(int nAK4HiggsReco, int nAK8HiggsReco){
         int ret(0);
 
         // 3 reco Higgs
@@ -817,25 +903,38 @@ ROOT.gInterpreter.Declare(cat)
 
 def matching_variables(df):
     higgsmatched = []
+    higgsmatchedtau = []
     h1match = []
     h2match = []
     h3match = []
+    h1matchtau = []
+    h2matchtau = []
+    h3matchtau = []
     for j in ['jet1','jet2','jet3','jet4','jet5','jet6','jet7','jet8','jet9','jet10']:
         higgsmatched.append('int(%sHiggsMatched)'%j)
         h1match.append('int(%sHiggsMatchedIndex == 1 && %sFatJetMatched == 0)'%(j,j))
         h2match.append('int(%sHiggsMatchedIndex == 2 && %sFatJetMatched == 0)'%(j,j))
         h3match.append('int(%sHiggsMatchedIndex == 3 && %sFatJetMatched == 0)'%(j,j))
+    for t in ['tau1','tau2','tau3','tau4']:
+        higgsmatchedtau.append('int(%sHiggsMatched)'%t)
+        h1matchtau.append('int(%sHiggsMatchedIndex == 1 && %sFatJetMatched == 0)'%(t,t))
+        h2matchtau.append('int(%sHiggsMatchedIndex == 2 && %sFatJetMatched == 0)'%(t,t))
+        h3matchtau.append('int(%sHiggsMatchedIndex == 3 && %sFatJetMatched == 0)'%(t,t))
 
     higgsMatchVar = '+'.join(higgsmatched)
+    higgsMatchVarTau = '+'.join(higgsmatchedtau)
     h1MatchVar = '+'.join(h1match)
     h2MatchVar = '+'.join(h2match)
     h3MatchVar = '+'.join(h3match)
+    h1MatchTauVar = '+'.join(h1matchtau)
+    h2MatchTauVar = '+'.join(h2matchtau)
+    h3MatchTauVar = '+'.join(h3matchtau)
 
     fatjetmatched = []
     fj_h1match = []
     fj_h2match = []
     fj_h3match = []
-    for j in ['fatJet1','fatJet2','fatJet3']:
+    for j in ['fatJet1','fatJet2','fatJet3','fatJet4']:
         fatjetmatched.append('int(%sHiggsMatched)'%j)
         fj_h1match.append('int(%sHiggsMatchedIndex == 1)'%j)
         fj_h2match.append('int(%sHiggsMatchedIndex == 2)'%j)
@@ -847,16 +946,23 @@ def matching_variables(df):
     fj_h3MatchVar = '+'.join(fj_h3match)
 
     df = df.Define('nAK4matched', higgsMatchVar)
+    df = df.Define('nTaumatched', higgsMatchVarTau)
     df = df.Define('nAK8matched', fjMatchVar)
     df = df.Define('h1Match',h1MatchVar)
     df = df.Define('h2Match',h2MatchVar)
     df = df.Define('h3Match',h3MatchVar)
+    df = df.Define('h1MatchTau',h1MatchTauVar)
+    df = df.Define('h2MatchTau',h2MatchTauVar)
+    df = df.Define('h3MatchTau',h3MatchTauVar)
     df = df.Define('fj_h1Match',fj_h1MatchVar)
     df = df.Define('fj_h2Match',fj_h2MatchVar)
     df = df.Define('fj_h3Match',fj_h3MatchVar)
 
     df = df.Define('nAK4HiggsReco', 'int(h1Match >= 2)+ int(h2Match >= 2)+ int(h3Match >= 2)')
+    df = df.Define('nAK4onlyHiggsReco', 'int(h1Match >= 2)*int(h1MatchTau < 2)+ int(h2Match >= 2)*int(h2MatchTau < 2)+ int(h3Match >= 2)*int(h3MatchTau < 2)')
+    df = df.Define('nTauHiggsReco', 'int(h1MatchTau >= 2)+ int(h2MatchTau >= 2)+ int(h3MatchTau >= 2)')
     df = df.Define('nAK8HiggsReco', 'int(fj_h1Match >= 1)+ int(fj_h2Match >= 1)+ int(fj_h3Match >= 1)')
-    df = df.Define('categorisation','categorisation( nAK4HiggsReco,nAK8HiggsReco)')
+    df = df.Define('categorisation','categorisationfunc( nAK4HiggsReco,nAK8HiggsReco)')
+    df = df.Define('categorisation4b2tau','categorisationfunc( nAK4onlyHiggsReco+nTauHiggsReco,nAK8HiggsReco)')
 
     return df
