@@ -1121,7 +1121,7 @@ for selection in selections.keys() :
         else:
             datahist = 'BTagCSV'
 
-    outtree = "{}/{}_{}/{}.root".format(input_tree,selection,additional_label,proctodo)
+    outtree = os.path.join(input_tree, selection+"_"+additional_label, proctodo+".root")
 
     dataset = selections[selection]["dataset"] # inclusive_resolved or inclusive_boosted
     subdir = "inclusive"+dataset if dataset.startswith("-") else "inclusive_"+dataset
@@ -1137,7 +1137,13 @@ for selection in selections.keys() :
         print(current_time)
         seconds0 = time.time()
         print(proc)
-        print("Cutting tree and saving it to ", outtree)
+        varregex = r'_part[0-9_]+.root'
+        part = re.findall(varregex, proc)
+        if part!=[]:
+            thisouttree = outtree.replace(".root", part[0])
+        else:
+            thisouttree = outtree
+        print("Cutting tree and saving it to ", thisouttree)
         print("With selection: ", final_selection)
 
         chunk_df = ROOT.RDataFrame(inputTree, proc)
@@ -1251,7 +1257,7 @@ for selection in selections.keys() :
         #chunk_df.Snapshot(inputTree, outtree, variables + ['totalWeight'])
         to_save = [str(el) for el in chunk_df.GetColumnNames() if 'mva' not in str(el)]
 
-        chunk_df.Snapshot(inputTree, outtree,to_save)
+        chunk_df.Snapshot(inputTree, thisouttree,to_save)
 
         gc.collect() # clean menory
         sys.stdout.flush() # extra clean
