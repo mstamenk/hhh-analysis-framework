@@ -17,10 +17,6 @@ inputdir = 'mva-inputs-%s'
 outputdir1 = 'mva-inputs-%s-spanet-boosted-classification'
 outputdir2 = 'mva-inputs-%s-categorisation-spanet-boosted-classification'
 
-years = ['2022']
-version = 'v2022'
-mainpath = '/eos/user/d/dmroy/HHH/sampleProduction/TestOutput/'
-
 
 
 
@@ -31,9 +27,9 @@ jobs_path = 'jobs'
 
 #submit="Universe   = vanilla\nrequest_memory = 7900\nExecutable = %s\nArguments  = $(ClusterId) $(ProcId)\nLog        = log/job_%s_%s_%s.log\nOutput     = output/job_%s_%s_%s.out\nError      = error/job_%s_%s_%s.error\nQueue 1"
 submit="Universe   = vanilla\nrequest_memory = 2000\nExecutable = %s\nArguments  = $(ClusterId) $(ProcId)\nLog        = log/job_%s_%s_%s.log\nOutput     = output/job_%s_%s_%s.out\nError      = error/job_%s_%s_%s.error\nQueue 1"
-submit_lxplus='universe              = vanilla\nexecutable            = %s\narguments             = $(ProcId)\nlog                   = log/job_%s_$(ClusterId).log\noutput                = output/job_%s_$(ClusterId).$(ProcId).out\nerror                 = error/job_%s_$(ClusterId).$(ProcId).err\ngetenv                = true\n\n+JobFlavour = "longlunch"\nRequestCpus = 4\n\nqueue %s'
+submit_lxplus='universe              = vanilla\nexecutable            = %s\narguments             = $(ProcId)\nlog                   = log/job_%s_$(ClusterId).log\noutput                = output/job_%s_$(ClusterId).$(ProcId).out\nerror                 = error/job_%s_$(ClusterId).$(ProcId).err\ngetenv                = true\n\n+JobFlavour = "microcentury"\nRequestCpus = 4\n\nqueue %s'
 job_cmd = '#! /bin/bash\n#SBATCH -p batch\n#SBATCH -n 1\n#SBATCH -t 03:00:00\n#SBATCH --mem=24g\n%s\nexit'
-job_cmd_lxplus = '#!/bin/bash\nsource /cvmfs/cms.cern.ch/cmsset_default.sh\nfunction peval { echo ">>> $@"; eval "$@"; }\nWORKDIR="$PWD"\nif [ ! -z "$CMSSW_BASE" -a -d "$CMSSW_BASE/src" ]; then\n  peval "cd $CMSSW_BASE/src"\n  peval "eval `scramv1 runtime -sh`"\n  peval "cd $WORKDIR"\nfi\nsource /cvmfs/sft.cern.ch/lcg/views/setupViews.sh LCG_102 x86_64-centos7-gcc11-opt\n\n'
+job_cmd_lxplus = '#!/bin/bash\nsource /cvmfs/cms.cern.ch/cmsset_default.sh\nfunction peval { echo ">>> $@"; eval "$@"; }\nWORKDIR="$PWD"\nif [ ! -z "$CMSSW_BASE" -a -d "$CMSSW_BASE/src" ]; then\n  peval "cd $CMSSW_BASE/src"\n  peval "eval `scramv1 runtime -sh`"\n  peval "cd $WORKDIR"\nfi\nsource /cvmfs/sft.cern.ch/lcg/views/setupViews.sh LCG_104 x86_64-el9-gcc11-opt\n\n'
 #job_cmd = '%s'
 
 
@@ -51,7 +47,6 @@ def WriteFile(path, content):
     with open(path, 'w') as f:
         f.write(content)
 
-regime = 'inclusive-weights'
 batch_size = 50e3
 for year in years:
     #path_to_samples = '/users/mstamenk/scratch/mstamenk//samples-%s-%s-nanoaod/'%(version,year)
@@ -73,7 +68,7 @@ for year in years:
         n_batches = math.floor(float(entries)/batch_size)
         for j in range(n_batches+1):
             # Check if previous jobs completed
-            script = ""
+            scriptl = []
             for k in [0,1]:
                 expoutfile = f.replace(inputdir%(year), filedirs[k+1]%(year)).replace('.root', '_%d.root'%j)
                 print(expoutfile)
@@ -84,13 +79,17 @@ for year in years:
                         if entries > 0: continue # If output file exists and has valid content, move on
                     except cppyy.gbl.std.runtime_error:
                         pass
-                script = scripts[k]
-                break
-            if script=="": continue
+                scriptl.append(scripts[k])
+                #break
+            if scriptl==[]: continue
 
             filename = 'job_%s_%s_%d.sh'%(f_in,year,j)
-            cmd = 'python3 %s --f_in %s --year %s --batch_size %d --batch_number %d --version %s --regime %s --path %s'%(script,f_in,year,batch_size,j,version,regime,mainpath)
-            print(cmd)
+            cmds = []
+            for script in scriptl:
+              cmd = 'python3 %s --f_in %s --year %s --batch_size %d --batch_number %d --version %s --regime %s --path %s'%(script,f_in,year,batch_size,j,version,regime,mainpath)
+              print(cmd)
+              cmds.append(cmd)
+            cmd = "; ".join(cmds)
 
             WriteFile(os.path.join(jobs_path, filename), job_cmd%cmd)
             manual_jobs.append(filename)
@@ -109,6 +108,7 @@ for year in years:
         submit_file_lxp = 'submit_%s_lxplus.sub'%(year)
         WriteFile(os.path.join(jobs_path, submit_file_lxp), submit_lxplus%(os.path.join(jobs_path,filename_lxp),year,year,year,jobcount))
         jobs_lxp.append(submit_file_lxp)
+        print("SUBMIT WITH: source submit_all_lxplus.sh")
     else:
         print("ALL JOBS DONE FOR",year,"!")
 
