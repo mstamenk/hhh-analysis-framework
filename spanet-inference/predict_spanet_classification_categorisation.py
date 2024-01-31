@@ -340,7 +340,7 @@ MET_data = np.transpose(met_arrays, (1,0,2))
 MET_mask = MET_data[:,:,0] > 0
 
 HT_data = np.transpose(ht_arrays, (1,0,2))
-HT_mask = MET_data[:,:,0] > 0
+HT_mask = HT_data[:,:,0] > 0
 
 Jet1_data = np.transpose(Jets_arrays['Jet1'],(1,0,2))
 Jet1_Mass = Jet1_data[:,:,0]

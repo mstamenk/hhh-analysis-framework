@@ -340,7 +340,7 @@ MET_data = np.transpose(met_arrays, (1,0,2))
 MET_mask = MET_data[:,:,0] > 0
 
 HT_data = np.transpose(ht_arrays, (1,0,2))
-HT_mask = MET_data[:,:,0] > 0
+HT_mask = HT_data[:,:,0] > 0
 
 Jet1_data = np.transpose(Jets_arrays['Jet1'],(1,0,2))
 Jet1_Mass = Jet1_data[:,:,0]
@@ -406,6 +406,16 @@ h1_match = []
 h2_match = []
 h3_match = []
 
+h1_j1idx = []
+h1_j2idx = []
+h1_fatidx = []
+h2_j1idx = []
+h2_j2idx = []
+h2_fatidx = []
+h3_j1idx = []
+h3_j2idx = []
+h3_fatidx = []
+
 prob_hhh = [] # 1
 prob_qcd = [] # 2
 prob_tt = [] # 3
@@ -441,25 +451,52 @@ for i in range(len(output_values[0])):
 
     if len(h1_index) == 2:
         h1 = jets_tmp[int(h1_index[0])] + jets_tmp[int(h1_index[1])]
-        h1.HiggsMatchedIndex = jets_tmp[int(h1_index[0])].HiggsMatchedIndex ==  jets_tmp[int(h1_index[1])].HiggsMatchedIndex and jets_tmp[int(h1_index[1])].HiggsMatchedIndex > 0
+        if jets_tmp[int(h1_index[0])].HiggsMatchedIndex ==  jets_tmp[int(h1_index[1])].HiggsMatchedIndex and jets_tmp[int(h1_index[1])].HiggsMatchedIndex > 0:
+          h1.HiggsMatchedIndex = jets_tmp[int(h1_index[0])].HiggsMatchedIndex
+        else:
+          h1.HiggsMatchedIndex = -1
+        h1_j1idx.append(float(int(h1_index[0])))
+        h1_j2idx.append(float(int(h1_index[1])))
+        h1_fatidx.append(float(-1))
     elif len(h1_index) == 3:
         h1 = fjets_tmp[int(h1_index)-110]
-        h1.HiggsMatchedIndex = fjets_tmp[int(h1_index)-110].HiggsMatchedIndex > 0
+        h1.HiggsMatchedIndex = fjets_tmp[int(h1_index)-110].HiggsMatchedIndex # > 0
+        h1_j1idx.append(float(-1))
+        h1_j2idx.append(float(-1))
+        h1_fatidx.append(float(int(h1_index)-110))
 
 
     if len(h2_index) == 2:
         h2 = jets_tmp[int(h2_index[0])] + jets_tmp[int(h2_index[1])]
-        h2.HiggsMatchedIndex = jets_tmp[int(h2_index[0])].HiggsMatchedIndex ==  jets_tmp[int(h2_index[1])].HiggsMatchedIndex and jets_tmp[int(h2_index[1])].HiggsMatchedIndex > 0
+        if jets_tmp[int(h2_index[0])].HiggsMatchedIndex ==  jets_tmp[int(h2_index[1])].HiggsMatchedIndex and jets_tmp[int(h2_index[1])].HiggsMatchedIndex > 0:
+          h2.HiggsMatchedIndex = jets_tmp[int(h2_index[0])].HiggsMatchedIndex
+        else:
+          h2.HiggsMatchedIndex = -1
+        h2_j1idx.append(float(int(h2_index[0])))
+        h2_j2idx.append(float(int(h2_index[1])))
+        h2_fatidx.append(float(-1))
     elif len(h2_index) == 3:
         h2 = fjets_tmp[int(h2_index)-110]
-        h2.HiggsMatchedIndex = fjets_tmp[int(h2_index)-110].HiggsMatchedIndex > 0
+        h2.HiggsMatchedIndex = fjets_tmp[int(h2_index)-110].HiggsMatchedIndex # > 0
+        h2_j1idx.append(float(-1))
+        h2_j2idx.append(float(-1))
+        h2_fatidx.append(float(int(h2_index)-110))
 
     if len(h3_index) == 2:
         h3 = jets_tmp[int(h3_index[0])] + jets_tmp[int(h3_index[1])]
-        h3.HiggsMatchedIndex = jets_tmp[int(h3_index[0])].HiggsMatchedIndex ==  jets_tmp[int(h3_index[1])].HiggsMatchedIndex and jets_tmp[int(h3_index[1])].HiggsMatchedIndex > 0
+        if jets_tmp[int(h3_index[0])].HiggsMatchedIndex ==  jets_tmp[int(h3_index[1])].HiggsMatchedIndex and jets_tmp[int(h3_index[1])].HiggsMatchedIndex > 0:
+          h3.HiggsMatchedIndex = jets_tmp[int(h3_index[0])].HiggsMatchedIndex
+        else:
+          h3.HiggsMatchedIndex = -1
+        h3_j1idx.append(float(int(h3_index[0])))
+        h3_j2idx.append(float(int(h3_index[1])))
+        h3_fatidx.append(float(-1))
     elif len(h3_index) == 3:
-        h3 = fjets_tmp[int(h2_index)-110]
-        h3.HiggsMatchedIndex = fjets_tmp[int(h3_index)-110].HiggsMatchedIndex > 0
+        h3 = fjets_tmp[int(h3_index)-110]
+        h3.HiggsMatchedIndex = fjets_tmp[int(h3_index)-110].HiggsMatchedIndex # > 0
+        h3_j1idx.append(float(-1))
+        h3_j2idx.append(float(-1))
+        h3_fatidx.append(float(int(h3_index)-110))
 
     higgses = [h1,h2,h3]
     #higgses.sort(key= lambda x: x.Pt(), reverse=True)
@@ -483,9 +520,9 @@ for i in range(len(output_values[0])):
     h3_eta.append(h3.Eta())
     h3_phi.append(h3.Phi())
 
-    h1_match.append(int(h1.HiggsMatchedIndex))
-    h2_match.append(int(h2.HiggsMatchedIndex))
-    h3_match.append(int(h3.HiggsMatchedIndex))
+    h1_match.append(float(h1.HiggsMatchedIndex))
+    h2_match.append(float(h2.HiggsMatchedIndex))
+    h3_match.append(float(h3.HiggsMatchedIndex))
 
     prob_hhh.append(float(output_values[12][i][1])) # based on mapping in SPANET training
     prob_qcd.append(float(output_values[12][i][2]))
@@ -516,19 +553,27 @@ arr_h1_pt = ROOT.VecOps.AsRVec(np.array(h1_pt))
 arr_h1_eta = ROOT.VecOps.AsRVec(np.array(h1_eta))
 arr_h1_phi = ROOT.VecOps.AsRVec(np.array(h1_phi))
 arr_h1_match = ROOT.VecOps.AsRVec(np.array(h1_match))
-
+arr_h1_j1idx = ROOT.VecOps.AsRVec(np.array(h1_j1idx))
+arr_h1_j2idx = ROOT.VecOps.AsRVec(np.array(h1_j2idx))
+arr_h1_fatidx = ROOT.VecOps.AsRVec(np.array(h1_fatidx))
 
 arr_h2_mass = ROOT.VecOps.AsRVec(np.array(h2_mass))
 arr_h2_pt = ROOT.VecOps.AsRVec(np.array(h2_pt))
 arr_h2_eta = ROOT.VecOps.AsRVec(np.array(h2_eta))
 arr_h2_phi = ROOT.VecOps.AsRVec(np.array(h2_phi))
 arr_h2_match = ROOT.VecOps.AsRVec(np.array(h2_match))
+arr_h2_j1idx = ROOT.VecOps.AsRVec(np.array(h2_j1idx))
+arr_h2_j2idx = ROOT.VecOps.AsRVec(np.array(h2_j2idx))
+arr_h2_fatidx = ROOT.VecOps.AsRVec(np.array(h2_fatidx))
 
 arr_h3_mass = ROOT.VecOps.AsRVec(np.array(h3_mass))
 arr_h3_pt = ROOT.VecOps.AsRVec(np.array(h3_pt))
 arr_h3_eta = ROOT.VecOps.AsRVec(np.array(h3_eta))
 arr_h3_phi = ROOT.VecOps.AsRVec(np.array(h3_phi))
 arr_h3_match = ROOT.VecOps.AsRVec(np.array(h3_match))
+arr_h3_j1idx = ROOT.VecOps.AsRVec(np.array(h3_j1idx))
+arr_h3_j2idx = ROOT.VecOps.AsRVec(np.array(h3_j2idx))
+arr_h3_fatidx = ROOT.VecOps.AsRVec(np.array(h3_fatidx))
 
 arr_prob_hhh = ROOT.VecOps.AsRVec(np.array(prob_hhh))
 arr_prob_qcd = ROOT.VecOps.AsRVec(np.array(prob_qcd))
@@ -558,19 +603,31 @@ df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h1_mass, "h1_spanet_boosted_mass")
 df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h1_pt, "h1_spanet_boosted_pt")
 df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h1_eta, "h1_spanet_boosted_eta")
 df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h1_phi, "h1_spanet_boosted_phi")
-df = ROOT.AddBoolArray(ROOT.RDF.AsRNode(df), arr_h1_match, "h1_spanet_boosted_match")
+df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h1_match, "h1_spanet_boosted_match")
+df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h1_j1idx, "h1_spanet_jet1idx")
+df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h1_j2idx, "h1_spanet_jet2idx")
+df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h1_fatidx, "h1_spanet_fatjetidx")
+#df = ROOT.AddBoolArray(ROOT.RDF.AsRNode(df), arr_h1_match, "h1_spanet_boosted_match")
 
 df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h2_mass, "h2_spanet_boosted_mass")
 df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h2_pt, "h2_spanet_boosted_pt")
 df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h2_eta, "h2_spanet_boosted_eta")
 df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h2_phi, "h2_spanet_boosted_phi")
-df = ROOT.AddBoolArray(ROOT.RDF.AsRNode(df), arr_h2_match, "h2_spanet_boosted_match")
+df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h2_match, "h2_spanet_boosted_match")
+df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h2_j1idx, "h2_spanet_jet1idx")
+df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h2_j2idx, "h2_spanet_jet2idx")
+df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h2_fatidx, "h2_spanet_fatjetidx")
+#df = ROOT.AddBoolArray(ROOT.RDF.AsRNode(df), arr_h2_match, "h2_spanet_boosted_match")
 
 df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h3_mass, "h3_spanet_boosted_mass")
 df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h3_pt, "h3_spanet_boosted_pt")
 df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h3_eta, "h3_spanet_boosted_eta")
 df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h3_phi, "h3_spanet_boosted_phi")
-df = ROOT.AddBoolArray(ROOT.RDF.AsRNode(df), arr_h3_match, "h3_spanet_boosted_match")
+df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h3_match, "h3_spanet_boosted_match")
+df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h3_j1idx, "h3_spanet_jet1idx")
+df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h3_j2idx, "h3_spanet_jet2idx")
+df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_h3_fatidx, "h3_spanet_fatjetidx")
+#df = ROOT.AddBoolArray(ROOT.RDF.AsRNode(df), arr_h3_match, "h3_spanet_boosted_match")
 
 df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_prob_hhh, "ProbHHH")
 df = ROOT.AddArray(ROOT.RDF.AsRNode(df), arr_prob_qcd, "ProbQCD")
