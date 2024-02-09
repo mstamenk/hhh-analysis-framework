@@ -1343,7 +1343,7 @@ for selection in selections.keys() :
       path_to_histograms = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v31/2018'
       file_1Higgs = "{}/ProbHHH6b_1Higgs_inclusive_/histograms/histograms_{}.root".format(path_to_histograms,do_limit_input)
       file_2Higgs = "{}/ProbHHH6b_2Higgs_inclusive_/histograms/histograms_{}.root".format(path_to_histograms,do_limit_input)
-      Higgs_number = "2Higgs"
+      Higgs_number = "2Higgs" #####just used for name the plot
       Unc_Shape(file_1Higgs,file_2Higgs,do_limit_input,Higgs_number)
     
     
