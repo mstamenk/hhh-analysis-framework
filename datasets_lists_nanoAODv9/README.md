@@ -26,7 +26,7 @@ This is what we expect in terms of signals, looking in what is avaiable to Run2 
 - For the HHH4B2Tau
     - datasets_lists_nanoAODv9/Run2_GF_HH2B2Tau.txt
     - datasets_lists_nanoAODv9/Run2_VBF_HH2B2Tau.txt - I did not found the sample name
-    - datasets_lists_nanoAODv9/Run2_HHH4B2Tau.txt 
+    - datasets_lists_nanoAODv9/Run2_HHH4B2Tau.txt - couplings MISING!!!
     - datasets_lists_nanoAODv9/Run2_ttH2Tau.txt
     - datasets_lists_nanoAODv9/Run2_VH2Tau.txt
     - datasets_lists_nanoAODv9/Run2_ttHH2B2Tau.txt
