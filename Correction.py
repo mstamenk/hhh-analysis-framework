@@ -15,7 +15,7 @@ def Unc_Shape(higgs1_path,higgs2_path,do_limit_input,Higgs_number,path,year):
 
     ROOT.gROOT.ProcessLine(".x /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/shape_unc/lhcbStyle.C")
     
-    # ------------------------------------------------------ #
+    # -------------------------------------------------------------- #
     # calculate corrected eff: 1D
     # -------------------------------------------------------------- #
   
