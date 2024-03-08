@@ -12,10 +12,149 @@ ROOT.gROOT.SetBatch(ROOT.kTRUE)
 
 import argparse
 parser = argparse.ArgumentParser(description='Args')
-parser.add_argument('-v','--version', default='v31')
+parser.add_argument('-v','--version', default='v33')
 parser.add_argument('--year', default='2018')
 parser.add_argument('--prob', default='ProbHHH6b')
+parser.add_argument('--var', default = 'ProbMultiH')
+parser.add_argument('--addWeightSyst',action='store_true')
+parser.add_argument('--doSyst', action = 'store_true')
 args = parser.parse_args()
+
+if args.doSyst:
+    systematics = [
+        # FTAG
+        'nominal',
+        '1./flavTagWeight_Stat_DOWN',
+        'flavTagWeight_LHEScaleWeight_muF_ttbar_UP',
+        'flavTagWeight_LHEScaleWeight_muF_wjets_UP',
+        'flavTagWeight_LHEScaleWeight_muF_zjets_UP',
+        'flavTagWeight_LHEScaleWeight_muR_ttbar_UP',
+        'flavTagWeight_LHEScaleWeight_muR_wjets_UP',
+        'flavTagWeight_LHEScaleWeight_muR_zjets_UP',
+        'flavTagWeight_PSWeightISR_UP',
+        'flavTagWeight_PSWeightFSR_UP',
+        'flavTagWeight_XSec_WJets_c_UP',
+        'flavTagWeight_XSec_WJets_b_UP',
+        'flavTagWeight_XSec_ZJets_c_UP',
+        'flavTagWeight_XSec_ZJets_b_UP',
+        'flavTagWeight_PUWeight_UP',
+        'flavTagWeight_PUJetID_UP',
+
+        'flavTagWeight_Stat_DOWN',
+        'flavTagWeight_LHEScaleWeight_muF_ttbar_DOWN',
+        'flavTagWeight_LHEScaleWeight_muF_wjets_DOWN',
+        'flavTagWeight_LHEScaleWeight_muF_zjets_DOWN',
+        'flavTagWeight_LHEScaleWeight_muR_ttbar_DOWN',
+        'flavTagWeight_LHEScaleWeight_muR_wjets_DOWN',
+        'flavTagWeight_LHEScaleWeight_muR_zjets_DOWN',
+        'flavTagWeight_PSWeightISR_DOWN',
+        'flavTagWeight_PSWeightFSR_DOWN',
+        'flavTagWeight_XSec_WJets_c_DOWN',
+        'flavTagWeight_XSec_WJets_b_DOWN',
+        'flavTagWeight_XSec_ZJets_c_DOWN',
+        'flavTagWeight_XSec_ZJets_b_DOWN',
+        'flavTagWeight_PUWeight_DOWN',
+        'flavTagWeight_PUJetID_DOWN',
+
+        # Fatjet FLAV TAG
+        'fatJetFlavTagWeight_UP',
+        'fatJetFlavTagWeight_DOWN',
+
+        # L1 prefiring
+        'l1PreFiringWeightUp', 
+        'l1PreFiringWeightDown',
+
+        # Pile-up
+        'puWeightUp',
+        'puWeightDown',
+
+        # ISR
+        'PSWeight[0]',
+        'PSWeight[2]',
+
+        # FSR
+        'PSWeight[1]',
+        'PSWeight[3]', 
+
+        # MUR
+        'LHEScaleWeight[6]',
+        'LHEScaleWeight[1]',
+
+        # MUF
+        'LHEScaleWeight[4]',
+        'LHEScaleWeight[3]',
+
+        # PDF
+        'LHEPdfWeight', 
+        '1./LHEPdfWeight'
+
+    ]
+else:
+    systematics = ['nominal']
+
+
+labels = {
+        'nominal' : '',
+        '1./flavTagWeight_Stat_DOWN' : 'PNetAK4_Stat_Up',
+        'flavTagWeight_LHEScaleWeight_muF_ttbar_UP' : 'PNetAK4_ttbar_muF_Up',
+        'flavTagWeight_LHEScaleWeight_muF_wjets_UP' :'PNetAK4_wjets_muF_Up',
+        'flavTagWeight_LHEScaleWeight_muF_zjets_UP' :'PNetAK4_zjets_muF_Up',
+        'flavTagWeight_LHEScaleWeight_muR_ttbar_UP' :'PNetAK4_ttbar_muR_Up',
+        'flavTagWeight_LHEScaleWeight_muR_wjets_UP' :'PNetAK4_wjets_muR_Up',
+        'flavTagWeight_LHEScaleWeight_muR_zjets_UP' :'PNetAK4_zjets_muR_Up',
+        'flavTagWeight_PSWeightISR_UP' : 'PNetAK4_ISR_Up',
+        'flavTagWeight_PSWeightFSR_UP' : 'PNetAK4_FSR_Up',
+        'flavTagWeight_XSec_WJets_c_UP' : 'PNetAK4_wjets_c_xsec_Up',
+        'flavTagWeight_XSec_WJets_b_UP':  'PNetAK4_wjets_b_xsec_Up',
+        'flavTagWeight_XSec_ZJets_c_UP' : 'PNetAK4_zjets_c_xsec_Up',
+        'flavTagWeight_XSec_ZJets_b_UP': 'PNetAK4_zjets_b_xsec_Up',
+        'flavTagWeight_PUWeight_UP' : 'PNetAK4_pileup_Up',
+        'flavTagWeight_PUJetID_UP' : 'PNetAK4_jetID_Up',
+
+        'flavTagWeight_Stat_DOWN' : 'PNetAK4_Stat_Down',
+        'flavTagWeight_LHEScaleWeight_muF_ttbar_DOWN' : 'PNetAK4_ttbar_muF_Down',
+        'flavTagWeight_LHEScaleWeight_muF_wjets_DOWN' :'PNetAK4_wjets_muF_Down',
+        'flavTagWeight_LHEScaleWeight_muF_zjets_DOWN' :'PNetAK4_zjets_muF_Down',
+        'flavTagWeight_LHEScaleWeight_muR_ttbar_DOWN' :'PNetAK4_ttbar_muR_Down',
+        'flavTagWeight_LHEScaleWeight_muR_wjets_DOWN' :'PNetAK4_wjets_muR_Down',
+        'flavTagWeight_LHEScaleWeight_muR_zjets_DOWN' :'PNetAK4_zjets_muR_Down',
+        'flavTagWeight_PSWeightISR_DOWN' : 'PNetAK4_ISR_Down',
+        'flavTagWeight_PSWeightFSR_DOWN' : 'PNetAK4_FSR_Down',
+        'flavTagWeight_XSec_WJets_c_DOWN' : 'PNetAK4_wjets_c_xsec_Down',
+        'flavTagWeight_XSec_WJets_b_DOWN':  'PNetAK4_wjets_b_xsec_Down',
+        'flavTagWeight_XSec_ZJets_c_DOWN' : 'PNetAK4_zjets_c_xsec_Down',
+        'flavTagWeight_XSec_ZJets_b_DOWN': 'PNetAK4_zjets_b_xsec_Down',
+        'flavTagWeight_PUWeight_DOWN' : 'PNetAK4_pileup_Down',
+        'flavTagWeight_PUJetID_DOWN' : 'PNetAK4_jetID_Down',
+
+        'fatJetFlavTagWeight_UP' : 'PNetAK8_Up',
+        'fatJetFlavTagWeight_DOWN': 'PNetAK8_Down',
+
+        'l1PreFiringWeightUp' : 'l1Prefiring_Up', 
+        'l1PreFiringWeightDown' : 'l1Prefiring_Down',
+    
+        'puWeightUp' : 'PileUp_Up',
+        'puWeightDown': 'PileUp_Down',
+    
+        'PSWeight[0]': 'ISR_Up', 
+        'PSWeight[2]': 'ISR_Down',
+        'PSWeight[1]': 'FSR_Up',
+        'PSWeight[3]': 'FSR_Down',  
+
+             # MUR
+        'LHEScaleWeight[6]': 'MUR_Up',
+        'LHEScaleWeight[1]': 'MUR_Down',
+
+        # MUF
+        'LHEScaleWeight[4]': 'MUF_Up',
+        'LHEScaleWeight[3]': 'MUF_Down',
+
+        # PDF
+        'LHEPdfWeight' : 'PDF_Up',
+        '1./LHEPdfWeight' : 'PDF_Down', 
+
+
+ }
 
 def convert_list_to_dict(ls):
     length = len(ls)
@@ -29,64 +168,187 @@ def convert_list_to_dict(ls):
             ret[i] = [lower,upper]
     return ret
 
-opt_bins = {'2018': 0.699, 
-            '2017': 0.699,
-            '2016': 0.673,
-            '2016APV': 0.673,
+#ProbHHH
+opt_bins_probHHH = {'2018': 0.7225, 
+            '2017': 0.7075,
+            '2016': 0.7185,
+            '2016APV': 0.71,
 }
 
-opt_bins_split = {'2018': {'3bh0h' : 0.613,
-                           '2bh1h' : 0.676,
-                           '1bh2h' : 0.682,
-                           '0bh3h' : 0.698,
+opt_bins_probMultiH = {'2018': 0.997, 
+            '2017': 0.9965,
+            '2016': 0.9965,
+            '2016APV': 0.9965,
+}
+
+
+opt_bins_probMultiH_HH4b = {'2018': 0.9965, 
+            '2017': 0.997,
+            '2016': 0.9945,
+            '2016APV': 0.996,
+}
+
+
+opt_bins_split_probHHH = {'2018': {'3bh0h' : 0.652, #0.667,
+                           '2bh1h' : 0.692,#0.698,
+                           '1bh2h' : 0.7015, #0.7015,
+                           '0bh3h' : 0.709, #0.71
+                           '2bh0h' : 0.6875, # 0.700
+                           '1bh1h' : 0.7, # 0.7055
+                           '0bh2h' : 0.7145, # 0.7215
                             },
-                  '2017': {'3bh0h' : 0.613,
-                           '2bh1h' : 0.651,
-                           '1bh2h' : 0.658,
-                           '0bh3h' : 0.679,
+                  '2017': {'3bh0h' : 0.6535,
+                           '2bh1h' : 0.6785,
+                           '1bh2h' : 0.6915,
+                           '0bh3h' : 0.699,
+                           '2bh0h' : 0.691,
+                           '1bh1h' : 0.6935,
+                           '0bh2h' : 0.712,
                             },
-                  '2016': {'3bh0h' : 0.613,
-                           '2bh1h' : 0.593,
-                           '1bh2h' : 0.611,
-                           '0bh3h' : 0.647,
+                  '2016': {'3bh0h' : 0.650,
+                           '2bh1h' : 0.6795,
+                           '1bh2h' : 0.6935,
+                           '0bh3h' : 0.713,
+                           '2bh0h' : 0.6895,
+                           '1bh1h' : 0.6795,
+                           '0bh2h' : 0.7005,
                             },
-                  '2016APV': {'3bh0h' : 0.613,
-                           '2bh1h' : 0.598,
-                           '1bh2h' : 0.613,
-                           '0bh3h' : 0.646,
+                  '2016APV': {'3bh0h' : 0.649,
+                           '2bh1h' : 0.6755,
+                           '1bh2h' : 0.6845,
+                           '0bh3h' : 0.705,
+                           '2bh0h' : 0.68,
+                           '1bh1h' : 0.6935,
+                           '0bh2h' : 0.708,
+                            },
+}
+
+opt_bins_split_probMultiH = {'2018': {'3bh0h' : 0.9875,
+                           '2bh1h' : 0.9935,
+                           '1bh2h' : 0.9945,
+                           '0bh3h' : 0.997,
+                           '2bh0h' : 0.994,
+                           '1bh1h' : 0.9965,
+                           '0bh2h' : 0.9975,
+                            },
+                  '2017': {'3bh0h' : 0.9885,
+                           '2bh1h' : 0.9915,
+                           '1bh2h' : 0.9935,
+                           '0bh3h' : 0.9965,
+                           '2bh0h' : 0.9935,
+                           '1bh1h' : 0.9945,
+                           '0bh2h' : 0.997,
+                            },
+                  '2016': {'3bh0h' : 0.985,
+                           '2bh1h' : 0.992,
+                           '1bh2h' : 0.994,
+                           '0bh3h' : 0.9965,
+                           '2bh0h' : 0.993,
+                           '1bh1h' : 0.994,
+                           '0bh2h' : 0.996,
+                            },
+                  '2016APV': {'3bh0h' : 0.985,
+                           '2bh1h' : 0.992,
+                           '1bh2h' : 0.994,
+                           '0bh3h' : 0.9965,
+                           '2bh0h' : 0.993,
+                           '1bh1h' : 0.994,
+                           '0bh2h' : 0.996,
+                            },
+}
+
+opt_bins_split_probMultiH_HH4b = {'2018': {
+                           '3bh0h' : 0.997,
+                           '2bh1h' : 0.997,
+                           '1bh2h' : 0.997,
+                           '0bh3h' : 0.997,
+                           '2bh0h' : 0.997,
+                           '1bh1h' : 0.997,
+                           '0bh2h' : 0.997,
+                            },
+                  '2017': {
+                           '3bh0h' : 0.997,
+                           '2bh1h' : 0.997,
+                           '1bh2h' : 0.997,
+                           '0bh3h' : 0.997,
+                           '2bh0h' : 0.997,
+                           '1bh1h' : 0.997,
+                           '0bh2h' : 0.997,
+                            },
+                  '2016': {
+                           '3bh0h' : 0.9865,
+                           '2bh1h' : 0.9965,
+                           '1bh2h' : 0.996,
+                           '0bh3h' : 0.997,
+                           '2bh0h' : 0.995,
+                           '1bh1h' : 0.986,
+                           '0bh2h' : 0.956,
+                            },
+                  '2016APV': {
+                           '3bh0h' : 0.956,
+                           '2bh1h' : 0.9965,
+                           '1bh2h' : 0.996,
+                           '0bh3h' : 0.997,
+                           '2bh0h' : 0.988,
+                           '1bh1h' : 0.984,
+                           '0bh2h' : 0.958,
                             },
 }
 
 
 year = args.year
 version = args.version
+var = args.var
+
+if 'ProbHHH' in var:
+    opt_bins = opt_bins_probHHH
+    opt_bins_split = opt_bins_split_probHHH
+
+elif 'ProbMultiH' in var:
+    opt_bins = opt_bins_probMultiH
+    opt_bins_split = opt_bins_split_probMultiH
+    if 'ProbHH4b' in args.prob:
+        opt_bins = opt_bins_probMultiH_HH4b
+        opt_bins_split = opt_bins_split_probMultiH_HH4b
 
 #bins_ProbHH4b_2Higgs = [1.0, 0.942, 0.91, 0.901, 0.879, 0.862, 0.844, 0.8240000000000001,0.808, 0.8049999999999999, 0.7949999999999999]
+if 'ProbMultiH' in var:
+    delta = 0.001
+elif 'ProbHHH' in var:
+    delta = 0.013
 
-bins_ProbHH4b_2Higgs = [1.0 ] + [ 0.647 - 0.013 * i for i in range(10)] 
+if 'ProbHH4b' in args.prob:
+    delta = 0.001
+
+
+bins_ProbHH4b_2Higgs = [1.0 ] + [ 0.997 - delta * i for i in range(10)] 
 #bins_ProbHHH6b_3Higgs = [1.0, 0.699, 0.6799999999999999, 0.6659999999999999, 0.6539999999999999, 0.6439999999999999, 0.635, 0.626, 0.618, 0.61, 0.602, 0.594, 0.586, 0.578, 0.57, 0.5619999999999999, 0.5539999999999999, 0.5449999999999999, 0.5359999999999999, 0.5269999999999999, 0.518]
-bins_ProbHHH6b_3Higgs = [1.0 ] + [ opt_bins[year]- 0.013 * i for i in range(10)] #[1.0, 0.59] + [0.54 - 0.05 * i for i in range(10)]
+bins_ProbHHH6b_3Higgs = [1.0 ] + [ opt_bins[year]- delta * i for i in range(10)] #[1.0, 0.59] + [0.54 - 0.05 * i for i in range(10)]
 
 if '2016' in args.year:
-    bins_ProbHHH6b_3Higgs = [1.0 ] + [ opt_bins[year] - 0.013 * i for i in range(10)] #[1.0, 0.59] + [0.54 - 0.05 * i for i in range(10)]
+    bins_ProbHHH6b_3Higgs = [1.0 ] + [ opt_bins[year] - delta * i for i in range(10)] #[1.0, 0.59] + [0.54 - 0.05 * i for i in range(10)]
 
 
-bins_ProbHHH6b_2Higgs = [1.0] + [opt_bins[year] - 0.06 * i for i in range(10)]
-bins_ProbVV_2Higgs = [1.0] + [0.57 - 0.05 * i for i in range(10)]
+
+bins_ProbHHH6b_2Higgs = [1.0] + [opt_bins[year] - delta * i for i in range(10)]
+bins_ProbVV_2Higgs = [1.0] + [0.57 - delta * i for i in range(10)]
+
+bins_ProbHHH6b_3bh0h = [1.0 ] + [opt_bins_split[year]['3bh0h'] - delta * i for i in range(10)]
+bins_ProbHHH6b_2bh1h = [1.0 ] + [opt_bins_split[year]['2bh1h'] - delta * i for i in range(10)]
+bins_ProbHHH6b_1bh2h = [1.0 ] + [opt_bins_split[year]['1bh2h'] - delta * i for i in range(10)]
+bins_ProbHHH6b_0bh3h = [1.0 ] + [opt_bins_split[year]['0bh3h'] - delta * i for i in range(10)]
+bins_ProbHHH6b_2bh0h = [1.0 ] + [opt_bins_split[year]['2bh0h'] - delta * i for i in range(10)]
+bins_ProbHHH6b_1bh1h = [1.0 ] + [opt_bins_split[year]['1bh1h'] - delta * i for i in range(10)]
+bins_ProbHHH6b_0bh2h = [1.0 ] + [opt_bins_split[year]['0bh2h'] - delta * i for i in range(10)]
+
+bins_ProbHHH6b_1bh0h = [1.0 ] + [opt_bins[year] - delta * i for i in range(10)]
+bins_ProbHHH6b_0bh1h = [1.0 ] + [opt_bins[year] - delta * i for i in range(10)]
+bins_ProbHHH6b_0bh0h = [1.0 ] + [opt_bins[year] - delta * i for i in range(10)]
 
 
-bins_ProbHHH6b_3bh0h = [1.0 ] + [opt_bins_split[year]['3bh0h'] - 0.013 * i for i in range(10)]
-bins_ProbHHH6b_2bh1h = [1.0 ] + [opt_bins_split[year]['2bh1h'] - 0.013 * i for i in range(10)]
-bins_ProbHHH6b_1bh2h = [1.0 ] + [opt_bins_split[year]['1bh2h'] - 0.013 * i for i in range(10)]
-bins_ProbHHH6b_0bh3h = [1.0 ] + [opt_bins_split[year]['0bh3h'] - 0.013 * i for i in range(10)]
-
-bins_ProbHHH6b_2bh0h = [1.0 ] + [opt_bins[year] - 0.013 * i for i in range(10)]
-bins_ProbHHH6b_1bh1h = [1.0 ] + [opt_bins[year] - 0.013 * i for i in range(10)]
-bins_ProbHHH6b_0bh2h = [1.0 ] + [opt_bins[year] - 0.013 * i for i in range(10)]
-
-bins_ProbHHH6b_1bh0h = [1.0 ] + [opt_bins[year] - 0.013 * i for i in range(10)]
-bins_ProbHHH6b_0bh1h = [1.0 ] + [opt_bins[year] - 0.013 * i for i in range(10)]
-bins_ProbHHH6b_0bh0h = [1.0 ] + [opt_bins[year] - 0.013 * i for i in range(10)]
+bins_ProbHH4b_2bh0h = [1.0 ] + [opt_bins_split[year]['2bh0h'] - delta * i for i in range(10)]
+bins_ProbHH4b_1bh1h = [1.0 ] + [opt_bins_split[year]['1bh1h'] - delta * i for i in range(10)]
+bins_ProbHH4b_0bh2h = [1.0 ] + [opt_bins_split[year]['0bh2h'] - delta * i for i in range(10)]
 
 categories = {            
             'ProbHH4b_3bh0h_inclusive' : '(nprobejets > -1)',
@@ -128,6 +390,21 @@ categories = {
             'ProbHHH6b_1bh0h_inclusive' : '(nprobejets > -1)',
             'ProbHHH6b_0bh1h_inclusive' : '(nprobejets > -1)',
             'ProbHHH6b_0bh0h_inclusive' : '(nprobejets > -1)',
+
+            'ProbHHH4b2tau_1Higgs_inclusive' : '(nprobejets > -1)',
+            'ProbHHH4b2tau_2Higgs_inclusive' : '(nprobejets > -1)',
+            'ProbHHH4b2tau_3Higgs_inclusive' : '(nprobejets > -1)',
+
+            'ProbHHH4b2tau_3bh0h_inclusive' : '(nprobejets > -1)',
+            'ProbHHH4b2tau_2bh1h_inclusive' : '(nprobejets > -1)',
+            'ProbHHH4b2tau_1bh2h_inclusive' : '(nprobejets > -1)',
+            'ProbHHH4b2tau_0bh3h_inclusive' : '(nprobejets > -1)',
+            'ProbHHH4b2tau_2bh0h_inclusive' : '(nprobejets > -1)',
+            'ProbHHH4b2tau_1bh1h_inclusive' : '(nprobejets > -1)',
+            'ProbHHH4b2tau_0bh2h_inclusive' : '(nprobejets > -1)',
+            'ProbHHH4b2tau_1bh0h_inclusive' : '(nprobejets > -1)',
+            'ProbHHH4b2tau_0bh1h_inclusive' : '(nprobejets > -1)',
+            'ProbHHH4b2tau_0bh0h_inclusive' : '(nprobejets > -1)',
 }
 
 binnings = {
@@ -137,9 +414,9 @@ binnings = {
     'ProbHH4b_2bh1h_inclusive' : convert_list_to_dict(bins_ProbHH4b_2Higgs),
     'ProbHH4b_1bh2h_inclusive' : convert_list_to_dict(bins_ProbHH4b_2Higgs),
     'ProbHH4b_0bh3h_inclusive' : convert_list_to_dict(bins_ProbHH4b_2Higgs),
-    'ProbHH4b_2bh0h_inclusive' : convert_list_to_dict(bins_ProbHH4b_2Higgs),
-    'ProbHH4b_1bh1h_inclusive' : convert_list_to_dict(bins_ProbHH4b_2Higgs),
-    'ProbHH4b_0bh2h_inclusive' : convert_list_to_dict(bins_ProbHH4b_2Higgs),
+    'ProbHH4b_2bh0h_inclusive' : convert_list_to_dict(bins_ProbHH4b_2bh0h),
+    'ProbHH4b_1bh1h_inclusive' : convert_list_to_dict(bins_ProbHH4b_1bh1h),
+    'ProbHH4b_0bh2h_inclusive' : convert_list_to_dict(bins_ProbHH4b_0bh2h),
     'ProbHH4b_1bh0h_inclusive' : convert_list_to_dict(bins_ProbHH4b_2Higgs),
     'ProbHH4b_0bh1h_inclusive' : convert_list_to_dict(bins_ProbHH4b_2Higgs),
     
@@ -170,7 +447,24 @@ binnings = {
     'ProbHHH6b_0bh1h_inclusive' : convert_list_to_dict(bins_ProbHHH6b_0bh1h),
     'ProbHHH6b_0bh0h_inclusive' : convert_list_to_dict(bins_ProbHHH6b_0bh0h),
 
+    'ProbHHH4b2tau_3bh0h_inclusive' : convert_list_to_dict(bins_ProbHHH6b_3bh0h),
+    'ProbHHH4b2tau_2bh1h_inclusive' : convert_list_to_dict(bins_ProbHHH6b_2bh1h),
+    'ProbHHH4b2tau_1bh2h_inclusive' : convert_list_to_dict(bins_ProbHHH6b_1bh2h),
+    'ProbHHH4b2tau_0bh3h_inclusive' : convert_list_to_dict(bins_ProbHHH6b_0bh3h),
 
+    'ProbHHH4b2tau_2bh0h_inclusive' : convert_list_to_dict(bins_ProbHHH6b_2bh0h),
+    'ProbHHH4b2tau_1bh1h_inclusive' : convert_list_to_dict(bins_ProbHHH6b_1bh1h),
+    'ProbHHH4b2tau_0bh2h_inclusive' : convert_list_to_dict(bins_ProbHHH6b_0bh2h),
+
+    'ProbHHH4b2tau_1bh0h_inclusive' : convert_list_to_dict(bins_ProbHHH6b_1bh0h),
+    'ProbHHH4b2tau_0bh1h_inclusive' : convert_list_to_dict(bins_ProbHHH6b_0bh1h),
+    'ProbHHH4b2tau_0bh0h_inclusive' : convert_list_to_dict(bins_ProbHHH6b_0bh0h),
+
+
+
+    'ProbHHH4b2tau_3Higgs_inclusive' : convert_list_to_dict(bins_ProbHHH6b_3Higgs),
+    'ProbHHH4b2tau_1Higgs_inclusive' : convert_list_to_dict(bins_ProbHHH6b_3Higgs),
+    'ProbHHH4b2tau_2Higgs_inclusive' : convert_list_to_dict(bins_ProbHHH6b_3Higgs),
 
 
 }
@@ -227,8 +521,8 @@ def get_integral_and_error(hist):
 #path = '/isilon/data/users/mstamenk/eos-triple-h/v28-categorisation/mva-inputs-2018-categorisation-spanet-boosted-classification/'
 path = '/isilon/data/users/mstamenk/eos-triple-h/%s/mva-inputs-%s-categorisation-spanet-boosted-classification/'%(version,year)
 
-cat = 'ProbHHH6b_1Higgs_inclusive'
-option = '_CR'
+cat = 'ProbHHH6b_3Higgs_inclusive'
+option = '_SR'
 
 prob = args.prob#'ProbHHH6b'
 
@@ -250,11 +544,12 @@ for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0
     samples = glob.glob(path+'/'+file_path+'/*.root')
     samples = [os.path.basename(s).replace('.root','') for s in samples if 'QCD' not in s]
 
-    outfile = ROOT.TFile(path +'/' + target + '/' + 'histograms_ProbMultiH.root','recreate')
+    #var = "ProbMultiH" #variables[cat]
+    outfile = ROOT.TFile(path +'/' + target + '/' + 'histograms_%s.root'%var,'recreate')
 
     #samples = ['GluGluToHHHTo6B_SM']
 
-    var = "ProbHHH" #variables[cat]
+    
 
     binning = binnings[cat]
     cut = categories[cat]
@@ -263,6 +558,7 @@ for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0
     bkg_yield = 0
 
     for s in samples:
+        if 'GluGlu' in s: continue # separate signal from other processes
         print(s)
         f_name = path + '/' + file_path + '/' + s + '.root'
         tree = ROOT.TChain('Events')
@@ -272,12 +568,23 @@ for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0
             h_mva = ROOT.TH1F('data_obs','data_obs',len(binning),0,len(binning))
         else:
             h_mva = ROOT.TH1F(s,s,len(binning),0,len(binning))
+
+        weight = 'totalWeight'
+
+        
+
+        
+        #    weight = 'totalWeight / (flavTagWeight * fatJetFlavTagWeight)'
+
         for i in range(1,h_mva.GetNbinsX() + 1):
 
             low,up = binning[i]
         
             h_name = s + '_histo_%d'%i
-            tree.Draw("%s>>%s(100,0,1)"%(var,h_name),'(%s && %s > %f && %s < %f) * totalWeight'%(cut, var,low, var,up))
+
+            
+
+            tree.Draw("%s>>%s(100,0,1)"%(var,h_name),'(%s && %s > %f && %s < %f) * %s'%(cut, var,low, var,up,weight))
             try:
                 h = ROOT.gPad.GetPrimitive(h_name)
                 integral, error = get_integral_and_error(h)
@@ -300,10 +607,72 @@ for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0
         h_mva.Write()
 
 
+    for sam in samples:
+        if 'GluGlu' not in sam: continue # separate signal from other processes
+
+        for syst in systematics:
+            if 'nominal' in syst:
+                s = sam 
+            else:
+                s = sam + '_' + labels[syst]
+            print(s)
+
+
+            f_name = path + '/' + file_path + '/' + sam + '.root'
+            tree = ROOT.TChain('Events')
+            tree.AddFile(f_name)
+
+            if 'JetHT' in s:
+                h_mva = ROOT.TH1F('data_obs','data_obs',len(binning),0,len(binning))
+            else:
+                h_mva = ROOT.TH1F(s,s,len(binning),0,len(binning))
+
+            if 'nominal' in syst:
+                weight = 'totalWeight'
+            elif 'LHE' in syst or 'PSWeight' in syst:
+                weight = 'totalWeight * %s'%syst
+
+            elif 'flavTag' in syst or 'FlavTag' in syst:
+                w = syst.split('_')[0]
+                weight = '(totalWeight / %s) * %s'%(w,syst)
+
+            
+            #    weight = 'totalWeight / (flavTagWeight * fatJetFlavTagWeight)'
+
+            for i in range(1,h_mva.GetNbinsX() + 1):
+
+                low,up = binning[i]
+            
+                h_name = sam + '_histo_%d_%s'%(i,labels[syst])
+
+                
+
+                tree.Draw("%s>>%s(100,0,1)"%(var,h_name),'(%s && %s > %f && %s < %f) * %s'%(cut, var,low, var,up,weight))
+                try:
+                    h = ROOT.gPad.GetPrimitive(h_name)
+                    integral, error = get_integral_and_error(h)
+                except: continue
+                
+                print(i,integral,error)
+                h_mva.SetBinContent(i,integral)
+                h_mva.SetBinError(i,error)
+            if 'data_obs' in s:
+                data_yield = h_mva.Integral() 
+            if 'data_obs' not in s:
+                bkg_yield += h_mva.Integral()   
+
+            
+            #h_mva.Rebin(2)
+            #if 'data_obs' not in s:
+            #if 'QCD' in s:
+            #    h_mva.Scale(0.47)
+            outfile.cd()
+            h_mva.Write()
+
     tree = ROOT.TChain('Events')
     #tree.AddFile(path + '/' + file_path + '/' + 'QCD' + '.root')
     #tree.AddFile(path + '/' + file_path + '/' + 'QCD_modelling' + '.root')
-    tree.AddFile(path + '/' + file_path + '/' + 'QCD_datadriven_data' + '.root')
+    tree.AddFile(path + '/' + file_path + '/' + 'QCD_datadriven' + '.root')
 
     h_mva = ROOT.TH1F('QCD','QCD',len(binning),0,len(binning))
     print('QCD')
@@ -333,6 +702,6 @@ for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0
     outfile.Close()
 
     print("Done with:")
-    print(path +'/' + target + '/' + 'histograms_ProbMultiH.root')
+    print(path +'/' + target + '/' + 'histograms_%s.root'%var)
 
 
