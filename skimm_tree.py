@@ -1336,15 +1336,16 @@ for selection in selections.keys() :
       proc=subprocess.Popen([command],shell=True,stdout=subprocess.PIPE)
       out = proc.stdout.read()
 
-#####do histograms first then do correction##########
-##############file_1Higgs corresponding to CR to calculate ratio#########
-##############file_2Higgs corresponding to SR to add correction###########
- if not skip_do_correct :
-    path_to_histograms = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v31/%s'%(year)
-    file_1Higgs = "{}/ProbHHH6b_1Higgs_inclusive_/histograms/histograms_{}.root".format(path_to_histograms,do_limit_input)
-    file_2Higgs = "{}/ProbHHH6b_2Higgs_inclusive_/histograms/histograms_{}.root".format(path_to_histograms,do_limit_input)
-    Higgs_number = "2Higgs"
-    path = output_histos
-    Unc_Shape(file_1Higgs,file_2Higgs,do_limit_input,Higgs_number,path,year)
+  #####do histograms first then do correction##########
+  ##############file_1Higgs corresponding to CR to calculate ratio#########
+  ##############file_2Higgs corresponding to SR to add correction###########
+  if not skip_do_correct :
+      path_to_histograms = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v32/%s'%(year)
+      Higgs_number_strings = ["2Higgs","3bh0h","2bh1h","1bh2h","0bh3h"]
+      for Higgs_number in Higgs_number_strings: 
+          file_1Higgs = "{}/ProbHHH6b_1Higgs_inclusive_/histograms/histograms_{}.root".format(path_to_histograms,do_limit_input)
+          file_2Higgs = "{}/ProbHHH6b_{}_inclusive_/histograms/histograms_{}.root".format(path_to_histograms,Higgs_number,do_limit_input)
+          Unc_Shape(file_1Higgs,file_2Higgs,do_limit_input,path_to_histograms,Higgs_number,year)
+    
     
     
