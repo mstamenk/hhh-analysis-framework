@@ -255,9 +255,7 @@ prob = args.prob#'ProbHHH6b'
 
 
 for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0bh3h_inclusive','%s_0bh0h_inclusive','%s_2Higgs_inclusive','%s_1Higgs_inclusive','%s_3Higgs_inclusive']:# variables:
-    cat = cat%prob
-    print(cat)
-    #print(binnings[cat])
+   
     target = '%s%s/histograms'%(cat,option)
 
     if not os.path.isdir(path + '/' + target):
