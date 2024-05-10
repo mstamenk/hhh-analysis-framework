@@ -7,16 +7,19 @@ import argparse
 parser = argparse.ArgumentParser(description='Args')
 parser.add_argument('-v','--version', default='v28-QCD-modelling') # version of NanoNN production
 parser.add_argument('--year', default='2018') # year
+parser.add_argument('--typename', default='categorisation-spanet-boosted-classification') # typename
+parser.add_argument('--regime', default='inclusive-weights') # regime
+parser.add_argument('--inpath',default = '/users/mstamenk/scratch/mstamenk')
+parser.add_argument('--outpath',default = '/users/mstamenk/scratch/mstamenk/eos-triple-h')
 args = parser.parse_args()
 
 year = args.year
 version = args.version
-typename = 'spanet-boosted-classification'
+typename = args.typename
+regime = args.regime
 
-regime = 'inclusive-weights'
-path = '/users/mstamenk/scratch/mstamenk/%s/mva-inputs-%s-%s/%s/'%(version,year,typename,regime)
-
-files = glob.glob(path +'/*.root')
+path = os.path.join(args.inpath, version, 'mva-inputs-%s-%s'%(year,typename), regime)
+files = glob.glob(os.path.join(path, '*.root'))
 
 #files = [f for f in files if 'HHH' in f or 'HH' in f]
 
@@ -46,13 +49,13 @@ samples = list(set(samples))
 
 print(samples)
 
-output_path = '/users/mstamenk/scratch/mstamenk/eos-triple-h/%s-merged-selection/mva-inputs-%s-%s/%s/'%(version,year,typename,regime)
+output_path = os.path.join(args.outpath, '%s-merged-selection'%version, 'mva-inputs-%s-%s'%(year,typename), regime)
 
 if not os.path.isdir(output_path):
     os.makedirs(output_path)
 
 for sample in samples:
-    cmd = 'hadd -f -j -n 0 %s/%s.root %s/%s_*.root'%(output_path,sample,path,sample)
+    cmd = 'hadd -f -j -n 0 %s %s'%(os.path.join(output_path, '%s.root'%sample),os.path.join(path,'%s_*.root'%sample))
     print(cmd)
     #if 'QCD' in sample and "bEnriched" not in sample: continue
     #if 'TTToSemiLeptonic' in sample: continue
