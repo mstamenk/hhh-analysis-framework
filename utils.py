@@ -335,6 +335,7 @@ histograms_dict = {
 #doing this ordered dictionary to make sure of the drawing order
 # [color, marker size, line size, legend label , add in legend]
 hist_properties = {'JetHT' : [ROOT.kBlack, 0.8, 0, 'Data', True] ,
+                   'JetMET' : [ROOT.kBlack, 0.8, 0, 'Data', True],
                    'JetHT-btagSF' : [ROOT.kBlack, 0.8, 0, 'Data', True],
                    'BTagCSV' : [ROOT.kBlack, 0.8, 0, 'Data', True],
                    'data_obs' : [ROOT.kBlack, 0.8, 0, 'Data', True],
@@ -727,8 +728,28 @@ computeMHHH = '''
 
 '''
 
+computeMHH = '''
+    float computeMHH(int type, float h1_t3_mass, float h1_t3_pt, float h1_t3_eta, float h1_t3_phi,float h2_t3_mass, float h2_t3_pt, float h2_t3_eta, float h2_t3_phi) {
+        TLorentzVector h1;
+        TLorentzVector h2;
+
+        h1.SetPtEtaPhiM(h1_t3_pt, h1_t3_eta, h1_t3_phi, h1_t3_mass);
+        h2.SetPtEtaPhiM(h2_t3_pt, h2_t3_eta, h2_t3_phi, h2_t3_mass);
+
+        if (type == 0)
+            return (h1+h2).M();
+        else if (type == 1)
+            return (h1+h2).Pt();
+        else if (type == 2)
+            return (h1+h2).Eta();
+        else return 0;
+    }
+
+'''
+
 def init_mhhh():
     ROOT.gInterpreter.Declare(computeMHHH)
+    ROOT.gInterpreter.Declare(computeMHH)
 
 def addMHHH(df):
     df = df.Define('mHHH', 'computeMHHH(0,h1_t3_mass,h1_t3_pt,h1_t3_eta,h1_t3_phi,h2_t3_mass,h2_t3_pt,h2_t3_eta,h2_t3_phi,h3_t3_mass,h3_t3_pt,h3_t3_eta,h3_t3_phi)') # for compatibility with boosted BDT
@@ -738,6 +759,12 @@ def addMHHH(df):
     df = df.Define('HHH4b2tau_mass', 'computeMHHH(0, h1_4b2t_mass,h1_4b2t_pt,h1_4b2t_eta,h1_4b2t_phi,h2_4b2t_mass,h2_4b2t_pt,h2_4b2t_eta,h2_4b2t_phi,h3_4b2t_mass,h3_4b2t_pt,h3_4b2t_eta,h3_4b2t_phi)')
     df = df.Define('HHH4b2tau_pt', 'computeMHHH(1, h1_4b2t_mass,h1_4b2t_pt,h1_4b2t_eta,h1_4b2t_phi,h2_4b2t_mass,h2_4b2t_pt,h2_4b2t_eta,h2_4b2t_phi,h3_4b2t_mass,h3_4b2t_pt,h3_4b2t_eta,h3_4b2t_phi)')
     df = df.Define('HHH4b2tau_eta', 'computeMHHH(2, h1_4b2t_mass,h1_4b2t_pt,h1_4b2t_eta,h1_4b2t_phi,h2_4b2t_mass,h2_4b2t_pt,h2_4b2t_eta,h2_4b2t_phi,h3_4b2t_mass,h3_4b2t_pt,h3_4b2t_eta,h3_4b2t_phi)')
+    df = df.Define('HH_mass', 'computeMHH(0, h1_t3_mass,h1_t3_pt,h1_t3_eta,h1_t3_phi,h2_t3_mass,h2_t3_pt,h2_t3_eta,h2_t3_phi)')
+    df = df.Define('HH_pt', 'computeMHH(1, h1_t3_mass,h1_t3_pt,h1_t3_eta,h1_t3_phi,h2_t3_mass,h2_t3_pt,h2_t3_eta,h2_t3_phi)')
+    df = df.Define('HH_eta', 'computeMHH(2, h1_t3_mass,h1_t3_pt,h1_t3_eta,h1_t3_phi,h2_t3_mass,h2_t3_pt,h2_t3_eta,h2_t3_phi)')
+    df = df.Define('HH4b2tau_mass', 'computeMHH(0, h1_4b2t_mass,h1_4b2t_pt,h1_4b2t_eta,h1_4b2t_phi,h2_4b2t_mass,h2_4b2t_pt,h2_4b2t_eta,h2_4b2t_phi)')
+    df = df.Define('HH4b2tau_pt', 'computeMHH(1, h1_4b2t_mass,h1_4b2t_pt,h1_4b2t_eta,h1_4b2t_phi,h2_4b2t_mass,h2_4b2t_pt,h2_4b2t_eta,h2_4b2t_phi)')
+    df = df.Define('HH4b2tau_eta', 'computeMHH(2, h1_4b2t_mass,h1_4b2t_pt,h1_4b2t_eta,h1_4b2t_phi,h2_4b2t_mass,h2_4b2t_pt,h2_4b2t_eta,h2_4b2t_phi)')
     return df
 
 def drawText(x, y, text, color = ROOT.kBlack, fontsize = 0.05, font = 42, doNDC = True, alignment = 12):
@@ -773,7 +800,7 @@ def initialise_df(df,year,proc):
         df = df.Define('triggerSF', triggersCorrections[year][1] )
     #cutWeight = '(%f * weight * xsecWeight * l1PreFiringWeight * puWeight * genWeight * triggerSF)'%(lumi)
     cutWeight = '(%f * xsecWeight * l1PreFiringWeight * puWeight * genWeight * triggerSF)'%(lumi)
-    if 'JetHT' in proc or 'BTagCSV' in proc or 'SingleMuon' in proc:
+    if 'JetHT' in proc or 'JetMET' in proc or 'BTagCSV' in proc or 'SingleMuon' in proc:
         df = df.Define('eventWeight','1')
     else:
         df = df.Define('eventWeight',cutWeight)
@@ -801,9 +828,10 @@ def initialise_df(df,year,proc):
     df = df.Define('nmediumbtags',nmedium)
     df = df.Define('ntightbtags',ntight)
 
-    df = addBTagEffSF(df,proc,'loose')
-    df = addBTagEffSF(df,proc,'medium')
-    df = addBTagEffSF(df,proc,'tight')
+    if not ('JetHT' in proc or 'JetMET' in proc or 'BTagCSV' in proc or 'SingleMuon' in proc):
+        df = addBTagEffSF(df,proc,'loose')
+        df = addBTagEffSF(df,proc,'medium')
+        df = addBTagEffSF(df,proc,'tight')
 
     return df
 
@@ -915,7 +943,7 @@ def matching_variables(df):
         h1match.append('int(%sHiggsMatchedIndex == 1 && %sFatJetMatched == 0)'%(j,j))
         h2match.append('int(%sHiggsMatchedIndex == 2 && %sFatJetMatched == 0)'%(j,j))
         h3match.append('int(%sHiggsMatchedIndex == 3 && %sFatJetMatched == 0)'%(j,j))
-    for t in ['tau1','tau2','tau3','tau4']:
+    for t in ['tau1','tau2','tau3','tau4','lep1','lep2','lep3','lep4']:
         higgsmatchedtau.append('int(%sHiggsMatched)'%t)
         h1matchtau.append('int(%sHiggsMatchedIndex == 1 && %sFatJetMatched == 0)'%(t,t))
         h2matchtau.append('int(%sHiggsMatchedIndex == 2 && %sFatJetMatched == 0)'%(t,t))
