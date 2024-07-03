@@ -1,6 +1,7 @@
 # Utility to add calibrations
 # git clone ssh://git@gitlab.cern.ch:7999/cms-nanoAOD/jsonpog-integration.git
 
+import os
 import ROOT
 import correctionlib
 correctionlib.register_pyroot_binding()
@@ -62,14 +63,25 @@ computeTightBTAGSF = '''
 '''
 
 def btag_init(year):
-    sfDir = '/isilon/data/users/mstamenk/hhh-6b-producer/CMSSW_12_5_2/src/jsonpog-integration/POG/BTV/%s_UL/btagging.json.gz'%year
+    if year in ['2016APV', '2016', '2017', '2018']:
+        sfDir = os.path.join(os.environ["CMSSW_BASE"], 'src/jsonpog-integration/POG/BTV/%s_UL/btagging.json.gz'%year)
+    elif year == '2022':
+        sfDir = os.path.join(os.environ["CMSSW_BASE"], 'src/jsonpog-integration/POG/BTV/2022_Summer22/btagging.json.gz')
+    elif year == '2022EE':
+        sfDir = os.path.join(os.environ["CMSSW_BASE"], 'src/jsonpog-integration/POG/BTV/2022_Summer22EE/btagging.json.gz')
     ROOT.gInterpreter.Declare('auto btvjson = correction::CorrectionSet::from_file("%s");'%sfDir)
-    ROOT.gInterpreter.Declare('auto btvjson_shape = btvjson->at("deepJet_shape");')
-    ROOT.gInterpreter.Declare('auto btvjson_comb = btvjson->at("deepJet_comb");') # bc
-    ROOT.gInterpreter.Declare('auto btvjson_incl = btvjson->at("deepJet_incl");') # light
-    ROOT.gInterpreter.Declare(computeLooseBTAGSF)
-    ROOT.gInterpreter.Declare(computeMediumBTAGSF)
-    ROOT.gInterpreter.Declare(computeTightBTAGSF)
+    if year in ['2016APV', '2016', '2017', '2018']:
+        ROOT.gInterpreter.Declare('auto btvjson_shape = btvjson->at("deepJet_shape");')
+        ROOT.gInterpreter.Declare('auto btvjson_comb = btvjson->at("deepJet_comb");') # bc
+        ROOT.gInterpreter.Declare('auto btvjson_incl = btvjson->at("deepJet_incl");') # light
+        ROOT.gInterpreter.Declare(computeLooseBTAGSF)
+        ROOT.gInterpreter.Declare(computeMediumBTAGSF)
+        ROOT.gInterpreter.Declare(computeTightBTAGSF)
+    elif year in ['2022', '2022EE']:
+        # No SFs available yet; just WPs
+        ROOT.gInterpreter.Declare('float computeLooseBTagsEffSFPerFlavour(int hadronFlavour, float eta, float pt){return 1.0;}')
+        ROOT.gInterpreter.Declare('float computeMediumBTagsEffSFPerFlavour(int hadronFlavour, float eta, float pt){return 1.0;}')
+        ROOT.gInterpreter.Declare('float computeTightBTagsEffSFPerFlavour(int hadronFlavour, float eta, float pt){return 1.0;}')
 
 
 

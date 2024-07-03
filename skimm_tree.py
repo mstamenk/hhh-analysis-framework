@@ -21,14 +21,14 @@ import gc
 ROOT.gROOT.SetBatch(ROOT.kTRUE)
 ROOT.ROOT.EnableImplicitMT()
 
-from utils import histograms_dict, wps_years, wps, tags, luminosities, hlt_paths, triggersCorrections, hist_properties, init_mhhh, addMHHH, clean_variables, initialise_df, save_variables, init_get_max_prob, init_get_max_cat
+from utils import histograms_dict, wps_years, tags, luminosities, hlt_paths, triggersCorrections, hist_properties, init_mhhh, addMHHH, clean_variables, initialise_df, save_variables, init_get_max_prob, init_get_max_cat
 from machinelearning import init_bdt, add_bdt, init_bdt_boosted, add_bdt_boosted
 from calibrations import btag_init, addBTagSF, addBTagEffSF
 from hhh_variables import add_hhh_variables
 
 from optparse import OptionParser
 parser = OptionParser()
-parser.add_option("--base_folder ", type="string", dest="base", help="Folder in where to look for the categories", default='/isilon/data/users/mstamenk/eos-triple-h/v27-spanet-boosted-classification-variables/mva-inputs-2018/')
+parser.add_option("--base_folder ", type="string", dest="base", help="Folder in where to look for the categories", default='/eos/user/d/dmroy/HHH/ntuples/v27-spanet-boosted-variables/mva-inputs-2018/')
 parser.add_option("--category ", type="string", dest="category", help="Category to compute it. if no argument is given will do all", default='none')
 parser.add_option("--skip_do_trees", action="store_true", dest="skip_do_trees", help="Write...", default=False)
 parser.add_option("--skip_do_histograms", action="store_true", dest="skip_do_histograms", help="Write...", default=False)
@@ -37,6 +37,7 @@ parser.add_option("--do_SR", action="store_true", dest="do_SR", help="Write...",
 parser.add_option("--do_CR", action="store_true", dest="do_CR", help="Write...", default=False)
 parser.add_option("--process ", type="string", dest="process_to_compute", help="Process to compute it. if no argument is given will do all", default='none')
 parser.add_option("--do_limit_input ", type="string", dest="do_limit_input", help="If given it will do the histograms only in that variable with all the uncertainties", default='none')
+parser.add_option("--year", type="string", dest="year", help="What year is this", default='')
 ## separate SR_CR as an option, this option would add _SR and _CR to the subfolder name
 ## add option to enter a process and if that is given to make the trees and histos only to it
 ## add option to add BDT computation here -- or not, we leave this only to MVA input variables -- the prefit plots already do data/MC
@@ -51,6 +52,7 @@ skip_do_histograms = options.skip_do_histograms
 skip_do_plots      = options.skip_do_plots
 input_tree         = options.base
 cat                = options.category
+year               = options.year
 
 if do_SR and do_CR :
     print("You should chose to signal region OR control region")
@@ -1053,9 +1055,10 @@ if not process_to_compute == 'none' :
     procstodo     = [process_to_compute]
     skip_do_plots = True
 
-for era in ['2016APV', '2016', '2017', '2018','2016APV201620172018'] :
-#for era in [2018] :
-    if str(era) in input_tree : year = str(era)
+if year=='':
+    for era in ['2016APV', '2016', '2017', '2018','2016APV201620172018', '2022', '2022EE'] :
+    #for era in [2018] :
+        if str(era) in input_tree : year = str(era)
 
 if '2016APV201620172018' in year:
     year = '2018'
@@ -1118,10 +1121,12 @@ for selection in selections.keys() :
         else:
             datahist = 'BTagCSV'
 
-    outtree = "{}/{}_{}/{}.root".format(input_tree,selection,additional_label,proctodo)
+    outtree = os.path.join(input_tree, selection+"_"+additional_label, proctodo+".root")
 
     dataset = selections[selection]["dataset"] # inclusive_resolved or inclusive_boosted
-    list_proc=glob.glob("{}/inclusive{}/{}.root".format(input_tree,dataset,datahist))
+    subdir = "inclusive"+dataset if dataset.startswith("-") else "inclusive_"+dataset
+    list_proc=glob.glob(os.path.join(input_tree, subdir, datahist+"*.root"))
+    if list_proc == []: continue
     print("Will create %s" % outtree)
 
 
@@ -1132,7 +1137,13 @@ for selection in selections.keys() :
         print(current_time)
         seconds0 = time.time()
         print(proc)
-        print("Cutting tree and saving it to ", outtree)
+        varregex = r'_part[0-9_]+.root'
+        part = re.findall(varregex, proc)
+        if part!=[]:
+            thisouttree = outtree.replace(".root", part[0])
+        else:
+            thisouttree = outtree
+        print("Cutting tree and saving it to ", thisouttree)
         print("With selection: ", final_selection)
 
         chunk_df = ROOT.RDataFrame(inputTree, proc)
@@ -1246,7 +1257,7 @@ for selection in selections.keys() :
         #chunk_df.Snapshot(inputTree, outtree, variables + ['totalWeight'])
         to_save = [str(el) for el in chunk_df.GetColumnNames() if 'mva' not in str(el)]
 
-        chunk_df.Snapshot(inputTree, outtree,to_save)
+        chunk_df.Snapshot(inputTree, thisouttree,to_save)
 
         gc.collect() # clean menory
         sys.stdout.flush() # extra clean

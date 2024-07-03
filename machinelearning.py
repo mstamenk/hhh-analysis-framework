@@ -24,6 +24,7 @@ bdts_xml_boosted = {
             }
 
 def init_bdt(df, year):
+    if year not in bdts_xml: return
     xmlpath_odd, xmlpath_even = bdts_xml[year]
 
     ROOT.gInterpreter.ProcessLine('''TMVA::Experimental::RReader model_even("{}");'''.format(xmlpath_even))
@@ -56,6 +57,7 @@ def init_bdt(df, year):
 
 
 def add_bdt(df, year):
+    if year not in bdts_xml: return df
     xmlpath_odd, xmlpath_even = bdts_xml[year]
 
 
@@ -93,6 +95,7 @@ def add_bdt(df, year):
 
 
 def init_bdt_boosted(df, year): # need to initialise once so that it doesnt create memory issues for multiple processes in for loop
+    if year not in bdts_xml_boosted: return
     xmlpath_odd, xmlpath_even = bdts_xml_boosted[year]
 
     ROOT.gInterpreter.ProcessLine('''TMVA::Experimental::RReader model_even_boosted("{}");'''.format(xmlpath_even))
@@ -126,6 +129,7 @@ def init_bdt_boosted(df, year): # need to initialise once so that it doesnt crea
     #df = df.Define('mvaBoosted', 'computeModelBoosted(%s)'%method_call)
 
 def add_bdt_boosted(df, year):
+    if year not in bdts_xml_boosted: return df
     xmlpath_odd, xmlpath_even = bdts_xml_boosted[year]
 
     #ROOT.gInterpreter.ProcessLine('''TMVA::Experimental::RReader model_even_boosted("{}");'''.format(xmlpath_even))
