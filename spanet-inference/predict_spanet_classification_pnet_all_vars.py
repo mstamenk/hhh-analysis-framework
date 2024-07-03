@@ -154,6 +154,7 @@ path_f_in = os.path.join(path, '%s.root'%args.f_in)
 
 df = ROOT.RDataFrame("Events", path_f_in)
 entries = df.Count().GetValue()
+allnames = df.GetColumnNames()
 
 event_min = int(args.batch_size) * int(args.batch_number)
 event_max = event_min + int(args.batch_size)
@@ -278,7 +279,8 @@ ht_arrays.append(np_arr)
 jet_4vec = ["%sPt", "%sEta","%sPhi","%sMass","%sHiggsMatchedIndex"]
 array_4vec = []
 for i in ['1','2','3','4','5','6','7','8','9','10']:
-    column_4vec = [el%'jet%s'%i for el in jet_4vec]
+    column_4vec = [el%'jet%s'%i for el in jet_4vec if el%'jet%s'%i in allnames]
+    isMC = (len(column_4vec)==5)
     np_4vec = df.AsNumpy(column_4vec)
     np_arr_4vec = np.vstack(np_4vec[col] for col in column_4vec).T
     array_4vec.append(np_arr_4vec)
@@ -289,7 +291,7 @@ for i in range(len(array_4vec[0])):
     for j in range(10):
         jet = ROOT.TLorentzVector()
         jet.SetPtEtaPhiM(array_4vec[j][i][0], array_4vec[j][i][1], array_4vec[j][i][2], array_4vec[j][i][3])
-        jet.HiggsMatchedIndex = array_4vec[j][i][4]
+        if isMC: jet.HiggsMatchedIndex = array_4vec[j][i][4]
         jets_tmp.append(jet)
     jets.append(jets_tmp)
 
@@ -297,7 +299,7 @@ for i in range(len(array_4vec[0])):
 fatjet_4vec = ["%sPt", "%sEta","%sPhi","%sMass","%sHiggsMatchedIndex"]
 array_fj_4vec = []
 for i in ['1','2','3']:
-    column_4vec = [el%'fatJet%s'%i for el in jet_4vec]
+    column_4vec = [el%'fatJet%s'%i for el in jet_4vec if el%'fatJet%s'%i in allnames]
     np_4vec = df.AsNumpy(column_4vec)
     np_arr_4vec = np.vstack(np_4vec[col] for col in column_4vec).T
     array_fj_4vec.append(np_arr_4vec)
@@ -308,7 +310,7 @@ for i in range(len(array_fj_4vec[0])):
     for j in range(3):
         jet = ROOT.TLorentzVector()
         jet.SetPtEtaPhiM(array_4vec[j][i][0], array_4vec[j][i][1], array_4vec[j][i][2], array_4vec[j][i][3])
-        jet.HiggsMatchedIndex = array_4vec[j][i][4]
+        if isMC: jet.HiggsMatchedIndex = array_4vec[j][i][4]
         jets_tmp.append(jet)
     fatjets.append(jets_tmp)
 
@@ -451,52 +453,58 @@ for i in range(len(output_values[0])):
 
     if len(h1_index) == 2:
         h1 = jets_tmp[int(h1_index[0])] + jets_tmp[int(h1_index[1])]
-        if jets_tmp[int(h1_index[0])].HiggsMatchedIndex ==  jets_tmp[int(h1_index[1])].HiggsMatchedIndex and jets_tmp[int(h1_index[1])].HiggsMatchedIndex > 0:
-          h1.HiggsMatchedIndex = jets_tmp[int(h1_index[0])].HiggsMatchedIndex
-        else:
-          h1.HiggsMatchedIndex = -1
         h1_j1idx.append(float(int(h1_index[0])))
         h1_j2idx.append(float(int(h1_index[1])))
         h1_fatidx.append(float(-1))
+        if isMC: 
+          if jets_tmp[int(h1_index[0])].HiggsMatchedIndex ==  jets_tmp[int(h1_index[1])].HiggsMatchedIndex and jets_tmp[int(h1_index[1])].HiggsMatchedIndex > 0:
+            h1.HiggsMatchedIndex = jets_tmp[int(h1_index[0])].HiggsMatchedIndex
+          else:
+            h1.HiggsMatchedIndex = -1
     elif len(h1_index) == 3:
         h1 = fjets_tmp[int(h1_index)-110]
-        h1.HiggsMatchedIndex = fjets_tmp[int(h1_index)-110].HiggsMatchedIndex # > 0
         h1_j1idx.append(float(-1))
         h1_j2idx.append(float(-1))
         h1_fatidx.append(float(int(h1_index)-110))
+        if isMC:
+          h1.HiggsMatchedIndex = fjets_tmp[int(h1_index)-110].HiggsMatchedIndex # > 0
 
 
     if len(h2_index) == 2:
         h2 = jets_tmp[int(h2_index[0])] + jets_tmp[int(h2_index[1])]
-        if jets_tmp[int(h2_index[0])].HiggsMatchedIndex ==  jets_tmp[int(h2_index[1])].HiggsMatchedIndex and jets_tmp[int(h2_index[1])].HiggsMatchedIndex > 0:
-          h2.HiggsMatchedIndex = jets_tmp[int(h2_index[0])].HiggsMatchedIndex
-        else:
-          h2.HiggsMatchedIndex = -1
         h2_j1idx.append(float(int(h2_index[0])))
         h2_j2idx.append(float(int(h2_index[1])))
         h2_fatidx.append(float(-1))
+        if isMC:
+          if jets_tmp[int(h2_index[0])].HiggsMatchedIndex ==  jets_tmp[int(h2_index[1])].HiggsMatchedIndex and jets_tmp[int(h2_index[1])].HiggsMatchedIndex > 0:
+            h2.HiggsMatchedIndex = jets_tmp[int(h2_index[0])].HiggsMatchedIndex
+          else:
+            h2.HiggsMatchedIndex = -1
     elif len(h2_index) == 3:
         h2 = fjets_tmp[int(h2_index)-110]
-        h2.HiggsMatchedIndex = fjets_tmp[int(h2_index)-110].HiggsMatchedIndex # > 0
         h2_j1idx.append(float(-1))
         h2_j2idx.append(float(-1))
         h2_fatidx.append(float(int(h2_index)-110))
+        if isMC:
+          h2.HiggsMatchedIndex = fjets_tmp[int(h2_index)-110].HiggsMatchedIndex # > 0
 
     if len(h3_index) == 2:
         h3 = jets_tmp[int(h3_index[0])] + jets_tmp[int(h3_index[1])]
-        if jets_tmp[int(h3_index[0])].HiggsMatchedIndex ==  jets_tmp[int(h3_index[1])].HiggsMatchedIndex and jets_tmp[int(h3_index[1])].HiggsMatchedIndex > 0:
-          h3.HiggsMatchedIndex = jets_tmp[int(h3_index[0])].HiggsMatchedIndex
-        else:
-          h3.HiggsMatchedIndex = -1
         h3_j1idx.append(float(int(h3_index[0])))
         h3_j2idx.append(float(int(h3_index[1])))
         h3_fatidx.append(float(-1))
+        if isMC:
+          if jets_tmp[int(h3_index[0])].HiggsMatchedIndex ==  jets_tmp[int(h3_index[1])].HiggsMatchedIndex and jets_tmp[int(h3_index[1])].HiggsMatchedIndex > 0:
+            h3.HiggsMatchedIndex = jets_tmp[int(h3_index[0])].HiggsMatchedIndex
+          else:
+            h3.HiggsMatchedIndex = -1
     elif len(h3_index) == 3:
         h3 = fjets_tmp[int(h3_index)-110]
-        h3.HiggsMatchedIndex = fjets_tmp[int(h3_index)-110].HiggsMatchedIndex # > 0
         h3_j1idx.append(float(-1))
         h3_j2idx.append(float(-1))
         h3_fatidx.append(float(int(h3_index)-110))
+        if isMC:
+          h3.HiggsMatchedIndex = fjets_tmp[int(h3_index)-110].HiggsMatchedIndex # > 0
 
     higgses = [h1,h2,h3]
     #higgses.sort(key= lambda x: x.Pt(), reverse=True)
@@ -520,9 +528,10 @@ for i in range(len(output_values[0])):
     h3_eta.append(h3.Eta())
     h3_phi.append(h3.Phi())
 
-    h1_match.append(float(h1.HiggsMatchedIndex))
-    h2_match.append(float(h2.HiggsMatchedIndex))
-    h3_match.append(float(h3.HiggsMatchedIndex))
+    if isMC:
+        h1_match.append(float(h1.HiggsMatchedIndex))
+        h2_match.append(float(h2.HiggsMatchedIndex))
+        h3_match.append(float(h3.HiggsMatchedIndex))
 
     prob_hhh.append(float(output_values[12][i][1])) # based on mapping in SPANET training
     prob_qcd.append(float(output_values[12][i][2]))
