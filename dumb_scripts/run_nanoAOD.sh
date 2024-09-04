@@ -53,18 +53,7 @@ OUTPUT_DIR="/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framew
 # kappa_strings=("c3_0_d4_99" "c3_0_d4_0" "c3_0_d4_m1" "c3_19_d4_19" "c3_1_d4_0" "c3_1_d4_2" "c3_2_d4_m1" "c3_4_d4_9" "c3_m1_d4_0" "c3_m1_d4_m1" "c3_m1p5_d4_m0p5")
 kappa_strings=("c3_2_d4_m1")
 
-# for str in "${kappa_strings[@]}"; do
-#     # for year in 2016 2016APV 2017 2018; do
-#     for year in 2016 ; do
-#         python3 plot_gen_NanoAOD_root.py -s INPUT_${year}_${str} -d $OUTPUT_DIR -t ${str}_${year}
 
-#     done
-# done
-# #!/bin/bash
-# set -x  # 启用调试模式
-
-# OUTPUT_DIR="/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/NanoAOD"
-# kappa_strings=("c3_0_d4_99")
 
 for str in "${kappa_strings[@]}"; do
     for year in 2016 2016APV  ; do
