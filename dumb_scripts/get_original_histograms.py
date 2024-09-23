@@ -19,7 +19,7 @@ reweight = {'c3_19_d4_19'   : '9.06091847289793e-6*k3**4 - 4.9300725444354e-5*k3
             'c3_4_d4_9'    : '-0.000544382627375349*k3**4 + 0.00482523670822783*k3**3 + 0.00769645658563427*k3**2*k4 - 0.0138311282893779*k3**2 - 0.0199714878689513*k3*k4 + 0.0127645854332177*k3 + 3.21431122469228e-5*k4**2 + 0.00902857694637784*k4',
             'c3_1_d4_0'     : '0.0142160519792486*k3**4 - 0.454703013515982*k3**3 + 0.114062909229438*k3**2*k4 + 1.2416391532208*k3**2 - 0.0810021309692927*k3*k4 - 0.0164237414582671*k3 + 0.00784728450225797*k4**2 - 0.825636512988201*k4'
  }
-
+ 
 yield_table = {
     "c3_0_d4_0"             : "0.03274*1e-3",
     "c3_0_d4_99"            : "5.243*1e-3",
@@ -36,21 +36,6 @@ yield_table = {
 
 
 
-
-kappa_list = {'c3_1_d4_2'      : {'k3': 2, 'k4': 3},
-              'c3_2_d4_m1'     : {'k3': 3, 'k4': 0},
-              'c3_0_d4_m1'    : {'k3': 1, 'k4': 0},
-              'c3_0_d4_99'    : {'k3': 1, 'k4': 100},
-              'c3_19_d4_19'    : {'k3': 20, 'k4': 20},
-              'c3_1_d4_0'    : {'k3': 2, 'k4': 1},
-              'c3_4_d4_9'    : {'k3': 5, 'k4': 10},
-              'c3_m1_d4_0'    : {'k3': 0, 'k4': 1},
-              'c3_m1_d4_m1'    : {'k3': 0, 'k4': 0},
-              'c3_m1p5_d4_m0p5': {'k3': -0.5, 'k4': 0.5},
-              'c3_0_d4_0': {'k3': 1, 'k4': 1}
-            
-}
-
 path_for_sample = "/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/NanoAOD"
 output_path = "/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/NanoAOD/histograms"
 
@@ -59,33 +44,31 @@ xmax = 1200
 nbins = 12
 
 branch_names = ["mhhh","mh1h2","mh1h3"]
-for new_kappa_name, values in kappa_list.items():
-    k3 = values['k3']
-    k4 = values['k4']
-    output_file = ROOT.TFile(f"{output_path}/{new_kappa_name}_widebin.root","RECREATE")
+    
+    
+    
+for basis_kappa_name in yield_table:
+    output_file = ROOT.TFile(f"{output_path}/{basis_kappa_name}_original_widebin.root", "RECREATE")
     for branch_name in branch_names:
         
-        h_total = ROOT.TH1D(f"{branch_name}", f"Weighted Histogram for {branch_name}", nbins, xmin, xmax)
+        # h_total = ROOT.TH1D(f"h_{branch_name}", f"Weighted Histogram for {branch_name}", nbins, xmin, xmax)
         
-        for basis_kappa_name in reweight:
-            
-            df = ROOT.RDataFrame('features', f"{path_for_sample}/{basis_kappa_name}.root")
-            total_entries = df.Count().GetValue()
-            kappa_weight =  eval(reweight[basis_kappa_name])
-            xs = eval(yield_table[basis_kappa_name])
-            lumi = 1.0
-            total_weight_value = kappa_weight * xs * lumi /total_entries
-            print(total_weight_value)
-            df = df.Define("totalWeight", f"{total_weight_value}")
+    
+        df = ROOT.RDataFrame('features', f"{path_for_sample}/{basis_kappa_name}.root")
+        total_entries = df.Count().GetValue()
+        xs = eval(yield_table[basis_kappa_name])
+        lumi = 1.0
+        total_weight_value =  xs * lumi /total_entries
+        print(total_weight_value)
+        df = df.Define("totalWeight", f"{total_weight_value}")
 
-            h_tmp = df.Histo1D((branch_name, branch_name, nbins, xmin, xmax), branch_name, "totalWeight")
-            h_total.Add(h_tmp.GetPtr())  
+        h_original = df.Histo1D((branch_name, branch_name, nbins, xmin, xmax), branch_name, "totalWeight")
 
         output_file.cd()
-        h_total.Write()
+        h_original.Write()
 
     output_file.Close()
-    print(f"aleady saved {new_kappa_name}")
+    print(f"aleady saved {basis_kappa_name}")
 
         # c = ROOT.TCanvas(f"c_{branch_name}", f"Canvas for {branch_name}", 800, 600)
         # h_total.Draw("hist")

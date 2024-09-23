@@ -46,16 +46,15 @@ float get_max_return_mass(float h1_spanet_boosted_eta, float h1_spanet_boosted_m
     }
 }
 '''
-cut_list = {'ProbHHH6b_3bh0h_inclusive_CR' : 0.9925,
-            'ProbHHH6b_2bh1h_inclusive_CR' : 0.996,
-            'ProbHHH6b_1bh2h_inclusive_CR' : 0.9945,
-            'ProbHHH6b_0bh3h_inclusive_CR' : 0.996,
-            'ProbHHH6b_2bh0h_inclusive_CR' : 0.996,
-            'ProbHHH6b_1bh1h_inclusive_CR' : 0.9965,
-            'ProbHHH6b_0bh2h_inclusive_CR' : 0.998,
-            'ProbHHH6b_1Higgs_inclusive_CR': 0.997, 
-            'ProbHHH6b_0bh0h_inclusive_CR' : 0.9975
-
+cut_list = {'ProbHHH6b_3bh0h_inclusive_CR' : 0.952,
+            'ProbHHH6b_2bh1h_inclusive_CR' : 0.9825,
+            'ProbHHH6b_1bh2h_inclusive_CR' : 0.981,
+            'ProbHHH6b_0bh3h_inclusive_CR' : 0.9825,
+            'ProbHHH6b_2bh0h_inclusive_CR' : 0.9825,
+            'ProbHHH6b_1bh1h_inclusive_CR' : 0.983,
+            'ProbHHH6b_0bh2h_inclusive_CR' : 0.9845,
+            'ProbHHH6b_1Higgs_inclusive_CR': 0.9862, 
+            'ProbHHH6b_0bh0h_inclusive_CR' : 0.982
 }
 
 
