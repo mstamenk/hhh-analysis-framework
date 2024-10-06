@@ -1,231 +1,231 @@
 GluGluToHHHTo6B_SM:
   '2016':
     Kfactor: 2.7306047648136835
-    Nevents_assumed: 1112004.3339994596
-    Nevents_generated: 326592.0
-    Ratio_correct: 3.4048731567198818
+    Nevents_assumed: 17380693.26294274
+    Nevents_generated: 4292992.0
+    Ratio_correct: 4.048619998113842
   2016APV:
     Kfactor: 2.7306047648136835
-    Nevents_assumed: 1184078.688980906
-    Nevents_generated: 347760.0
-    Ratio_correct: 3.4048731567198818
+    Nevents_assumed: 19987538.95042827
+    Nevents_generated: 4936877.0
+    Ratio_correct: 4.048619998113842
   '2017':
     Kfactor: 2.7306047648136835
-    Nevents_assumed: 1008857.1065897875
-    Nevents_generated: 296298.0
-    Ratio_correct: 3.4048731567198818
+    Nevents_assumed: 15482890.492966881
+    Nevents_generated: 3824239.0
+    Ratio_correct: 4.048619998113842
   '2018':
     Kfactor: 2.7306047648136835
-    Nevents_assumed: 1676682.1178025117
-    Nevents_generated: 492436.0
-    Ratio_correct: 3.4048731567198818
+    Nevents_assumed: 30206579.715267453
+    Nevents_generated: 7460957.0
+    Ratio_correct: 4.048619998113842
 HHHTo6B_c3_0_d4_99:
   '2016':
     Kfactor: 1.0
-    Nevents_assumed: 121699.68012701334
-    Nevents_generated: 24192.0
-    Ratio_correct: 5.030575402075618
+    Nevents_assumed: 370750.79166204476
+    Nevents_generated: 184000.0
+    Ratio_correct: 2.014949954685026
   2016APV:
     Kfactor: 1.0
-    Nevents_assumed: 91274.76009526002
-    Nevents_generated: 18144.0
-    Ratio_correct: 5.030575402075618
+    Nevents_assumed: 435229.1902119656
+    Nevents_generated: 216000.0
+    Ratio_correct: 2.014949954685026
   '2017':
     Kfactor: 1.0
-    Nevents_assumed: 168423.6644614917
-    Nevents_generated: 33480.0
-    Ratio_correct: 5.030575402075618
+    Nevents_assumed: 801950.0819646403
+    Nevents_generated: 398000.0
+    Ratio_correct: 2.014949954685026
   '2018':
     Kfactor: 1.0
-    Nevents_assumed: 189290.49122930135
-    Nevents_generated: 37628.0
-    Ratio_correct: 5.030575402075618
+    Nevents_assumed: 797920.1820552702
+    Nevents_generated: 396000.0
+    Ratio_correct: 2.014949954685026
 HHHTo6B_c3_0_d4_minus1:
   '2016':
     Kfactor: 1.0
-    Nevents_assumed: 130629.18135649123
-    Nevents_generated: 27216.0
-    Ratio_correct: 4.799720067478367
+    Nevents_assumed: 370750.80462262285
+    Nevents_generated: 184000.0
+    Ratio_correct: 2.01495002512295
   2016APV:
     Kfactor: 1.0
-    Nevents_assumed: 94343.29764635478
-    Nevents_generated: 19656.0
-    Ratio_correct: 4.799720067478367
+    Nevents_assumed: 435229.2054265572
+    Nevents_generated: 216000.0
+    Ratio_correct: 2.01495002512295
   '2017':
     Kfactor: 1.0
-    Nevents_assumed: 168729.3592521345
-    Nevents_generated: 35154.0
-    Ratio_correct: 4.799720067478367
+    Nevents_assumed: 785830.5097979506
+    Nevents_generated: 390000.0
+    Ratio_correct: 2.01495002512295
   '2018':
     Kfactor: 1.0
-    Nevents_assumed: 157046.84060789217
-    Nevents_generated: 32720.0
-    Ratio_correct: 4.799720067478367
+    Nevents_assumed: 779785.6597225817
+    Nevents_generated: 387000.0
+    Ratio_correct: 2.01495002512295
 HHHTo6B_c3_19_d4_19:
   '2016':
     Kfactor: 1.0
-    Nevents_assumed: 149754.8933405084
-    Nevents_generated: 33264.0
-    Ratio_correct: 4.502010983060017
+    Nevents_assumed: 365280.2056200519
+    Nevents_generated: 181285.0
+    Ratio_correct: 2.0149499717023023
   2016APV:
     Kfactor: 1.0
-    Nevents_assumed: 68070.40606386746
-    Nevents_generated: 15120.0
-    Ratio_correct: 4.502010983060017
+    Nevents_assumed: 435229.1938876973
+    Nevents_generated: 216000.0
+    Ratio_correct: 2.0149499717023023
   '2017':
     Kfactor: 1.0
-    Nevents_assumed: 188409.1596410617
-    Nevents_generated: 41850.0
-    Ratio_correct: 4.502010983060017
+    Nevents_assumed: 769710.8891902794
+    Nevents_generated: 382000.0
+    Ratio_correct: 2.0149499717023023
   '2018':
     Kfactor: 1.0
-    Nevents_assumed: 139940.50939743756
-    Nevents_generated: 31084.0
-    Ratio_correct: 4.502010983060017
+    Nevents_assumed: 803965.0387092186
+    Nevents_generated: 399000.0
+    Ratio_correct: 2.0149499717023023
 HHHTo6B_c3_1_d4_0:
   '2016':
     Kfactor: 1.0
-    Nevents_assumed: 210290.72254942203
-    Nevents_generated: 73926.0
-    Ratio_correct: 2.844611132070206
+    Nevents_assumed: 1816258.4063097944
+    Nevents_generated: 584000.0
+    Ratio_correct: 3.1100315176537574
   2016APV:
     Kfactor: 1.0
-    Nevents_assumed: 64515.78047535227
-    Nevents_generated: 22680.0
-    Ratio_correct: 2.844611132070206
+    Nevents_assumed: 671766.8078132116
+    Nevents_generated: 216000.0
+    Ratio_correct: 3.1100315176537574
   '2017':
     Kfactor: 1.0
-    Nevents_assumed: 128570.73394730917
-    Nevents_generated: 45198.0
-    Ratio_correct: 2.844611132070206
+    Nevents_assumed: 1244012.607061503
+    Nevents_generated: 400000.0
+    Ratio_correct: 3.1100315176537574
   '2018':
     Kfactor: 1.0
-    Nevents_assumed: 88421.89242927029
-    Nevents_generated: 31084.0
-    Ratio_correct: 2.844611132070206
+    Nevents_assumed: 1237792.5440261955
+    Nevents_generated: 398000.0
+    Ratio_correct: 3.1100315176537574
 HHHTo6B_c3_1_d4_2:
   '2016':
     Kfactor: 1.0
-    Nevents_assumed: 102449.29804575643
-    Nevents_generated: 24192.0
-    Ratio_correct: 4.234842015780275
+    Nevents_assumed: 370750.79490159755
+    Nevents_generated: 184000.0
+    Ratio_correct: 2.014949972291291
   2016APV:
     Kfactor: 1.0
-    Nevents_assumed: 121658.54142933575
-    Nevents_generated: 28728.0
-    Ratio_correct: 4.234842015780275
+    Nevents_assumed: 426051.09689113207
+    Nevents_generated: 211445.0
+    Ratio_correct: 2.014949972291291
   '2017':
     Kfactor: 1.0
-    Nevents_assumed: 177228.13836040453
-    Nevents_generated: 41850.0
-    Ratio_correct: 4.234842015780275
+    Nevents_assumed: 767695.939442982
+    Nevents_generated: 381000.0
+    Ratio_correct: 2.014949972291291
   '2018':
     Kfactor: 1.0
-    Nevents_assumed: 152420.43383196366
-    Nevents_generated: 35992.0
-    Ratio_correct: 4.234842015780275
+    Nevents_assumed: 791875.3391104774
+    Nevents_generated: 393000.0
+    Ratio_correct: 2.014949972291291
 HHHTo6B_c3_2_d4_minus1:
   '2016':
     Kfactor: 1.0
-    Nevents_assumed: 127937.94792873884
-    Nevents_generated: 30240.0
-    Ratio_correct: 4.230752246320729
+    Nevents_assumed: 370750.8047308805
+    Nevents_generated: 184000.0
+    Ratio_correct: 2.014950025711307
   2016APV:
     Kfactor: 1.0
-    Nevents_assumed: 83159.66615368024
-    Nevents_generated: 19656.0
-    Ratio_correct: 4.230752246320729
+    Nevents_assumed: 433373.4365799622
+    Nevents_generated: 215079.0
+    Ratio_correct: 2.014950025711307
   '2017':
     Kfactor: 1.0
-    Nevents_assumed: 226632.93633090882
-    Nevents_generated: 53568.0
-    Ratio_correct: 4.230752246320729
+    Nevents_assumed: 771725.8598474306
+    Nevents_generated: 383000.0
+    Ratio_correct: 2.014950025711307
   '2018':
     Kfactor: 1.0
-    Nevents_assumed: 124587.19214965282
-    Nevents_generated: 29448.0
-    Ratio_correct: 4.230752246320729
+    Nevents_assumed: 805980.0102845229
+    Nevents_generated: 400000.0
+    Ratio_correct: 2.014950025711307
 HHHTo6B_c3_4_d4_9:
   '2016':
     Kfactor: 1.0
-    Nevents_assumed: 151985.61457889117
-    Nevents_generated: 28728.0
-    Ratio_correct: 5.2905045453526585
+    Nevents_assumed: 370750.78997135867
+    Nevents_generated: 184000.0
+    Ratio_correct: 2.0149499454965145
   2016APV:
     Kfactor: 1.0
-    Nevents_assumed: 47995.45723543932
-    Nevents_generated: 9072.0
-    Ratio_correct: 5.2905045453526585
+    Nevents_assumed: 435229.18822724716
+    Nevents_generated: 216000.0
+    Ratio_correct: 2.0149499454965145
   '2017':
     Kfactor: 1.0
-    Nevents_assumed: 194838.7013962477
-    Nevents_generated: 36828.0
-    Ratio_correct: 5.2905045453526585
+    Nevents_assumed: 749561.3797247034
+    Nevents_generated: 372000.0
+    Ratio_correct: 2.0149499454965145
   '2018':
     Kfactor: 1.0
-    Nevents_assumed: 164450.04328774204
-    Nevents_generated: 31084.0
-    Ratio_correct: 5.2905045453526585
+    Nevents_assumed: 801950.0783076128
+    Nevents_generated: 398000.0
+    Ratio_correct: 2.0149499454965145
 HHHTo6B_c3_minus1_d4_0:
   '2016':
     Kfactor: 1.0
-    Nevents_assumed: 137346.4238598988
-    Nevents_generated: 30240.0
-    Ratio_correct: 4.541879095896124
+    Nevents_assumed: 368897.0455862181
+    Nevents_generated: 183080.0
+    Ratio_correct: 2.014949997739885
   2016APV:
     Kfactor: 1.0
-    Nevents_assumed: 96142.49670192915
-    Nevents_generated: 21168.0
-    Ratio_correct: 4.541879095896124
+    Nevents_assumed: 435229.19951181515
+    Nevents_generated: 216000.0
+    Ratio_correct: 2.014949997739885
   '2017':
     Kfactor: 1.0
-    Nevents_assumed: 152062.1121306022
-    Nevents_generated: 33480.0
-    Ratio_correct: 4.541879095896124
+    Nevents_assumed: 805979.999095954
+    Nevents_generated: 400000.0
+    Ratio_correct: 2.014949997739885
   '2018':
     Kfactor: 1.0
-    Nevents_assumed: 163471.31241949328
-    Nevents_generated: 35992.0
-    Ratio_correct: 4.541879095896124
+    Nevents_assumed: 803965.0490982141
+    Nevents_generated: 399000.0
+    Ratio_correct: 2.014949997739885
 HHHTo6B_c3_minus1_d4_minus1:
   '2016':
     Kfactor: 1.0
-    Nevents_assumed: 128513.19609386637
-    Nevents_generated: 27216.0
-    Ratio_correct: 4.721972225671163
+    Nevents_assumed: 370750.7915360041
+    Nevents_generated: 184000.0
+    Ratio_correct: 2.014949954000022
   2016APV:
     Kfactor: 1.0
-    Nevents_assumed: 99954.70807300718
-    Nevents_generated: 21168.0
-    Ratio_correct: 4.721972225671163
+    Nevents_assumed: 435229.1900640048
+    Nevents_generated: 216000.0
+    Ratio_correct: 2.014949954000022
   '2017':
     Kfactor: 1.0
-    Nevents_assumed: 189709.95613856462
-    Nevents_generated: 40176.0
-    Ratio_correct: 4.721972225671163
+    Nevents_assumed: 803965.0316460088
+    Nevents_generated: 399000.0
+    Ratio_correct: 2.014949954000022
   '2018':
     Kfactor: 1.0
-    Nevents_assumed: 139052.6381015644
-    Nevents_generated: 29448.0
-    Ratio_correct: 4.721972225671163
+    Nevents_assumed: 803965.0316460088
+    Nevents_generated: 399000.0
+    Ratio_correct: 2.014949954000022
 HHHTo6B_c3_minus1p5_d4_minus0p5:
   '2016':
     Kfactor: 1.0
-    Nevents_assumed: 149318.6406003808
-    Nevents_generated: 27216.0
-    Ratio_correct: 5.4864285934884185
+    Nevents_assumed: 370750.799433862
+    Nevents_generated: 184000.0
+    Ratio_correct: 2.014949996923163
   2016APV:
     Kfactor: 1.0
-    Nevents_assumed: 33181.92013341795
-    Nevents_generated: 6048.0
-    Ratio_correct: 5.4864285934884185
+    Nevents_assumed: 435229.19933540316
+    Nevents_generated: 216000.0
+    Ratio_correct: 2.014949996923163
   '2017':
     Kfactor: 1.0
-    Nevents_assumed: 211238.4737064911
-    Nevents_generated: 38502.0
-    Ratio_correct: 5.4864285934884185
+    Nevents_assumed: 749561.3988554166
+    Nevents_generated: 372000.0
+    Ratio_correct: 2.014949996923163
   '2018':
     Kfactor: 1.0
-    Nevents_assumed: 179515.94357894105
-    Nevents_generated: 32720.0
-    Ratio_correct: 5.4864285934884185
+    Nevents_assumed: 799935.1487784956
+    Nevents_generated: 397000.0
+    Ratio_correct: 2.014949996923163
