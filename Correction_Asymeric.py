@@ -1,14 +1,17 @@
 import ROOT
 import string
-import vector
+# import vector
 import numpy as np
-import pandas as pd
+# import pandas as pd
 import matplotlib.pyplot as plt
 from io import StringIO
 import array
+import os.path
+from os import path
 from ROOT import TCanvas, TGraphErrors,TGraphAsymmErrors,TGraph
 from ROOT import gROOT
 from ROOT import Form
+import subprocess
 
 
 def code_for_plot(Hist_up,Hist_down,Hist_nom,pro,syst,path_for_plot):
@@ -63,25 +66,33 @@ def code_for_plot(Hist_up,Hist_down,Hist_nom,pro,syst,path_for_plot):
 
 
 
-# path = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33/Marko_sample_1Higgs'
-cat_list=  ["ProbHHH6b_2bh0h_inclusive_CR","ProbHHH6b_1bh1h_inclusive_CR","ProbHHH6b_0bh2h_inclusive_CR","ProbHHH6b_0bh0h_inclusive_CR","ProbHHH6b_3Higgs_inclusive_CR","ProbHHH6b_2Higgs_inclusive_CR","ProbHHH6b_1Higgs_inclusive_CR","ProbHHH6b_3bh0h_inclusive_CR","ProbHHH6b_2bh1h_inclusive_CR","ProbHHH6b_1bh2h_inclusive_CR","ProbHHH6b_0bh3h_inclusive_CR"]
-pro_list = ["GluGluToHHHTo4B2Tau_SM","GluGluToHHHTo6B_SM","GluGluToHHTo4B_cHHH1"]
+# path_hist = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33/Marko_sample_1Higgs'
+# cat_list=  ["ProbHHH6b_2bh0h_inclusive_CR","ProbHHH6b_1bh1h_inclusive_CR","ProbHHH6b_0bh2h_inclusive_CR","ProbHHH6b_0bh0h_inclusive_CR","ProbHHH6b_1Higgs_inclusive_CR","ProbHHH6b_3bh0h_inclusive_CR","ProbHHH6b_2bh1h_inclusive_CR","ProbHHH6b_1bh2h_inclusive_CR","ProbHHH6b_0bh3h_inclusive_CR"]
+cat_list=  ["ProbHH4b_2bh0h_inclusive_CR","ProbHH4b_1bh1h_inclusive_CR","ProbHH4b_0bh2h_inclusive_CR","ProbHH4b_0bh0h_inclusive_CR","ProbHH4b_1Higgs_inclusive_CR","ProbHH4b_3bh0h_inclusive_CR","ProbHH4b_2bh1h_inclusive_CR","ProbHH4b_1bh2h_inclusive_CR","ProbHH4b_0bh3h_inclusive_CR"]
+# cat_list=  ["ProbHHH6b_2bh0h_inclusive_CR","ProbHHH6b_1bh1h_inclusive_CR","ProbHHH6b_0bh2h_inclusive_CR"]
+pro_list = ["GluGluToHHHTo6B_SM","GluGluToHHTo4B_cHHH1"]
 syst_list = ["PNetAK4_Stat","PNetAK4_FSR","PNetAK4_zjets_muF","PNetAK4_ISR","PNetAK4_ttbar_muR","PNetAK4_ttbar_muF","JES","PNetAK4_wjets_muR","PNetAK4_wjets_muF","JER","JMR","PileUp","l1Prefiring","PNetAK4_zjets_muR","PNetAK4_jetID","PNetAK4_wjets_c_xsec","PNetAK4_zjets_c_xsec"]
 other_syst = ["MUR","MUF","PNetAK8","PNetAK4_zjets_b_xsec","FSR","ISR","PNetAK4_pileup","PNetAK4_wjets_b_xsec"]
 year_list = ["2018","2017","2016_all"]
 for year in year_list:
 
-    path = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/%s'%(year)
+    path_hist = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/%s'%(year)
+    # path_hist = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/run2'
+
     if year == '2016_all':
         year = '2016'
 
 
     for cat in cat_list:
 
-        hist_path = path + '/' + cat + '/' + 'histograms/' +'histograms_ProbMultiH.root' 
-        hist_path_corr = path + '/' + cat + '/' + 'histograms/' +'histograms_ProbMultiH_fixAsy.root'
+        hist_path = path_hist + '/' + cat + '/' + 'histograms/' +'histograms_ProbMultiH.root' 
+        hist_path_corr = path_hist + '/' + cat + '/' + 'histograms/' +'histograms_ProbMultiH_fixAsy.root'
 
-        path_for_plot = path + '/' + cat + '/' + 'histograms/'
+        path_for_plot = path_hist + '/' + cat + '/' + 'plots/'
+        if not path.exists(path_for_plot) :
+            procs=subprocess.Popen(['mkdir %s' % path_for_plot],shell=True,stdout=subprocess.PIPE)
+            out = procs.stdout.read()
+            print("made directory %s" % path_for_plot)
 
 
         file_o = ROOT.TFile(hist_path)

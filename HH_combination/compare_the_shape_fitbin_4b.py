@@ -12,10 +12,10 @@ parser = OptionParser()
 kl, kt, C2 = sp.symbols('kl kt C2')
 
 
-# cat_list = ["GGFcateg1_2016","GGFcateg1_20172018","GGFcateg2_2016","GGFcateg2_20172018","VBFcateg1_2016","VBFcateg1_20172018"]
-cat_list = ["GGFcateg2_2016"]
-# type_list = ["alt","alt2"]
-type_list = ["alt"]
+cat_list = ["GGFcateg1_2016","GGFcateg1_20172018","GGFcateg2_2016","GGFcateg2_20172018","VBFcateg1_2016","VBFcateg1_20172018"]
+# cat_list = ["GGFcateg2_2016"]
+type_list = ["alt","alt2"]
+# type_list = ["alt"]
 for type in type_list:
     path_fit = "/eos/home-x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/HH_combination/fitdiagnose/bbbb"
     path_plots = "/eos/home-x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/HH_combination/plots/bbbb/plots_%s_rebin"%(type)

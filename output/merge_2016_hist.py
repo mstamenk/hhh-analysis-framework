@@ -5,13 +5,14 @@ import ROOT
 # process_strings = ["DYJetsToLL","GluGluToHHHTo4B2Tau_SM","GluGluToHHTo2B2Tau","GluGluToHHTo4B_cHHH1","TTToSemiLeptonic","WJetsToLNu_0J","WJetsToLNu_1J","WJetsToLNu_2J", "ZZTo4Q", "WWTo4Q", "ZJetsToQQ", "WJetsToQQ", "TTToHadronic","TTTo2L2Nu", "QCD", "data_obs" , "GluGluToHHHTo6B_SM"]
 
 year = '2016'
-path = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/sample_cut'
+path = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33/'
 # path2 = '/eos/user/m/mstamenk/CxAOD31run/hhh-6b/v26'
 
 var = 'ProbMultiH'
 cat = 'ProbHHH6b'
 option = '_CR'
-btag_cut_strings = ['%s_2bh0h_inclusive%s','%s_1bh1h_inclusive%s','%s_0bh2h_inclusive%s','%s_3bh0h_inclusive%s','%s_2bh1h_inclusive%s','%s_1bh2h_inclusive%s','%s_0bh3h_inclusive%s','%s_3Higgs_inclusive%s','%s_2Higgs_inclusive%s','%s_1Higgs_inclusive%s','%s_0bh0h_inclusive%s']
+# btag_cut_strings = ['%s_2bh0h_inclusive%s','%s_1bh1h_inclusive%s','%s_0bh2h_inclusive%s','%s_3bh0h_inclusive%s','%s_2bh1h_inclusive%s','%s_1bh2h_inclusive%s','%s_0bh3h_inclusive%s','%s_3Higgs_inclusive%s','%s_2Higgs_inclusive%s','%s_1Higgs_inclusive%s','%s_0bh0h_inclusive%s']
+btag_cut_strings = ['%s_2bh0h_inclusive%s','%s_1bh1h_inclusive%s','%s_0bh2h_inclusive%s']
 # btag_cut_strings = ['%s_2Higgs_inclusive%s','%s_1Higgs_inclusive%s','%s_0bh0h_inclusive%s']
 # process_list = ["GluGluToHHTo4B_cHHH1","GluGluToHHTo4B_cHHH0","GluGluToHHTo4B_cHHH5","data_obs","GluGluToHHHTo6B_SM","GluGluToHHHTo4B2Tau_SM","GluGluToHHTo2B2Tau_SM","QCD_datadriven"]
 process_list = ["HHHTo6B_c3_0_d4_99","HHHTo6B_c3_0_d4_minus1","HHHTo6B_c3_19_d4_19","HHHTo6B_c3_1_d4_0","HHHTo6B_c3_1_d4_2","HHHTo6B_c3_2_d4_minus1","HHHTo6B_c3_4_d4_9","HHHTo6B_c3_minus1_d4_0","HHHTo6B_c3_minus1_d4_minus1","HHHTo6B_c3_minus1p5_d4_minus0p5"]

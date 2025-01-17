@@ -39,10 +39,26 @@ bins_ProbHHH6b_3Higgs = [1.0 ] + [ 0.673- 0.013 * i for i in range(10)]
 # bins_ProbHHH6b_3Higgs = [1.0 ] + [ 0.699- 0.013 * i for i in range(10)]
 # bins_ProbHHH6b_3Higgs = [1.0 ] + [ 0.35- 0.013 * i for i in range(10)]
 reversed_bins = bins_ProbHHH6b_3Higgs[::-1]
+
+ProbMultiH_cut = {'ProbHHH6b_3bh0h_inclusive' : 0.952,
+                  'ProbHHH6b_2bh1h_inclusive' : 0.9825,
+                  'ProbHHH6b_1bh2h_inclusive' : 0.981,
+                  'ProbHHH6b_0bh3h_inclusive' : 0.9825,
+                  'ProbHHH6b_2bh0h_inclusive' : 0.9825,
+                  'ProbHHH6b_1bh1h_inclusive' : 0.983,
+                  'ProbHHH6b_0bh2h_inclusive' : 0.9845,
+                  'ProbHHH6b_1Higgs_inclusive': 0.9862, 
+                  'ProbHHH6b_0bh0h_inclusive' : 0.982
+}
+
+
 histograms_dict = {
         'h1_t3_mass'  : { "nbins" : 13 , "xmin" : 70 , "xmax" : 200, "label" : 'm(H1) (GeV)'},
         'h2_t3_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H2) (GeV)'},
         'h3_t3_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H3) (GeV)'},
+        'h1_mass'  : { "nbins" : 13 , "xmin" : 70 , "xmax" : 200, "label" : 'm(H1) (GeV)'},
+        'h2_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H2) (GeV)'},
+        'h3_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H3) (GeV)'},
 
         #'h1_spanet_boosted_mass'  : { "nbins" : 13 , "xmin" : 70 , "xmax" : 200, "label" : 'm(H1) (GeV)'},
         #'h2_spanet_boosted_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H2) (GeV)'},
@@ -53,6 +69,7 @@ histograms_dict = {
         #'h3_spanet_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H3) (GeV)'},
 
         'h_fit_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H) fitted (GeV)'},
+        'h_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H) fitted (GeV)'},
 
         'h1_t3_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H1)'},
         'h2_t3_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H2)'},
@@ -202,7 +219,7 @@ histograms_dict = {
         'ProbHHH'  : { "nbins" :10, "xmin" : 0.0 , "xmax" : 1.0,"define_bins":reversed_bins,"label" : 'ProbHHH'},
         'ProbHH4b'  : { "nbins" : 40, "xmin" : 0 , "xmax" : 1.0, "label" : 'ProbHH4b'},
         'ProbHHH4b2tau'  : { "nbins" : 40, "xmin" : 0 , "xmax" : 1.0, "label" : 'ProbHHH4b2tau'},
-        'ProbMultiH'  : { "nbins" : 10, "xmin" : 0.5 , "xmax" : 1.0, "label" : 'Prob multi-Higgs'},
+        'ProbMultiH'  : { "nbins" : 20, "xmin" : 0 , "xmax" : 1.0, "label" : 'Prob multi-Higgs'},
         'ProbVV'  : { "nbins" : 40, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'ProbVV'},
         'ProbQCD'  : { "nbins" : 100, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'ProbQCD'},
         'ProbTT'  : { "nbins" : 100, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'ProbTT'},

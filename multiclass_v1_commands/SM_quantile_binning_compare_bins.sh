@@ -1,0 +1,3 @@
+### To Xiangram do it
+We want to compare how the number of bins by quantimes in SR-only helps on final limits
+- HHH with 3 bins, HHH with 4 bins ....

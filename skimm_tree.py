@@ -23,15 +23,17 @@ import gc
 ROOT.gROOT.SetBatch(ROOT.kTRUE)
 ROOT.ROOT.EnableImplicitMT()
 
-from utils import histograms_dict, wps_years, wps, tags, luminosities, hlt_paths, triggersCorrections, hist_properties, init_mhhh, addMHHH, clean_variables, initialise_df, save_variables, init_get_max_prob, init_get_max_cat
+from utils import histograms_dict, ProbMultiH_cut, wps_years, wps, tags, luminosities, hlt_paths, triggersCorrections, hist_properties, init_mhhh, addMHHH, clean_variables, initialise_df, save_variables, init_get_max_prob, init_get_max_cat
 from machinelearning import init_bdt, add_bdt, init_bdt_boosted, add_bdt_boosted
 from calibrations import btag_init, addBTagSF, addBTagEffSF
 from hhh_variables import add_hhh_variables
 
 from optparse import OptionParser
 parser = OptionParser()
-# parser.add_option("--base_folder ", type="string", dest="base", help="Folder in where to look for the categories", default='/eos/cms/store/group/phys_higgs/cmshhh/v33/mva-inputs-2017-categorisation-spanet-boosted-classification/')
 parser.add_option("--base_folder ", type="string", dest="base", help="Folder in where to look for the categories", default='/eos/cms/store/group/phys_higgs/cmshhh/v33/mva-inputs-2018-categorisation-spanet-boosted-classification/')
+# parser.add_option("--base_folder ", type="string", dest="base", help="Folder in where to look for the categories", default='/eos/cms/store/group/phys_higgs/cmshhh/v33-additional-samples/mva-inputs-2018-categorisation-spanet-boosted-classification/')
+# parser.add_option("--base_folder ", type="string", dest="base", help="Folder in where to look for the categories", default='/eos/cms/store/group/phys_higgs/cmshhh/v33/mva-inputs-2018-categorisation-spanet-boosted-classification/')
+
 # parser.add_option("--base_folder ", type="string", dest="base", help="Folder in where to look for the categories", default='/eos/cms/store/group/phys_higgs/cmshhh/v33-additional-samples/mva-inputs-2018-categorisation-spanet-boosted-classification/')
 parser.add_option("--category ", type="string", dest="category", help="Category to compute it. if no argument is given will do all", default='none')
 parser.add_option("--skip_do_trees", action="store_true", dest="skip_do_trees", help="Write...", default=False)
@@ -144,7 +146,7 @@ selections = {
         "sel" : "(IndexMaxProb == 1  )",
         "label" : "ProbHHH ",
         "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
 #################3Higgs################
@@ -152,7 +154,7 @@ selections = {
         "sel" : "(IndexMaxCat == 1 || IndexMaxCat == 2 || IndexMaxCat == 3 || IndexMaxCat == 4  )",
         "label" : "Prob3Higgs ",
         "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
 #################3bh0h###############
@@ -519,7 +521,7 @@ selections = {
         "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 5)",
         "label" : "ProbHHH ",
         "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
 
@@ -527,28 +529,28 @@ selections = {
         "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 6)",
         "label" : "ProbHHH ",
         "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
         "ProbHHH6b_0bh2h_inclusive"              : {
         "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 7)",
         "label" : "ProbHHH ",
         "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
         "ProbHHH6b_1bh0h_inclusive"              : {
         "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 8)",
         "label" : "ProbHHH ",
         "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
         "ProbHHH6b_0bh1h_inclusive"              : {
         "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 9)",
         "label" : "ProbHHH ",
         "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
         "ProbHHH6b_0bh0h_inclusive"              : {
@@ -616,7 +618,7 @@ selections = {
         "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 5)",
         "label" : "ProbHHH ",
         "doSR" : "&& ProbHHH > 0.0  ",
-        "doCR" : "&& (ProbHHH > 0. && ht > 450 && (nmediumbtags >= 4 || nprobejets >= 1) )",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
 
@@ -624,28 +626,28 @@ selections = {
         "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 6)",
         "label" : "ProbHHH ",
         "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0. && ht > 450 && (nmediumbtags >= 4 || nprobejets >= 1) )",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
         "ProbHH4b_0bh2h_inclusive"              : {
         "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 7)",
         "label" : "ProbHHH ",
         "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0. && ht > 450 && (nmediumbtags >= 4 || nprobejets >= 1) )",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
         "ProbHH4b_1bh0h_inclusive"              : {
         "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 8)",
         "label" : "ProbHHH ",
         "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0. && nmediumbtags >= 4)",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
         "ProbHH4b_0bh1h_inclusive"              : {
         "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 9)",
         "label" : "ProbHHH ",
         "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0. && nmediumbtags >= 4)",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
         "ProbHH4b_0bh0h_inclusive"              : {
@@ -669,6 +671,7 @@ selections = {
         "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
+
         "ProbHH4b_1Higgs_inclusive"              : {
         "sel" : "(IndexMaxProb == 7 && (IndexMaxCat == 8 || IndexMaxCat == 9 ))",
         "label" : "ProbHHH ",
@@ -731,7 +734,10 @@ if do_CR :
 inputTree = 'Events'
 
 # procstodo = ["DYJetsToLL","GluGluToHHHTo4B2Tau_SM","GluGluToHHTo2B2Tau_SM","GluGluToHHTo4B_cHHH1","TTToSemiLeptonic","WJetsToLNu_0J","WJetsToLNu_1J","WJetsToLNu_2J", "ZZTo4Q", "WWTo4Q", "ZJetsToQQ", "WJetsToQQ", "TTToHadronic","TTTo2L2Nu", "QCD", "data_obs" , "GluGluToHHHTo6B_SM","WWW","WWZ","WZZ","ZZZ"]
-procstodo = ["GluGluToHHTo4B_cHHH1","data_obs","GluGluToHHHTo6B_SM","QCD_datadriven_data","GluGluToHHHTo4B2Tau_SM","GluGluToHHTo2B2Tau_SM"]
+# procstodo = ["GluGluToHHTo4B_cHHH1","data_obs","GluGluToHHHTo6B_SM","QCD_datadriven","GluGluToHHHTo4B2Tau_SM","GluGluToHHTo2B2Tau_SM","HHHTo6B_c3_0_d4_99","HHHTo6B_c3_0_d4_minus1","HHHTo6B_c3_19_d4_19","HHHTo6B_c3_1_d4_0","HHHTo6B_c3_1_d4_2","HHHTo6B_c3_2_d4_minus1","HHHTo6B_c3_4_d4_9","HHHTo6B_c3_minus1_d4_0","HHHTo6B_c3_minus1_d4_minus1","HHHTo6B_c3_minus1p5_d4_minus0p5"]
+# procstodo = ["GluGluToHHTo4B_cHHH1","data_obs","GluGluToHHHTo6B_SM","QCD_datadriven","GluGluToHHHTo4B2Tau_SM","HHHTo6B_c3_0_d4_99","HHHTo6B_c3_0_d4_minus1","HHHTo6B_c3_19_d4_19","HHHTo6B_c3_1_d4_0","HHHTo6B_c3_1_d4_2","HHHTo6B_c3_2_d4_minus1","HHHTo6B_c3_4_d4_9","HHHTo6B_c3_minus1_d4_0","HHHTo6B_c3_minus1_d4_minus1","HHHTo6B_c3_minus1p5_d4_minus0p5"]
+procstodo = ["GluGluToHHTo4B_cHHH1","data_obs","GluGluToHHHTo6B_SM","QCD_datadriven","GluGluToHHHTo4B2Tau_SM","GluGluToHHTo2B2Tau_SM","GluGluToHHHTo6B_SMJERDOWN","GluGluToHHHTo6B_SMJERUP","GluGluToHHHTo6B_SMJESDOWN","GluGluToHHHTo6B_SMJESUP","GluGluToHHHTo6B_SMJMRDOWN","GluGluToHHHTo6B_SMJMRUP","GluGluToHHTo4B_cHHH1JERDOWN","GluGluToHHTo4B_cHHH1JERUP","GluGluToHHTo4B_cHHH1JESDOWN","GluGluToHHTo4B_cHHH1JESUP","GluGluToHHTo4B_cHHH1JMRDOWN","GluGluToHHTo4B_cHHH1JMRUP","GluGluToHHHTo4B2Tau_SMJERDOWN","GluGluToHHHTo4B2Tau_SMJERUP","GluGluToHHHTo4B2Tau_SMJESDOWN","GluGluToHHHTo4B2Tau_SMJESUP","GluGluToHHHTo4B2Tau_SMJMRDOWN","GluGluToHHHTo4B2Tau_SMJMRUP"]
+# procstodo = ["GluGluToHHTo4B_cHHH1","data_obs","GluGluToHHHTo6B_SM","QCD_datadriven","GluGluToHHHTo4B2Tau_SM","GluGluToHHTo2B2Tau_SM"]
 if not process_to_compute == 'none' :
     procstodo     = [process_to_compute]
     skip_do_plots = True
@@ -784,6 +790,7 @@ for selection in selections.keys() :
   print(final_selection)
 
   output_tree = "/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/%s"%(year)
+#   output_tree = "/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33/%s"%(year)
   output_folder = "{}/{}_{}".format(output_tree,selection,additional_label)
   if not path.exists(output_folder) :
       procs=subprocess.Popen(['mkdir %s' % output_folder],shell=True,stdout=subprocess.PIPE)
@@ -798,10 +805,15 @@ for selection in selections.keys() :
     ## do that in a utils function
     datahist = proctodo
     if proctodo == "data_obs" :
-        if year == '2018' or '2016' in year:
+        print(year)
+        if year in ['2018', '2016', '2016APV']:
             datahist = 'JetHT'
+            print("4444")
+            print(year)
+
         else:
             datahist = 'BTagCSV'
+            print("33331")
 
     outtree = "{}/{}_{}/{}.root".format(output_tree,selection,additional_label,proctodo)
 
@@ -969,10 +981,14 @@ for selection in selections.keys() :
         #template = ROOT.TH1F("", "", histograms_dict[do_limit_input]["nbins"], histograms_dict[do_limit_input]["xmin"], histograms_dict[do_limit_input]["xmax"])
         # Define histograms to be produced === make that can be a list
         if do_limit_input == var :
+            if do_limit_input == 'ProbMultiH':
+                xmin = ProbMultiH_cut[cat]
+            else: 
+                xmin = histograms_dict[do_limit_input]["xmin"]
+            
             nbins = histograms_dict[do_limit_input]["nbins"]
-            xmin = histograms_dict[do_limit_input]["xmin"]
             xmax = histograms_dict[do_limit_input]["xmax"]
-            define_bins = histograms_dict[do_limit_input]["define_bins"]
+            # define_bins = histograms_dict[do_limit_input]["define_bins"]
             print("11111111")
 
             try :
@@ -981,14 +997,20 @@ for selection in selections.keys() :
                 print("The binning options for the variable %s should be added in utils" % do_limit_input)
                 exit()
 
-            nameout = output_histos + '/' + 'histograms_%s.root'%(do_limit_input)
+            if do_limit_input == 'ProbMultiH':
+                nameout = output_histos + '/' + 'histograms_%s_regubin_scale.root'%(do_limit_input)
+                # nameout = output_histos + '/' + 'histograms_%s_regubin.root'%(do_limit_input)
+            else:
+                nameout = output_histos + '/' + 'histograms_%s_scale.root'%(do_limit_input)
+                # nameout = output_histos + '/' + 'histograms_%s.root'%(do_limit_input)
+
+
             f_out = ROOT.TFile(nameout, 'recreate')
             print("Writing in %s" % nameout)
 
             f_out.cd()
             for proctodo in procstodo :
                 outtree = "{}/{}_{}/{}.root".format(output_tree,selection,additional_label,proctodo) ## make better, to not have to call it twice
-
                 try :
                     chunk_df = ROOT.RDataFrame(inputTree, outtree)
                     # chunk_df.Filter("%s > %s"%(char_var,xmin))
@@ -1009,33 +1031,72 @@ for selection in selections.keys() :
                     #h_tmp = chunk_df.Fill(template, [char_var, 'totalWeight'])
                     f_out.cd()
                     print("2222222")
-                    h_tmp = chunk_df.Filter("%s > %s"%(char_var,xmin)).Histo1D((char_var,char_var,nbins,array('d',define_bins)),char_var,'totalWeight')
+                    # h_tmp = chunk_df.Filter("%s > %s"%(char_var,xmin)).Histo1D((char_var,char_var,nbins,array('d',define_bins)),char_var,'totalWeight')
                     print("33333333333")
-                    # h_tmp = chunk_df.Filter("%s > %s"%(char_var,xmin)).Histo1D((char_var,char_var,nbins,xmin,xmax),char_var, 'totalWeight')
+                    h_tmp = chunk_df.Filter("%s > %s"%(char_var,xmin)).Histo1D((char_var,char_var,nbins,xmin,xmax),char_var, 'totalWeight')
                     if proctodo == "data_obs":
                         data_value = h_tmp.Integral()
                         print("already get the data value !!!!!!!!!!!!!")
                         print(h_tmp.Integral())
 
-                    if proctodo == "QCD_datadriven_data":
+                    if proctodo == "QCD_datadriven":
                         print(h_tmp.Integral())
                         h_tmp.Scale(data_value/h_tmp.Integral())
                         print("already scale the QCD !!!!!!!!!!!!!")
                         print(h_tmp.Integral())
 
 
-                    h_tmp.SetTitle('%s_tmp'%(proctodo))
-                    h_tmp.SetName('%s_tmp'%(proctodo))
-                    h_uni = ROOT.TH1F(char_var,char_var,nbins,0,nbins)
-                    h_uni.SetTitle('%s'%(proctodo))
-                    h_uni.SetName('%s'%(proctodo))
+                    # h_tmp.SetTitle('%s_tmp'%(proctodo))
+                    # h_tmp.SetName('%s_tmp'%(proctodo))
+                    # h_uni = ROOT.TH1F(char_var,char_var,nbins,0,nbins)
+                    # h_uni.SetTitle('%s'%(proctodo))
+                    # h_uni.SetName('%s'%(proctodo))
 
-                    for i in range(1, h_uni.GetNbinsX()+1):
-                        data_tmp = h_tmp.GetBinContent(i)
-                        e_data_tmp = h_tmp.GetBinError(i)
-                        h_uni.SetBinContent(i, data_tmp)
-                        h_uni.SetBinError(i, e_data_tmp)
-                    h_uni.Write()
+                    
+
+                    # for i in range(1, h_uni.GetNbinsX()+1):
+                    #     data_tmp = h_tmp.GetBinContent(i)
+                    #     e_data_tmp = h_tmp.GetBinError(i)
+                    #     h_uni.SetBinContent(i, data_tmp)
+                    #     h_uni.SetBinError(i, e_data_tmp)
+                    # h_uni.Write()
+                    if proctodo == "HHHTo6B_c3_0_d4_minus1":
+                        proctodo = "c3_0_d4_m1"
+                        h_tmp.Scale(5.46)
+                    elif proctodo == "HHHTo6B_c3_19_d4_19":
+                         proctodo = "c3_19_d4_19"
+                         h_tmp.Scale(5.46)
+                    elif proctodo == "HHHTo6B_c3_1_d4_0":
+                         proctodo = "c3_1_d4_0"
+                         h_tmp.Scale(5.46)
+                    elif proctodo == "HHHTo6B_c3_1_d4_2":
+                         proctodo = "c3_1_d4_2"
+                         h_tmp.Scale(5.46)
+                    elif proctodo == "HHHTo6B_c3_2_d4_minus1":
+                         proctodo = "c3_2_d4_m1"
+                         h_tmp.Scale(5.46)
+                    elif proctodo == "HHHTo6B_c3_4_d4_9":
+                         proctodo = "c3_4_d4_9"
+                         h_tmp.Scale(5.46)
+                    elif proctodo == "HHHTo6B_c3_minus1_d4_0":
+                         proctodo = "c3_m1_d4_0"
+                         h_tmp.Scale(5.46)
+                    elif proctodo == "HHHTo6B_c3_minus1_d4_minus1":
+                         proctodo = "c3_m1_d4_m1"
+                         h_tmp.Scale(5.46)
+                    elif proctodo == "HHHTo6B_c3_minus1p5_d4_minus0p5":
+                         proctodo = "c3_m1p5_d4_m0p5"
+                         h_tmp.Scale(5.46)
+                    elif proctodo == "HHHTo6B_c3_0_d4_99":
+                         proctodo = "c3_0_d4_99"
+                         h_tmp.Scale(5.46)
+                    elif proctodo == "GluGluToHHHTo6B_SM":
+                         proctodo = "c3_0_d4_0"
+                    
+
+                    h_tmp.SetTitle('%s'%(proctodo))
+                    h_tmp.SetName('%s'%(proctodo))
+                    h_tmp.Write()
 
                 except:
                     print("%s likely has 0 events"%proctodo)
@@ -1047,18 +1108,22 @@ for selection in selections.keys() :
 
   if not skip_do_plots :
       # Draw the data/MC to this selection
-      year = 'run2'
-      path_to_plots = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/sample_original_slim/%s/'%(year)
-      output_folder_draw = "{}/{}_{}".format(path_to_plots,selection,additional_label)
+    #   year = 'run2'
+      year = '2018'
+      path_to_plots = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/plots/v33/%s/'%(year)
+      output_folder_draw = "{}/{}_{}/".format(path_to_plots,selection,additional_label)
       input_folder_for_plots  = output_folder_draw
 
       if not path.exists(output_folder_draw) :
         procs=subprocess.Popen(['mkdir %s' % output_folder],shell=True,stdout=subprocess.PIPE)
         out = procs.stdout.read()
       print("made directory %s" % output_folder_draw)
+    #   command = "python3 draw_data_mc_categories.py --input_folder %s --plot_label '%s (%s)' --output_folder %s" % (output_histos.replace('histograms',''), selections[selection]["label"], additional_label,output_folder_draw)
 
     #   command = "python3 draw_data_mc_categories.py --input_folder %s --plot_label '%s (%s)' --output_folder %s" % (output_histos.replace('histograms',''), selections[selection]["label"], additional_label,output_folder_draw)
-      command = "python3 draw_histograms.py --input_folder %s --plot_label '%s (%s)' --output_folder %s" % (input_folder_for_plots, selections[selection]["label"], additional_label,output_folder_draw)
+    #   command = "python3 draw_data_mc_categories_pairing_run2.py --input_folder %s --plot_label '%s (%s)' --output_folder %s --save_pdf" % (output_histos.replace('histograms',''), selections[selection]["label"], additional_label,output_folder_draw)
+      command = "python3 draw_ProbMultiH_sideband_run2_fitbin.py --input_folder %s --plot_label '%s (%s)' --output_folder %s --save_pdf"  % (output_histos.replace('histograms',''), selections[selection]["label"], additional_label,output_folder_draw)
+    #   command = "python3 draw_histograms.py --input_folder %s --plot_label '%s (%s)' --output_folder %s" % (input_folder_for_plots, selections[selection]["label"], additional_label,output_folder_draw)
       #if "0PFfat" in selection :
       #command = command + " --log"
       print(command)
@@ -1067,12 +1132,14 @@ for selection in selections.keys() :
       out = proc.stdout.read()
 
   if not skip_do_correct :
-    path_to_histograms = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/%s'%(year)
-    Higgs_number_strings = ["3Higgs","2Higgs","3bh0h","2bh1h","1bh2h","0bh3h"]
+    # path_to_histograms = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/%s'%(year)
+    path_to_histograms = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/run2_separate'
+    # Higgs_number_strings = ["3Higgs","2Higgs","3bh0h","2bh1h","1bh2h","0bh3h","2bh0h","1bh1h","0bh2h"]
+    Higgs_number_strings = ["3bh0h","2bh1h","1bh2h","0bh3h","2bh0h","1bh1h","0bh2h"]
     # Higgs_number_strings = ["3Higgs"]
     for Higgs_number in Higgs_number_strings: 
-        file_1Higgs = "{}/ProbHHH6b_1Higgs_inclusive_/histograms/histograms_{}.root".format(path_to_histograms,do_limit_input)
-        file_2Higgs = "{}/ProbHHH6b_{}_inclusive_/histograms/histograms_{}.root".format(path_to_histograms,Higgs_number,do_limit_input)
+        file_1Higgs = "{}/ProbHHH6b_1Higgs_inclusive_CR/histograms/histograms_{}_fixAsy.root".format(path_to_histograms,do_limit_input)
+        file_2Higgs = "{}/ProbHHH6b_{}_inclusive_CR/histograms/histograms_{}_fixAsy.root".format(path_to_histograms,Higgs_number,do_limit_input)
         Unc_Shape(file_1Higgs,file_2Higgs,do_limit_input,path_to_histograms,Higgs_number,year)
     
     

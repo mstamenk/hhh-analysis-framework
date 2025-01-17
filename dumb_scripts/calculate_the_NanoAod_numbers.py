@@ -21,7 +21,7 @@ treeName = 'Events'
 # Process each file
 for i, fileName in enumerate(fNames):
     # Print file index and name
-    print(f"[{i+1} / {len(fNames)}] Processing file: {fileName}")
+    # print(f"[{i+1} / {len(fNames)}] Processing file: {fileName}")
 
     try:
         # Use ROOT to open file
@@ -39,7 +39,7 @@ for i, fileName in enumerate(fNames):
         # Get the tree and count entries
         data = fileIn.Get(treeName)
         entries = data.GetEntries()
-        print(f"  > {fileName}: Obtained file with {entries} events")
+        # print(f"  > {fileName}: Obtained file with {entries} events")
 
         # Sum entries
         total_entries += entries

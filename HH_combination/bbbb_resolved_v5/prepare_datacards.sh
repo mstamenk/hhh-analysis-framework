@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+# Script to run the transformation of bbtt datacards.
+
+action() {
+    local shell_is_zsh="$( [ -z "${ZSH_VERSION}" ] && echo "false" || echo "true" )"
+    local this_file="$( ${shell_is_zsh} && echo "${(%):-%x}" || echo "${BASH_SOURCE[0]}" )"
+    local this_dir="$( cd "$( dirname "${this_file}" )" && pwd )"
+
+    # infer the channel and overall repository path if not set externally
+    channel_dir="${channel_dir:-$( cd "${this_dir}/.." && pwd )}"
+    repo_dir="${repo_dir:-$( cd "${channel_dir}/.." && pwd )}"
+
+    # start the datacard preparation
+    prepare_datacards "$@"
+}
+
+prepare_datacards() {
+    # find the location of the directory with original datacards
+    local orig_dir="${channel_dir}/v3"
+
+    # default log level
+    local log_level="DEBUG"
+
+    # fetch card
+    bundle_datacard.py -l "$log_level" -s shapes "${orig_dir}/datacard.txt" . || return "$?"
+    # rename VBF shapes to central
+    rename_processes.py  -l "$log_level" "datacard.txt" \
+            "qqHH_CV_1_C2V_1_kl_1_2016_hbbhbb=VBFHH_2016_4B" \
+            "qqHH_CV_1_C2V_1_kl_1_2017_hbbhbb=VBFHH_2017_4B" \
+            "qqHH_CV_1_C2V_1_kl_1_2018_hbbhbb=VBFHH_2018_4B" \
+    || return "$?"
+    # add up/down
+    python addUpDown.py
+    # add up/down as uncertainty
+    add_parameter.py  -l "$log_level" "datacard.txt" vbfshape shape '*,VBFHH_201?_4B,1.0' || return "$?"
+    # add correct VBF scaling
+    add_parameter.py -d None -l "$log_level" "datacard.txt" xsVBFHH rateParam "* VBFHH_* ((8.88178419700125e-15*@0*@0*@2*@2+0.666666666666714*@0*@0*@0*@0+0.500000000000009*@1*@1-0.666666666666721*@0*@0*@0*@2+0.666666666666707*@0*@1*@2-1.16666666666672*@0*@0*@1)*0.0142178+(0.500000000000009*@0*@0*@2*@2+0.600000000000037*@0*@0*@0*@0+8.88178419700125e-15*@1*@1-1.10000000000005*@0*@0*@0*@2+0.600000000000033*@0*@1*@2-0.600000000000055*@0*@0*@1)*0.0014228+(-1.00000000000005*@0*@0*@2*@2-4.13333333333357*@0*@0*@0*@0-1.00000000000004*@1*@1+5.13333333333364*@0*@0*@0*@2-3.13333333333355*@0*@1*@2+5.13333333333361*@0*@0*@1)*0.001726+(0.499999999999989*@0*@0*@2*@2-0.200000000000053*@0*@0*@0*@0-9.76996261670138e-15*@1*@1-0.299999999999937*@0*@0*@0*@2-1.20000000000004*@0*@1*@2+1.20000000000006*@0*@0*@1)*0.0046089+(1.77635683940025e-14*@0*@0*@2*@2+1.06666666666676*@0*@0*@0*@0+2.13162820728030e-14*@1*@1-1.06666666666678*@0*@0*@0*@2+1.06666666666673*@0*@1*@2-1.06666666666679*@0*@0*@1)*0.0660185+(-1.86517468137026e-14*@0*@0*@2*@2-1.33333333333342*@0*@0*@0*@0+0.499999999999984*@1*@1+2.33333333333344*@0*@0*@0*@2-2.33333333333341*@0*@1*@2+0.833333333333435*@0*@0*@1)*0.02708)/0.001726 CV,C2V,kl" || return "$?"
+    # add BR and r scaling, cant be done in model as it doesnt understand a non moel covered HH process
+    add_parameter.py -d None -l "$log_level" "datacard.txt" brVBFHH rateParam "* VBFHH_* @0*@0*@1*@2 CVktkl_BRscal_hbb,r_qqhh,r" || return "$?"
+    # remove other vbf processes
+    remove_processes.py datacard.txt 'qqHH_CV_**' || return "$?"
+    # remove NNLO scaling and add it again
+    cat datacard.txt | grep -v xsfix >> datacard2.txt || return "$?"
+    mv datacard2.txt datacard.txt || return "$?"
+    add_parameter.py -d None -l "$log_level" "datacard.txt" scaleNNLOfix_Up rateParam "* ggHH_* ((0.17241379*@1*@1*@0*@0+2.11206897*@1*@1*@1*@1+0.95238095*@2*@2-0.12602627*@2*@0*@1-3.06444992*@2*@1*@1-1.28448276*@0*@1*@1*@1)*31.0415784+(-0.27045301*@1*@1*@0*@0-1.35226504*@1*@1*@1*@1-1.35226504*@2*@0*@1+1.35226504*@2*@1*@1+1.62271805*@0*@1*@1*@1)*13.532349499999999+(0.09803922*@1*@1*@0*@0+0.24019608*@1*@1*@1*@1+0.24019608*@2*@0*@1-0.24019608*@2*@1*@1-0.33823529*@0*@1*@1*@1)*91.78564499999999+(-1.00000000000000*@2*@0*@1+1.00000000000000*@2*@1*@1)*132.95934+(0.12578616*@2*@2+0.08176101*@2*@0*@1-0.12578616*@2*@1*@1)*2626.5325927999997+(-1.07816712*@2*@2+2.15633423*@2*@0*@1+1.07816712*@2*@1*@1)*9.4608663) kl,kt,C2" || return "$?"
+    add_parameter.py -d None -l "$log_level" "datacard.txt" scaleNNLOfix_Down rateParam "* ggHH_* 1.0/((0.17241379*@1*@1*@0*@0+2.11206897*@1*@1*@1*@1+0.95238095*@2*@2-0.12602627*@2*@0*@1-3.06444992*@2*@1*@1-1.28448276*@0*@1*@1*@1)*31.054+(-0.27045301*@1*@1*@0*@0-1.35226504*@1*@1*@1*@1-1.35226504*@2*@0*@1+1.35226504*@2*@1*@1+1.62271805*@0*@1*@1*@1)*13.183+(0.09803922*@1*@1*@0*@0+0.24019608*@1*@1*@1*@1+0.24019608*@2*@0*@1-0.24019608*@2*@1*@1-0.33823529*@0*@1*@1*@1)*91.329+(-1.00000000000000*@2*@0*@1+1.00000000000000*@2*@1*@1)*155.508+(0.12578616*@2*@2+0.08176101*@2*@0*@1-0.12578616*@2*@1*@1)*2923.567+(-1.07816712*@2*@2+2.15633423*@2*@0*@1+1.07816712*@2*@1*@1)*11.103) kl,kt,C2" || return "$?"
+    # add rebinning
+    # TODO
+    update_shape_bins.py datacard.txt '*,*,newbining.apply_rebin' -d None
+    # prettify the card
+    prettify_datacard.py -l "$log_level" --no-preamble "datacard.txt" || return "$?"
+    # save datacard content as json
+    extract_datacard_content.py -l "$log_level" "datacard.txt" || return "$?"
+
+}
+
+DHI_DATACARD_SCRIPT_DIRECTORY=none action "$@"

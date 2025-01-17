@@ -64,7 +64,7 @@ def rebin_histogram(hist):
     for i in range(last_negative_bin + 1, nbins + 1):
         new_x_edges.append(hist.GetXaxis().GetBinUpEdge(i))
 
-    # print(f"New X edges: {new_x_edges}")
+    print(f"New X edges: {new_x_edges}")
 
     # 创建新的直方图
     new_hist = ROOT.TH1F(
@@ -108,6 +108,12 @@ def rebin_histogram_with_fixed_edges(hist, new_x_edges):
         new_hist.SetBinError(new_bin, (new_hist.GetBinError(new_bin)**2 + bin_error**2)**0.5)
 
     return new_hist
+
+def merge_bins(new_x_edges_1, new_x_edges_2):
+    """Merge two sets of bin edges into a unified set of bin edges."""
+    # Find the union of the two sets of bin edges, and keep unique edges
+    unified_edges = sorted(set(new_x_edges_1 + new_x_edges_2))
+    return unified_edges
 
 # 测试代码
 # 主程序
@@ -170,6 +176,10 @@ for type in type_list:
                     # print(f"Copying histogram: {hist_name}")
                     obj_clone = obj.Clone()
                     obj_clone.Write()
+
+        # print(new_x_edges_2016)
+        # print(new_x_edges_2017)
+        # print(new_x_edges_2018)
 
         input_file.Close()
         output_file.Close()

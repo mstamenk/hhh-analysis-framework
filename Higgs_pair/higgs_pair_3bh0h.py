@@ -152,8 +152,8 @@ def higgsPairing(jets_4vec, fatjets, XbbWP, Run=2):
 
 
 # 1. 加载 ROOT 文件和树
-path  = "/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33"
-year_list = ["2018"]
+path  = "/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new"
+year_list = ["2018","2017","2016","2016APV"]
 # cat_list = ["ProbHHH6b_3bh0h_inclusive_CR","ProbHHH6b_2bh1h_inclusive_CR","ProbHHH6b_1bh2h_inclusive_CR","ProbHHH6b_0bh3h_inclusive_CR"]
 cat_list = ["ProbHHH6b_3bh0h_inclusive_CR"]
 file_list = ["data_obs","QCD_datadriven","GluGluToHHHTo6B_SM","GluGluToHHTo4B_cHHH1"]

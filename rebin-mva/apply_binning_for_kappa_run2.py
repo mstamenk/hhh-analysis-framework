@@ -627,10 +627,12 @@ prob = args.prob#'ProbHHH6b'
 varibles_list=['ProbMultiH']
 
 
-for cat in ['%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_0bh0h_inclusive','%s_1Higgs_inclusive','%s_2Higgs_inclusive','%s_3Higgs_inclusive','%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0bh3h_inclusive']:# variables:
+# for cat in ['%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_0bh0h_inclusive','%s_1Higgs_inclusive','%s_2Higgs_inclusive','%s_3Higgs_inclusive','%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0bh3h_inclusive']:# variables:
+# for cat in ['%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_0bh0h_inclusive','%s_1Higgs_inclusive','%s_2Higgs_inclusive','%s_3Higgs_inclusive','%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0bh3h_inclusive']:# variables:
 # for cat in ['%s_2Higgs_inclusive']:# variables:
 # for cat in ['%s_1bh2h_inclusive','%s_0bh3h_inclusive']:# variables:
-# for cat in ['%s_0bh0h_inclusive']:# variables:
+# for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0bh3h_inclusive']:# variables:
+for cat in ['%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0bh3h_inclusive']:# variables:
     cat = cat%prob
     print(cat)
     #print(binnings[cat])

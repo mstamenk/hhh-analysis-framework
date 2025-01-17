@@ -1,0 +1,35 @@
+import ROOT
+
+def updateFile(name, years):
+    f1 = ROOT.TFile.Open(name, "UPDATE")
+    centralname = "average"
+    for year in years:
+        f1.cd()
+        h_0 = f1.Get("VBFHH_2016_4B".replace("2016", year))
+        h_1 = f1.Get("qqHH_CV_1_C2V_2_kl_1_2016_hbbhbb".replace("2016", year))
+        h_2 = f1.Get("qqHH_CV_1_C2V_1_kl_2_2016_hbbhbb".replace("2016", year))
+        h_3 = f1.Get("qqHH_CV_1_C2V_1_kl_0_2016_hbbhbb".replace("2016", year))
+        h_4 = f1.Get("qqHH_CV_1_C2V_0_kl_1_2016_hbbhbb".replace("2016", year))
+        h_5 = f1.Get("qqHH_CV_1p5_C2V_1_kl_1_2016_hbbhbb".replace("2016", year))
+        central = h_0
+        centralyield = h_0.Integral()
+        if centralname == "average":
+            for h in [h_1, h_2, h_3, h_4, h_5]:
+                central.Add(h)
+            central.Scale(centralyield/central.Integral())
+        for h in [h_1, h_2, h_3, h_4, h_5]:
+            h.Scale(centralyield/h.Integral())
+            up = h_3.Clone("VBFHH_2016_4B_vbfshapeUp".replace("2016", year))
+            down = h_2.Clone("VBFHH_2016_4B_vbfshapeDown".replace("2016", year))
+        central.Write()
+        up.Write()
+        down.Write()
+        f1.cd()
+    f1.Write()
+    f1.Close()
+
+for cat in ["GGFcateg1", "GGFcateg2", "VBFcateg1"]:
+    f_2016 = "shapes/outPlotter_"+cat+".root"
+    f_201718 = "shapes/outPlotter_"+cat+"_1.root"
+    updateFile(f_2016, ["2016"])
+    updateFile(f_201718, ["2017","2018"])

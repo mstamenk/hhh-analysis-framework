@@ -32,7 +32,7 @@ if not os.path.exists(prefix):
 
 with open(args.inputJson) as f:
     yld_data=json.load(f)
-yld_data['c3_0_d4_0']=yld_data['ggHHH']
+# yld_data['c3_0_d4_0']=yld_data['ggHHH']
 
 
 def getXSec(kl,k4): 

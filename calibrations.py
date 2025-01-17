@@ -62,7 +62,7 @@ computeTightBTAGSF = '''
 '''
 
 def btag_init(year):
-    sfDir = '/isilon/data/users/mstamenk/hhh-6b-producer/CMSSW_12_5_2/src/jsonpog-integration/POG/BTV/%s_UL/btagging.json.gz'%year
+    sfDir = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/jsonpog-integration/POG/BTV/%s_UL/btagging.json.gz'%year
     ROOT.gInterpreter.Declare('auto btvjson = correction::CorrectionSet::from_file("%s");'%sfDir)
     ROOT.gInterpreter.Declare('auto btvjson_shape = btvjson->at("deepJet_shape");')
     ROOT.gInterpreter.Declare('auto btvjson_comb = btvjson->at("deepJet_comb");') # bc

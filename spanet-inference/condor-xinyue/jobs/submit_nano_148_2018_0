@@ -1,0 +1,8 @@
+Universe   = vanilla
+request_memory = 7900
+Executable = jobs/job_nano_148_2018_0.sh
+Arguments  = $(ClusterId) $(ProcId)
+Log        = log/job_nano_148_2018_0.log
+Output     = output/job_nano_148_2018_0.out
+Error      = error/job_nano_148_2018_0.error
+Queue 1

@@ -23,7 +23,7 @@ import gc
 ROOT.gROOT.SetBatch(ROOT.kTRUE)
 ROOT.ROOT.EnableImplicitMT()
 
-from utils import histograms_dict, wps_years, wps, tags, luminosities, hlt_paths, triggersCorrections, hist_properties, init_mhhh, addMHHH, clean_variables, initialise_df, save_variables, init_get_max_prob, init_get_max_cat
+from utils import histograms_dict, wps_years,ProbMultiH_cut, wps, tags, luminosities, hlt_paths, triggersCorrections, hist_properties, init_mhhh, addMHHH, clean_variables, initialise_df, save_variables, init_get_max_prob, init_get_max_cat
 from machinelearning import init_bdt, add_bdt, init_bdt_boosted, add_bdt_boosted
 from calibrations import btag_init, addBTagSF, addBTagEffSF
 from hhh_variables import add_hhh_variables
@@ -519,7 +519,7 @@ selections = {
         "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 5)",
         "label" : "ProbHHH ",
         "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
 
@@ -527,28 +527,28 @@ selections = {
         "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 6)",
         "label" : "ProbHHH ",
         "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
         "ProbHHH6b_0bh2h_inclusive"              : {
         "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 7)",
         "label" : "ProbHHH ",
         "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
         "ProbHHH6b_1bh0h_inclusive"              : {
         "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 8)",
         "label" : "ProbHHH ",
         "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
         "ProbHHH6b_0bh1h_inclusive"              : {
         "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 9)",
         "label" : "ProbHHH ",
         "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
         "ProbHHH6b_0bh0h_inclusive"              : {
@@ -731,7 +731,9 @@ if do_CR :
 inputTree = 'Events'
 
 # procstodo = ["DYJetsToLL","GluGluToHHHTo4B2Tau_SM","GluGluToHHTo2B2Tau_SM","GluGluToHHTo4B_cHHH1","TTToSemiLeptonic","WJetsToLNu_0J","WJetsToLNu_1J","WJetsToLNu_2J", "ZZTo4Q", "WWTo4Q", "ZJetsToQQ", "WJetsToQQ", "TTToHadronic","TTTo2L2Nu", "QCD", "data_obs" , "GluGluToHHHTo6B_SM","WWW","WWZ","WZZ","ZZZ"]
-procstodo = ["GluGluToHHTo4B_cHHH1","data_obs","GluGluToHHHTo6B_SM","QCD_datadriven","GluGluToHHHTo4B2Tau_SM","GluGluToHHTo2B2Tau_SM"]
+# procstodo = ["GluGluToHHTo4B_cHHH1","data_obs","GluGluToHHHTo6B_SM","QCD_datadriven","GluGluToHHHTo4B2Tau_SM","GluGluToHHTo2B2Tau_SM","HHHTo6B_c3_0_d4_99","HHHTo6B_c3_0_d4_minus1","HHHTo6B_c3_19_d4_19","HHHTo6B_c3_1_d4_0","HHHTo6B_c3_1_d4_2","HHHTo6B_c3_2_d4_minus1","HHHTo6B_c3_4_d4_9","HHHTo6B_c3_minus1_d4_0","HHHTo6B_c3_minus1_d4_minus1","HHHTo6B_c3_minus1p5_d4_minus0p5"]
+# procstodo = ["GluGluToHHTo4B_cHHH1","data_obs","GluGluToHHHTo6B_SM","QCD_datadriven","GluGluToHHHTo4B2Tau_SM","HHHTo6B_c3_0_d4_99","HHHTo6B_c3_0_d4_minus1","HHHTo6B_c3_19_d4_19","HHHTo6B_c3_1_d4_0","HHHTo6B_c3_1_d4_2","HHHTo6B_c3_2_d4_minus1","HHHTo6B_c3_4_d4_9","HHHTo6B_c3_minus1_d4_0","HHHTo6B_c3_minus1_d4_minus1","HHHTo6B_c3_minus1p5_d4_minus0p5"]
+procstodo = ["GluGluToHHTo4B_cHHH1","data_obs","GluGluToHHHTo6B_SM","QCD_datadriven","GluGluToHHHTo4B2Tau_SM","GluGluToHHTo2B2Tau_SM","GluGluToHHHTo6B_SMJERDOWN","GluGluToHHHTo6B_SMJERUP","GluGluToHHHTo6B_SMJESDOWN","GluGluToHHHTo6B_SMJESUP","GluGluToHHHTo6B_SMJMRDOWN","GluGluToHHHTo6B_SMJMRUP","GluGluToHHTo4B_cHHH1JERDOWN","GluGluToHHTo4B_cHHH1JERUP","GluGluToHHTo4B_cHHH1JESDOWN","GluGluToHHTo4B_cHHH1JESUP","GluGluToHHTo4B_cHHH1JMRDOWN","GluGluToHHTo4B_cHHH1JMRUP","GluGluToHHHTo4B2Tau_SMJERDOWN","GluGluToHHHTo4B2Tau_SMJERUP","GluGluToHHHTo4B2Tau_SMJESDOWN","GluGluToHHHTo4B2Tau_SMJESUP","GluGluToHHHTo4B2Tau_SMJMRDOWN","GluGluToHHHTo4B2Tau_SMJMRUP"]
 if not process_to_compute == 'none' :
     procstodo     = [process_to_compute]
     skip_do_plots = True
@@ -807,6 +809,8 @@ for selection in selections.keys() :
 
     dataset = selections[selection]["dataset"] # inclusive_resolved or inclusive_boosted
     list_proc=glob.glob("{}/inclusive{}/{}.root".format(input_tree,dataset,datahist))
+    print("{}/inclusive{}/{}.root".format(input_tree,dataset,datahist))
+    print(list_proc)
     print("Will create %s" % outtree)
 
 
@@ -958,6 +962,7 @@ for selection in selections.keys() :
     #histograms = []
     proctodo = "GluGluToHHHTo6B_SM" ## for taking the list of variables and doing the first histogram in the file
     outtree = "{}/{}_{}/{}.root".format(output_tree,selection,additional_label,proctodo)
+
     chunk_df = ROOT.RDataFrame(inputTree, outtree)
     variables = chunk_df.GetColumnNames()
 
@@ -969,10 +974,13 @@ for selection in selections.keys() :
         #template = ROOT.TH1F("", "", histograms_dict[do_limit_input]["nbins"], histograms_dict[do_limit_input]["xmin"], histograms_dict[do_limit_input]["xmax"])
         # Define histograms to be produced === make that can be a list
         if do_limit_input == var :
+            if do_limit_input == 'ProbMultiH':
+                xmin = ProbMultiH_cut[cat]
+            else: 
+                xmin = histograms_dict[do_limit_input]["xmin"]
             nbins = histograms_dict[do_limit_input]["nbins"]
-            xmin = histograms_dict[do_limit_input]["xmin"]
             xmax = histograms_dict[do_limit_input]["xmax"]
-            define_bins = histograms_dict[do_limit_input]["define_bins"]
+            # define_bins = histograms_dict[do_limit_input]["define_bins"]
             print("11111111")
 
             try :
@@ -981,7 +989,15 @@ for selection in selections.keys() :
                 print("The binning options for the variable %s should be added in utils" % do_limit_input)
                 exit()
 
-            nameout = output_histos + '/' + 'histograms_%s.root'%(do_limit_input)
+            if do_limit_input == 'ProbMultiH':
+                nameout = output_histos + '/' + 'histograms_%s_regubin_scale.root'%(do_limit_input)
+                # nameout = output_histos + '/' + 'histograms_%s_regubin.root'%(do_limit_input)
+            else:
+                nameout = output_histos + '/' + 'histograms_%s_scale.root'%(do_limit_input)
+                # nameout = output_histos + '/' + 'histograms_%s.root'%(do_limit_input)
+
+
+
             f_out = ROOT.TFile(nameout, 'recreate')
             print("Writing in %s" % nameout)
 
@@ -1008,8 +1024,8 @@ for selection in selections.keys() :
                 try:
                     #h_tmp = chunk_df.Fill(template, [char_var, 'totalWeight'])
                     f_out.cd()
-                    h_tmp = chunk_df.Filter("%s > %s"%(char_var,xmin)).Histo1D((char_var,char_var,nbins,array('d',define_bins)),char_var,'totalWeight')
-                    # h_tmp = chunk_df.Filter("%s > %s"%(char_var,xmin)).Histo1D((char_var,char_var,nbins,xmin,xmax),char_var, 'totalWeight')
+                    # h_tmp = chunk_df.Filter("%s > %s"%(char_var,xmin)).Histo1D((char_var,char_var,nbins,array('d',define_bins)),char_var,'totalWeight')
+                    h_tmp = chunk_df.Filter("%s > %s"%(char_var,xmin)).Histo1D((char_var,char_var,nbins,xmin,xmax),char_var, 'totalWeight')
                     if proctodo == "data_obs":
                         data_value = h_tmp.Integral()
                         print("already get the data value !!!!!!!!!!!!!")
@@ -1022,18 +1038,56 @@ for selection in selections.keys() :
                         print(h_tmp.Integral())
 
 
-                    h_tmp.SetTitle('%s_tmp'%(proctodo))
-                    h_tmp.SetName('%s_tmp'%(proctodo))
-                    h_uni = ROOT.TH1F(char_var,char_var,nbins,0,nbins)
-                    h_uni.SetTitle('%s'%(proctodo))
-                    h_uni.SetName('%s'%(proctodo))
+                    # h_tmp.SetTitle('%s_tmp'%(proctodo))
+                    # h_tmp.SetName('%s_tmp'%(proctodo))
+                    # h_uni = ROOT.TH1F(char_var,char_var,nbins,0,nbins)
+                    # h_uni.SetTitle('%s'%(proctodo))
+                    # h_uni.SetName('%s'%(proctodo))
 
-                    for i in range(1, h_uni.GetNbinsX()+1):
-                        data_tmp = h_tmp.GetBinContent(i)
-                        e_data_tmp = h_tmp.GetBinError(i)
-                        h_uni.SetBinContent(i, data_tmp)
-                        h_uni.SetBinError(i, e_data_tmp)
-                    h_uni.Write()
+                    # for i in range(1, h_uni.GetNbinsX()+1):
+                    #     data_tmp = h_tmp.GetBinContent(i)
+                    #     e_data_tmp = h_tmp.GetBinError(i)
+                    #     h_uni.SetBinContent(i, data_tmp)
+                    #     h_uni.SetBinError(i, e_data_tmp)
+                    # h_uni.Write()
+                    if proctodo == "HHHTo6B_c3_0_d4_minus1":
+                        proctodo = "c3_0_d4_m1"
+                        h_tmp.Scale(5.46)
+                    elif proctodo == "HHHTo6B_c3_19_d4_19":
+                         proctodo = "c3_19_d4_19"
+                         h_tmp.Scale(5.46)
+                    elif proctodo == "HHHTo6B_c3_1_d4_0":
+                         proctodo = "c3_1_d4_0"
+                         h_tmp.Scale(5.46)
+                    elif proctodo == "HHHTo6B_c3_1_d4_2":
+                         proctodo = "c3_1_d4_2"
+                         h_tmp.Scale(5.46)
+                    elif proctodo == "HHHTo6B_c3_2_d4_minus1":
+                         proctodo = "c3_2_d4_m1"
+                         h_tmp.Scale(5.46)
+                    elif proctodo == "HHHTo6B_c3_4_d4_9":
+                         proctodo = "c3_4_d4_9"
+                         h_tmp.Scale(5.46)
+                    elif proctodo == "HHHTo6B_c3_minus1_d4_0":
+                         proctodo = "c3_m1_d4_0"
+                         h_tmp.Scale(5.46)
+                    elif proctodo == "HHHTo6B_c3_minus1_d4_minus1":
+                         proctodo = "c3_m1_d4_m1"
+                         h_tmp.Scale(5.46)
+                    elif proctodo == "HHHTo6B_c3_minus1p5_d4_minus0p5":
+                         proctodo = "c3_m1p5_d4_m0p5"
+                         h_tmp.Scale(5.46)
+                    elif proctodo == "HHHTo6B_c3_0_d4_99":
+                         proctodo = "c3_0_d4_99"
+                         h_tmp.Scale(5.46)
+                    elif proctodo == "GluGluToHHHTo6B_SM":
+                         proctodo = "c3_0_d4_0"
+
+                    
+                
+                    h_tmp.SetTitle('%s'%(proctodo))
+                    h_tmp.SetName('%s'%(proctodo))
+                    h_tmp.Write()
 
                 except:
                     print("%s likely has 0 events"%proctodo)
@@ -1045,9 +1099,9 @@ for selection in selections.keys() :
 
   if not skip_do_plots :
       # Draw the data/MC to this selection
-      path_to_plots = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/plots_addmva/v33_new/%s/'%(year)
+      path_to_plots = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/plots/v33_new/%s/'%(year)
       
-      output_folder_draw = "{}/{}_{}".format(path_to_plots,selection,additional_label)
+      output_folder_draw = "{}/{}_{}/".format(path_to_plots,selection,additional_label)
       if not path.exists(output_folder_draw) :
         procs=subprocess.Popen(['mkdir %s' % output_folder],shell=True,stdout=subprocess.PIPE)
         out = procs.stdout.read()

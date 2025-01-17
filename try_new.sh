@@ -73,10 +73,14 @@ do
     # for var  in      ProbHHH6b_0bh3h_inclusive  ProbHHH6b_1bh2h_inclusive 
     # for var  in  ProbHH4b_3Higgs_inclusive   ProbHH4b_2Higgs_inclusive    ProbHH4b_1Higgs_inclusive ProbHH4b_0bh0h_inclusive
     # for var  in   ProbHHH6b_3Higgs_inclusive     ProbHHH6b_2Higgs_inclusive ProbHHH6b_1Higgs_inclusive  ProbHHH6b_0bh0h_inclusive 
-    for var  in  ProbHHH6b_2bh0h_inclusive ProbHHH6b_1bh1h_inclusive ProbHHH6b_0bh2h_inclusive ProbHHH6b_3Higgs_inclusive     ProbHHH6b_2Higgs_inclusive ProbHHH6b_1Higgs_inclusive  ProbHHH6b_0bh0h_inclusive ProbHHH6b_3bh0h_inclusive ProbHHH6b_2bh1h_inclusive ProbHHH6b_1bh2h_inclusive ProbHHH6b_0bh3h_inclusive
+    # for var  in  ProbHHH6b_2bh0h_inclusive ProbHHH6b_1bh1h_inclusive ProbHHH6b_0bh2h_inclusive ProbHHH6b_3Higgs_inclusive     ProbHHH6b_2Higgs_inclusive ProbHHH6b_1Higgs_inclusive  ProbHHH6b_0bh0h_inclusive ProbHHH6b_3bh0h_inclusive ProbHHH6b_2bh1h_inclusive ProbHHH6b_1bh2h_inclusive ProbHHH6b_0bh3h_inclusive
     # for var  in   ProbHHH6b_3Higgs_inclusive    ProbHHH6b_2Higgs_inclusive    ProbHH4b_2Higgs_inclusive  
     # for var  in    ProbHH4b_3Higgs_inclusive   ProbHHH6b_1Higgs_inclusive  ProbHHH6b_0bh0h_inclusive  ProbHH4b_1Higgs_inclusive ProbHH4b_0bh0h_inclusive
-    # for var  in   ProbHH4b_2Higgs_inclusive
+    for var  in   ProbHHH6b_0bh3h_inclusive ProbHHH6b_1bh2h_inclusive ProbHHH6b_2bh1h_inclusive ProbHHH6b_3bh0h_inclusive
+    # for var  in    ProbHHH6b_1bh2h_inclusive ProbHHH6bs_2bh1h_inclusive ProbHHH6b_3bh0h_inclusive
+    # for var  in   ProbHHH6b_0bh3h_inclusive ProbHHH6b_1bh2h_inclusive
+    # for var  in   ProbHHH6b_0bh3h_inclusive  ProbHHH6b_3bh0h_inclusive
+    # for var  in   ProbHHH6b_1bh2h_inclusive 
     # for var  in   6m_multiclass_HHH 6m_multiclass_QCD 6m_multiclass_TT 6m_multiclass_rest 
     # for var  in    6l_1l 6l_2l 6l_lt2bm 6l_mt1l gt5bloose_0PFfat_no_bdt_cut
     # for var  in    6l_mt2l 6l_mt1l 6l_1l 6l_2l gt5bloose_0PFfat_no_bdt_cut no_cat
@@ -95,15 +99,24 @@ do
         # python skimm_tree.py --skip_do_trees --skip_do_plots   --category $var  --do_limit_input h1_t3_mass  --bdt_category $bdt_cat    &
         # python skimm_tree_PNet.py --skip_do_trees --skip_do_plots   --category $var  --do_limit_input h1_t3_mass  --bdt_category $bdt_cat    &
 
-        # python skimm_tree.py --skip_do_trees --skip_do_plots  --skip_do_histograms --category $var  --do_limit_input ProbHHH    &
+        # python skimm_tree.py --skip_do_trees --skip_do_plots  --skip_do_histograms --category $var  --do_limit_input ProbMultiH  --do_CR  &
     
-        # python skimm_tree.py --skip_do_trees --skip_do_plots --do_CR --skip_do_correct --category $var  --do_limit_input ProbHHH    &
+        # python skimm_tree.py --skip_do_trees --skip_do_plots --do_CR --skip_do_correct --category $var  --do_limit_input ProbMultiH   &
+        # python skimm_tree_2017.py --skip_do_trees --skip_do_plots --do_CR --skip_do_correct --category $var  --do_limit_input ProbMultiH    &
+        # python skimm_tree_2016.py --skip_do_trees --skip_do_plots --do_CR --skip_do_correct --category $var  --do_limit_input ProbMultiH   &
+        # python skimm_tree_2016APV.py --skip_do_trees --skip_do_plots --do_CR --skip_do_correct --category $var  --do_limit_input ProbMultiH    &
         # python skimm_tree_2017.py --skip_do_trees --skip_do_plots --do_CR --skip_do_correct  --category $var  --do_limit_input ProbHHH    &
         # python skimm_tree_2016.py --skip_do_trees --skip_do_plots  --do_CR --skip_do_correct  --category $var  --do_limit_input ProbHHH    &
         # python skimm_tree_2016APV.py --skip_do_trees --skip_do_plots --do_CR  --skip_do_correct  --category $var  --do_limit_input ProbHHH    &
 
+        python skimm_tree.py --skip_do_trees --skip_do_histograms --do_CR --skip_do_correct --category $var   &
+        # python skimm_tree_2016.py --skip_do_trees --skip_do_histograms --do_CR --skip_do_correct --category $var   &
+        # python skimm_tree_2016APV.py --skip_do_trees --skip_do_histograms --do_CR --skip_do_correct --category $var   &
+        # python skimm_tree_2017.py --skip_do_trees --skip_do_histograms --do_CR --skip_do_correct --category $var   &
 
-        python skimm_tree.py --skip_do_trees   --skip_do_histograms --do_CR --skip_do_correct  --category $var  --do_limit_input ProbMultiH    &
+
+
+        # python skimm_tree.py --skip_do_trees   --skip_do_histograms --do_CR --skip_do_correct  --category $var  --do_limit_input ProbMultiH    &
         # python skimm_tree_2017.py --skip_do_trees --skip_do_plots  --skip_do_histograms  --category $var  --do_limit_input ProbHHH    &
         # python skimm_tree_2016.py --skip_do_trees --skip_do_plots  --skip_do_histograms  --category $var  --do_limit_input ProbMultiH   &
         # python skimm_tree_2016APV.py --skip_do_trees --skip_do_plots  --skip_do_histograms  --category $var  --do_limit_input ProbHHH    &

@@ -1,0 +1,3 @@
+### To Xinyue do it
+We want to compare how the reconstruction areas fit separatelly, with and wiwhout its respective CR's
+- 3Higgs, ... 

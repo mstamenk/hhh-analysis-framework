@@ -164,7 +164,7 @@ def convert_list_to_dict(ls):
         if i > 0:
             upper = ls[index]
             lower = ls[index+1]
-            print(lower,upper)
+            # print(lower,upper)
             ret[i] = [lower,upper]
     return ret
 
@@ -613,7 +613,7 @@ def get_integral_and_error(hist):
 
 
 #path = '/isilon/data/users/mstamenk/eos-triple-h/v28-categorisation/mva-inputs-2018-categorisation-spanet-boosted-classification/'
-path = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/%s/sample_cut/%s'%(version,path_year)
+path = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/%s/%s'%(version,path_year)
 
 cat = 'ProbHH4b_1bh1h_inclusive'
 option = '_CR'
@@ -623,9 +623,13 @@ prob = args.prob#'ProbHHH6b'
 
 
 # for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0bh3h_inclusive']:# variables:
-for cat in ['%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_0bh0h_inclusive','%s_2Higgs_inclusive','%s_1Higgs_inclusive','%s_3Higgs_inclusive','%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0bh3h_inclusive']:# variables:
+# for cat in ['%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_0bh0h_inclusive','%s_2Higgs_inclusive','%s_1Higgs_inclusive','%s_3Higgs_inclusive','%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0bh3h_inclusive']:# variables:
 # for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0bh3h_inclusive','%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_1bh0h_inclusive','%s_0bh1h_inclusive','%s_0bh0h_inclusive','%s_2Higgs_inclusive','%s_1Higgs_inclusive','%s_3Higgs_inclusive']:# variables:
 #for cat in ['%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_1bh0h_inclusive','%s_0bh1h_inclusive','%s_0bh0h_inclusive','%s_2Higgs_inclusive','%s_1Higgs_inclusive','%s_3Higgs_inclusive']:# variables:
+for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0bh3h_inclusive','%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_1bh0h_inclusive','%s_0bh1h_inclusive','%s_0bh0h_inclusive']:# variables:
+
+# for cat in ['%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive']:# variables:
+
     cat = cat%prob
     print(cat)
     #print(binnings[cat])
@@ -658,7 +662,7 @@ for cat in ['%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_0
     for s in samples:
         if 'GluGlu' in s: continue # separate signal from other processes
         if 'QCD' in s: continue
-        print(s)
+        # print(s)
         f_name = path + '/' + file_path + '/' + s + '.root'
         tree = ROOT.TChain('Events')
         tree.AddFile(f_name)
@@ -689,7 +693,7 @@ for cat in ['%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_0
                 integral, error = get_integral_and_error(h)
             except: continue
             
-            print(i,integral,error)
+            # print(i,integral,error)
             h_mva.SetBinContent(i,integral)
             h_mva.SetBinError(i,error)
         if 'data_obs' in s:
@@ -730,7 +734,7 @@ for cat in ['%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_0
             else:
                 s = sam + '_' + labels[syst]
                 if 'JMR' in sam or 'JES' in sam or 'JER' in sam: continue
-            print(s)
+            # print(s)
 
 
             f_name = path + '/' + file_path + '/' + sam + '.root'
@@ -768,7 +772,7 @@ for cat in ['%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_0
                     integral, error = get_integral_and_error(h)
                 except: continue
                 
-                print(i,integral,error)
+                # print(i,integral,error)
                 h_mva.SetBinContent(i,integral)
                 h_mva.SetBinError(i,error)
             if 'data_obs' in s:
@@ -802,7 +806,7 @@ for cat in ['%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_0
             integral, error = get_integral_and_error(h)
         except: continue
         
-        print(i,integral,error)
+        # print(i,integral,error)
         h_mva.SetBinContent(i,integral)
         h_mva.SetBinError(i,error)
 
