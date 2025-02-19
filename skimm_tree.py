@@ -21,10 +21,12 @@ import gc
 ROOT.gROOT.SetBatch(ROOT.kTRUE)
 ROOT.ROOT.EnableImplicitMT()
 
-from utils import histograms_dict, wps_years, wps, tags, luminosities, hlt_paths, triggersCorrections, hist_properties, init_mhhh, addMHHH, clean_variables, initialise_df, save_variables, init_get_max_prob, init_get_max_cat
+from utils import histograms_dict, wps_years, wps, tags, luminosities, hlt_paths, triggersCorrections, hist_properties, init_mhhh, addMHHH, clean_variables, initialise_df, save_variables, init_get_max_prob, init_get_max_cat, applySelection
 from machinelearning import init_bdt, add_bdt, init_bdt_boosted, add_bdt_boosted
 from calibrations import btag_init, addBTagSF, addBTagEffSF
 from hhh_variables import add_hhh_variables
+from jetveto import jetveto_init, addJetVetoFlag
+
 
 from optparse import OptionParser
 parser = OptionParser()
@@ -37,6 +39,8 @@ parser.add_option("--do_SR", action="store_true", dest="do_SR", help="Write...",
 parser.add_option("--do_CR", action="store_true", dest="do_CR", help="Write...", default=False)
 parser.add_option("--process ", type="string", dest="process_to_compute", help="Process to compute it. if no argument is given will do all", default='none')
 parser.add_option("--do_limit_input ", type="string", dest="do_limit_input", help="If given it will do the histograms only in that variable with all the uncertainties", default='none')
+parser.add_option("--run_all_categories ",  dest="run_all_categories", help="Run on all ProbHHH6b and ProbHH4b categories in a for loop", action='store_true', default = False)
+
 ## separate SR_CR as an option, this option would add _SR and _CR to the subfolder name
 ## add option to enter a process and if that is given to make the trees and histos only to it
 ## add option to add BDT computation here -- or not, we leave this only to MVA input variables -- the prefit plots already do data/MC
@@ -51,955 +55,218 @@ skip_do_histograms = options.skip_do_histograms
 skip_do_plots      = options.skip_do_plots
 input_tree         = options.base
 cat                = options.category
+run_all_categories = options.run_all_categories
 
 if do_SR and do_CR :
     print("You should chose to signal region OR control region")
     exit()
 
 selections = {
-    #"final_selection_jetMultiplicity" : "(nbtags > 4 && nfatjets == 0) || (nbtags > 2 && nfatjets > 0)",
+    #"final_selection_jetMultiplicity" : "(nbtags > 4 && nfatjets 
+    # Start of SR definition
 
-
-     ########################### categories for resolved ###############################
-    # SR for resolved 6L (bdt > 0.6 can change)
-    "gt5bloose_0PFfat"              : {
-        "sel" : "(nloosebtags > 5 && nprobejets == 0  && nleps == 0 && ntaus ==0 && mva[0] > 0.6)",
-        "label" : "Resolved 6L",
-        "doSR" : "&& (h_fit_mass > 80 && h_fit_mass < 150)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved",
-
-        },
-    #SR for resolved 6L(exclude 6M from it) in order to combine 6L(veto 6M) and 6M
-    "gt5bloose_0PFfat_orthogonal"              : {
-        "sel" : "(nloosebtags > 5  && nmediumbtags <6  && nleps == 0 && ntaus ==0 && nprobejets == 0  && mva[0] > 0.6 )",
-        "label" : "Resolved 6L(orthogonal)",
-        "doSR" : "&& (h_fit_mass > 80 && h_fit_mass < 150)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved",
-
-        },
-    
-    #SR for resolved 6M in order to combine 6L(veto 6M) and 6M
-    "gt5bmedium_0PFfat"             : {
-        "sel" : "(nmediumbtags > 5  && nleps == 0 && ntaus ==0 && nprobejets == 0 && mva[0] > 0.6 )",
-        "label" : "Resolved 6M",
-        "doSR" : "&& (h_fit_mass > 80 && h_fit_mass < 150)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved",
-        },
-    #CR for purer ttbar need at least 2 leptons (still need some cut to make it purer)
-    "6l_mt2l"              : {
-        "sel" : "(nloosebtags >= 6 && nprobejets == 0 && nleps >= 2 && ntaus ==0)",
-        "label" : "6l_mt2l",
-        "doSR" : "&& (h_fit_mass > 80 && h_fit_mass < 150)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved",
-
-        },
-
-    #CR for ttbar need at least one lepton (the cut is loose than 6l_mt2l)
-    "6l_mt1l"              : {
-        "sel" : "(nloosebtags >= 6 && nprobejets == 0 && nleps >= 1 && ntaus ==0 )",
-        "label" : "6l_mt1l",
-        "doSR" : "&& (h_fit_mass > 80 && h_fit_mass < 150)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved",
-
-        },
-
-    #CR for W +jets need 1 lepton (still need cut for met to make it purer)
-    "6l_1l"              : {
-        "sel" : "(nloosebtags >= 6 && nprobejets == 0 && nleps == 1 && ntaus ==0 )",
-        "label" : "6l_1l",
-        "doSR" : "&& (h_fit_mass > 80 && h_fit_mass < 150)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved",
-
-        },
-
-    #CR for Z + jets need 2 lepton (need cut for met to distinguish it from ttbar)
-    "6l_2l"              : {
-        "sel" : "(nloosebtags >= 6 && nprobejets == 0 && nleps == 2 && ntaus ==0 )",
-        "label" : "6l_2l",
-        "doSR" : "&& (h_fit_mass > 80 && h_fit_mass < 150)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved",
-
-        },
-
-    #########################boosted categories####################
-    
-   
-    
-    
-    "1PFfat"                        : {
-        "sel" : "(nprobejets == 1)",
-        "label" : "Boosted (1 PN fat jet)",
-        "doSR" : "&& (fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted",
-        },
-    "gt1PFfat"                      : {
-        "sel" : "(nprobejets > 1)",
-        "label" : "Boosted (> 1 PN fat jet)",
-        "doSR" : "&& (fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted",
-        },
-    #"gt0PFfat"                      : {
-    #    "sel" : "(nprobejets > 0)",
-    #    "label" : "Boosted (> 0 PN fat jet)",
-    #    "doSR" : "&& (fatJet1Mass > 80 && fatJet1Mass < 150)",
-    #    "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-    #    },
-    "1PNfatLoose"                        : {
-        "sel" : "(nprobejets == 1 && fatJet1PNetXbb > 0.95)",
-        "label" : "Boosted (1 PN fat jet) with PNet Xbb > 0.95",
-        "doSR" : "&& (fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted",
-        },
-    "gt1PNfatLoose"                      : {
-        "sel" : "(nprobejets > 1 && fatJet1PNetXbb > 0.95)",
-        "label" : "Boosted (> 1 PN fat jet) with PNet Xbb > 0.95",
-        "doSR" : "&& (fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted",
-        },
-    "1PNfatMedium"                        : {
-        "sel" : "(nprobejets == 1 && fatJet1PNetXbb > 0.975)",
-        "label" : "Boosted (1 PN fat jet) with PNet Xbb > 0.975",
-        "doSR" : "&& (fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-         "dataset" : "boosted",
-        },
-    "gt1PNfatMedium"                      : {
-        "sel" : "(nprobejets > 1 && fatJet1PNetXbb > 0.975)",
-        "label" : "Boosted (> 1 PN fat jet) with PNet Xbb > 0.975",
-        "doSR" : "&& (fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted",
-        },
-    "1PNfatTight"                        : {
-        "sel" : "(nprobejets == 1 && fatJet1PNetXbb > 0.985)",
-        "label" : "Boosted (1 PN fat jet) with PNet Xbb > 0.985",
-        "doSR" : "&& (fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted",
-        },
-    "gt1PNfatTight"                      : {
-        "sel" : "(nprobejets > 1 && fatJet1PNetXbb > 0.985)",
-        "label" : "Boosted (> 1 PN fat jet) with PNet Xbb > 0.985",
-        "doSR" : "&& (fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted",
-        },
-    # nprobejets >= 1
-    "gt0PFfat_cat1"                      : {
-        "sel" : "(nprobejets > 0 && mvaBoosted[0] > 0.45 && fatJet1PNetXbb > 0.985)",
-        "label" : "Boosted category 1",
-        "doSR" : "&& (fatJet1Mass > 70)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted_mvacut0-run2-training",
-        },
-    "gt0PFfat_cat2"                      : {
-        "sel" : "(nprobejets > 0 && mvaBoosted[0] > 0.24 && mvaBoosted[0] < 0.45 && fatJet1PNetXbb > 0.985)",
-        "label" : "Boosted category 2",
-        "doSR" : "&& (fatJet1Mass > 70)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted_mvacut0-run2-training",
-        },
-    "gt0PFfat_cat3"                      : {
-        "sel" : "(nprobejets > 0 && mvaBoosted[0] > 0.45 && fatJet1PNetXbb < 0.985)",
-        "label" : "Boosted category 3",
-        "doSR" : "&& (fatJet1Mass > 70)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted_mvacut0-run2-training",
-        },
-    "gt0PFfat_cat4"                      : {
-        "sel" : "(nprobejets > 0 && mvaBoosted[0] > 0.15 && mvaBoosted[0] < 0.24 && fatJet1PNetXbb < 0.985)",
-        "label" : "Boosted category 4",
-        "doSR" : "&& (fatJet1Mass > 70)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted_mvacut0-run2-training-decorrelated",
-        },
-    "gt0PFfat_cat5"                      : {
-        "sel" : "(nprobejets > 0 && mvaBoosted[0] > 0.10 && mvaBoosted[0] < 0.24)",
-        "label" : "Boosted category 5",
-        "doSR" : "&& (fatJet1Mass > 70)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted_mvacut0-run2-training",
-        },
-    # nprobejets == 1
-    "1PFfat_cat1"                      : {
-        "sel" : "(nprobejets == 1 && mvaBoosted[0] > 0.45 && fatJet1PNetXbb > 0.985)",
-        "label" : "Boosted category 1",
-        "doSR" : "&& (fatJet1Mass > 70)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted_mvacut0-run2-training",
-        },
-    "1PFfat_cat2"                      : {
-        "sel" : "(nprobejets == 1 && mvaBoosted[0] > 0.25 && mvaBoosted[0] < 0.45 && fatJet1PNetXbb > 0.985)",
-        "label" : "Boosted category 2",
-        "doSR" : "&& (fatJet1Mass > 70)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted_mvacut0-run2-training",
-        },
-    "1PFfat_cat3"                      : {
-        "sel" : "(nprobejets == 1 && mvaBoosted[0] > 0.45 && fatJet1PNetXbb < 0.985)",
-        "label" : "Boosted category 3",
-        "doSR" : "&& (fatJet1Mass > 70)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted_mvacut0-run2-training",
-        },
-    "1PFfat_cat4"                      : {
-        "sel" : "(nprobejets == 1 && mvaBoosted[0] > 0.15 && mvaBoosted[0] < 0.25 && fatJet1PNetXbb < 0.985)",
-        "label" : "Boosted category 4",
-        "doSR" : "&& (fatJet1Mass > 70)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted_mvacut0-run2-training",
-        },
-    "1PFfat_cat5"                      : {
-        "sel" : "(nprobejets == 1 && mvaBoosted[0] > 0. && (mvaBoosted[0] < 0.25 || (mvaBoosted[0] < 0.45 && fatJet1PNetXbb < 0.985)))",
-        "label" : "Boosted category 5",
-        "doSR" : "&& (fatJet1Mass > 70)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted_mvacut0-run2-training",
-        },
-    # nprobejets >= 1
-    "gt1PFfat_cat1"                      : {
-        "sel" : "(nprobejets > 1 && mvaBoosted[0] > 0.43 && fatJet1PNetXbb > 0.975)",
-        "label" : "Boosted category 1",
-        "doSR" : "&& (fatJet1Mass > 70)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted_mvacut0-run2-training",
-        },
-    "gt1PFfat_cat2"                      : {
-        "sel" : "(nprobejets > 1 && mvaBoosted[0] > 0.25 && mvaBoosted[0] < 0.43 && fatJet1PNetXbb > 0.975)",
-        "label" : "Boosted category 2",
-        "doSR" : "&& (fatJet1Mass > 70)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted_mvacut0-run2-training",
-        },
-    "gt1PFfat_cat3"                      : {
-        "sel" : "(nprobejets > 1 && mvaBoosted[0] > 0.43 && fatJet1PNetXbb < 0.975)",
-        "label" : "Boosted category 3",
-        "doSR" : "&& (fatJet1Mass > 70)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted_mvacut0-run2-training",
-        },
-    "gt1PFfat_cat4"                      : {
-        "sel" : "(nprobejets > 1 && mvaBoosted[0] > 0.10 && mvaBoosted[0] < 0.19 && fatJet1PNetXbb < 0.985)",
-        "label" : "Boosted category 4",
-        "doSR" : "&& (fatJet1Mass > 70)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted_mvacut0-run2-training",
-        },
-    "gt1PFfat_cat5"                      : {
-        "sel" : "(nprobejets > 1 && mvaBoosted[0] > 0.0 && (mvaBoosted[0] < 0.25 || (mvaBoosted[0] < 0.43 && fatJet1PNetXbb < 0.975)))",
-        "label" : "Boosted category 5",
-        "doSR" : "&& (fatJet1Mass > 70)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted_mvacut0-run2-training",
-        },
-
-    # inclusive boosted category
-    "gt0PFfat"                      : {
-        "sel" : "(nprobejets > 0 && mvaBoosted[0] > 0.0 && fatJet1PNetXbb > 0.95)",
-        "label" : "Boosted category 3",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted",
-        },
-    "1PFfat"                      : {
-        "sel" : "(nprobejets == 1 && mvaBoosted[0] > 0.0 && fatJet1PNetXbb > 0.95)",
-        "label" : "Boosted category 3",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted_mvacut0-new",
-        },
-    "gt1PFfat"                      : {
-        "sel" : "(nprobejets > 1 && mvaBoosted[0] > 0.0 && fatJet1PNetXbb > 0.95)",
-        "label" : "Boosted category 3",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted_mvacut0-new",
-        },
-
-    "gt0PFfat_PNetTight"                      : {
-        "sel" : "(nprobejets > 0 && mvaBoosted[0] > 0.0 && fatJet1PNetXbb > 0.985)",
-        "label" : "Boosted category 3",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted",
-        },
-
-     "gt0PFfat_inclusive_0taus"                      : {
-        "sel" : "(nprobejets > 0 && ntaus == 0)",
-        "label" : ">= 1 AK8 and 0 had taus",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-        "gt0PFfat_inclusive_0taus_resolved"                      : {
-        "sel" : "(nprobejets == 0 && ntaus == 0)",
-        "label" : ">= 1 AK8 and 0 had taus",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "resolved-weights",
-        },
-
-     "gt0PFfat_inclusive_1taus"                      : {
-        "sel" : "(nprobejets > 0 && ntaus == 1)",
-        "label" : ">= 1 AK8 and 1 had taus",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-     "gt0PFfat_inclusive_2ptaus"                      : {
-        "sel" : "(nprobejets > 0 && ntaus >= 2)",
-        "label" : ">= 1 AK8 and >=2 had taus",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-     "gt0PFfat_inclusive_0taus_PNetMedium"                      : {
-        "sel" : "(nprobejets > 0 && ntaus == 0 && (fatJet1PNetXbb / (fatJet1PNetXbb + fatJet1PNetQCD) > 0.9714))",
-        "label" : ">= 1 AK8 and 0 had taus",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-     "gt0PFfat_inclusive_1taus_PNetMedium"                      : {
-        "sel" : "(nprobejets > 0 && ntaus == 1 && (fatJet1PNetXbb / (fatJet1PNetXbb + fatJet1PNetQCD) > 0.9714))",
-        "label" : ">= 1 AK8 and 1 had taus",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-     "gt0PFfat_inclusive_2ptaus_PNetMedium"                      : {
-        "sel" : "(nprobejets > 0 && ntaus >= 2 && (fatJet1PNetXbb / (fatJet1PNetXbb + fatJet1PNetQCD) > 0.9714))",
-        "label" : ">= 1 AK8 and >=2 had taus",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-
-     "gt0PFfat_inclusive_0taus_PNetTight"                      : {
-        "sel" : "(nprobejets > 0 && ntaus == 0 && (fatJet1PNetXbb / (fatJet1PNetXbb + fatJet1PNetQCD) > 0.988))",
-        "label" : ">= 1 AK8 and 0 had taus",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-     "gt0PFfat_inclusive_1taus_PNetTight"                      : {
-        "sel" : "(nprobejets > 0 && ntaus == 1 && (fatJet1PNetXbb / (fatJet1PNetXbb + fatJet1PNetQCD) > 0.988))",
-        "label" : ">= 1 AK8 and 1 had taus",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-     "gt0PFfat_inclusive_2ptaus_PNetTight"                      : {
-        "sel" : "(nprobejets > 0 && ntaus >= 2 && (fatJet1PNetXbb / (fatJet1PNetXbb + fatJet1PNetQCD) > 0.988))",
-        "label" : ">= 1 AK8 and >=2 had taus",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-
-     "gt0PFfat_inclusive_0taus_PNetTight_mvacut02"                      : {
-        "sel" : "(nprobejets > 0 && ntaus == 0 && (fatJet1PNetXbb / (fatJet1PNetXbb + fatJet1PNetQCD) > 0.988) && mvaBoosted[0] > 0.2)",
-        "label" : ">= 1 AK8 and 0 had taus",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-     "gt0PFfat_inclusive_1taus_PNetTight_mvacut02"                      : {
-        "sel" : "(nprobejets > 0 && ntaus == 1 && (fatJet1PNetXbb / (fatJet1PNetXbb + fatJet1PNetQCD) > 0.988) && mvaBoosted[0] > 0.2)",
-        "label" : ">= 1 AK8 and 1 had taus",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-     "gt0PFfat_inclusive_2ptaus_PNetTight_mvacut02"                      : {
-        "sel" : "(nprobejets > 0 && ntaus >= 2 && (fatJet1PNetXbb / (fatJet1PNetXbb + fatJet1PNetQCD) > 0.988) && mvaBoosted[0] > 0.2)",
-        "label" : ">= 1 AK8 and >=2 had taus",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-
-
-
-     "gt0PFfat_inclusive_0taus_0leps"                      : {
-        "sel" : "(nprobejets > 0 && ntaus == 0 && nleps == 0)",
-        "label" : ">= 1 AK8 and 0 had taus",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-     "gt0PFfat_inclusive_1taus_1leps"                      : {
-        "sel" : "(nprobejets > 0 && ntaus == 1 && nleps == 1)",
-        "label" : ">= 1 AK8 and 1 had taus",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-     "gt0PFfat_inclusive_2ptaus_0leps"                      : {
-        "sel" : "(nprobejets > 0 && ntaus >= 2 && nleps == 0)",
-        "label" : ">= 1 AK8 and >=2 had taus",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-     "gt0PFfat_inclusive_0taus_0leps_mvacut0"                      : {
-        "sel" : "(nprobejets > 0 && ntaus == 0 && nleps == 0 && mvaBoosted[0] > 0.0)",
-        "label" : ">= 1 AK8 and 0 had taus",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-     "gt0PFfat_inclusive_1taus_1leps_mvacut0"                      : {
-        "sel" : "(nprobejets > 0 && ntaus == 1 && nleps == 1 && mvaBoosted[0] > 0.0)",
-        "label" : ">= 1 AK8 and 1 had taus",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-     "gt0PFfat_inclusive_2ptaus_0leps_mvacut0"                      : {
-        "sel" : "(nprobejets > 0 && ntaus >= 2 && nleps == 0 && mvaBoosted[0] > 0.0)",
-        "label" : ">= 1 AK8 and >=2 had taus",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-     "1PFfat_inclusive_mvacut0"                      : {
-        "sel" : "(nprobejets == 1 && mvaBoosted[0] > 0.0 && fatJet1Pt < 450)",
-        "label" : ">= 1 AK8 ",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-     "1PFfat_inclusive_mvacut0_pt450"                      : {
-        "sel" : "(nprobejets == 1 && mvaBoosted[0] > 0.0 && fatJet1Pt > 450)",
-        "label" : ">= 1 AK8 ",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-
-     "gt1PFfat_inclusive_mvacut0"                      : {
-        "sel" : "(nprobejets > 1 && mvaBoosted[0] > 0.0 && fatJet1Pt < 450)",
-        "label" : ">= 1 AK8",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-     "gt1PFfat_inclusive_mvacut0_pt450"                      : {
-        "sel" : "(nprobejets > 1 && mvaBoosted[0] > 0.0 && fatJet1Pt > 450)",
-        "label" : ">= 1 AK8",
-        "doSR" : "&& (fatJet1Mass > 0)",
-        "doCR" : "&& !(fatJet1Mass > 80 && fatJet1Mass < 150)",
-        "dataset" : "boosted-weights",
-        },
-
-
-
-
-
-    # resolved
-    "5bloose_0PFfat_cat1"              : {
-        "sel" : "(nloosebtags == 5 && nprobejets == 0 && mva[0] > 0.42)",
-        "label" : "Resolved 5L",
-        "doSR" : "&& (h1_t3_mass > 70)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved-mvacut0-run2-training-MVA-resolved",
-
-        },
-    "5bloose_0PFfat_cat2"              : {
-        "sel" : "(nloosebtags == 5 && nprobejets == 0 && mva[0] > 0.25 && mva[0] < 0.42)",
-        "label" : "Resolved 5L",
-        "doSR" : "&& (h1_t3_mass > 70)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved-mvacut0-run2-training-MVA-resolved",
-
-        },
-    "5bloose_0PFfat_cat3"              : {
-        "sel" : "(nloosebtags == 5 && nprobejets == 0 && mva[0] < 0.25)",
-        "label" : "Resolved 5L",
-        "doSR" : "&& (h1_t3_mass > 70)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved-mvacut0-run2-training-MVA-resolved",
-
-        },
-
-    "gt5bloose_0PFfat_cat1"              : {
-        "sel" : "(nloosebtags > 5 && nprobejets == 0 && mva[0] > 0.42)",
-        "label" : "Resolved 6L",
-        "doSR" : "&& (h1_t3_mass > 70)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved-mvacut0-run2-training-MVA-resolved",
-
-        },
-    "gt5bloose_0PFfat_cat2"              : {
-        "sel" : "(nloosebtags > 5 && nprobejets == 0 && mva[0] > 0.25 && mva[0] < 0.42)",
-        "label" : "Resolved 6L",
-        "doSR" : "&& (h1_t3_mass > 70)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved-mvacut0-run2-training-MVA-resolved",
-
-        },
-    "gt5bloose_0PFfat_cat3"              : {
-        "sel" : "(nloosebtags > 5 && nprobejets == 0 && mva[0] < 0.25)",
-        "label" : "Resolved 6L",
-        "doSR" : "&& (h1_t3_mass > 70)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved-mvacut0-run2-training-MVA-resolved",
-        },
-
-    "mva4b"              : {
-        "sel" : "(nloosebtags > 4 && nprobejets == 0 )",
-        "label" : "Resolved 6L",
-        "doSR" : "&& (h1_t3_mass > 70)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved-mvacut0-run2-training-boostedMVA",
-
-        },
-
-    "mva5b"              : {
-        "sel" : "(nloosebtags == 5 && nprobejets == 0 )",
-        "label" : "Resolved 6L",
-        "doSR" : "&& (h1_t3_mass > 70)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved-mvacut0-run2-training-boostedMVA",
-
-        },
-
-    "mva6b"              : {
-        "sel" : "(nloosebtags > 5 && nprobejets == 0 )",
-        "label" : "Resolved 6L",
-        "doSR" : "&& (h1_t3_mass > 70)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved-mvacut0-run2-training-boostedMVA",
-
-        },
-
-    "ProbHHH_single"              : {
-        "sel" : "(nprobejets == 1)",
-        "label" : "ProbHHH single",
-        "doSR" : "&& (ProbMultiH > 0.2)",
-        "doCR" : "&& !(ProbHHH > 0.2)",
-        "dataset" : "boosted-weights",
-
-        },
-
-    "ProbHHH_double"              : {
-        "sel" : "(nprobejets >= 2)",
-        "label" : "ProbHHH double",
-        "doSR" : "&& (ProbMultiH > 0.2)",
-        "doCR" : "&& !(ProbHHH > 0.2)",
-        "dataset" : "boosted-weights",
-
-        },
-
-    "ProbHHH_inclusive"              : {
-        "sel" : "(nprobejets >= 1)",
-        "label" : "ProbHHH inclusive",
-        "doSR" : "&& (ProbMultiH > 0.2)",
-        "doCR" : "&& !(ProbHHH > 0.2)",
-        "dataset" : "boosted-weights",
-        },
-
-    "ProbHHH_resolved"              : {
-        "sel" : "(nprobejets == 0)",
-        "label" : "ProbHHH single",
-        "doSR" : "&& (ProbMultiH > 0.2)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved-weights",
-
-        },
-
-    "ProbHHH_single_0tau"              : {
-        "sel" : "(nprobejets == 1 && ntaus == 0)",
-        "label" : "ProbHHH single",
-        "doSR" : "&& (ProbMultiH > 0.2)",
-        "doCR" : "&& !(ProbHHH > 0.2)",
-        "dataset" : "boosted-weights",
-
-        },
-
-    "ProbHHH_double_0tau"              : {
-        "sel" : "(nprobejets >= 2  && ntaus == 0)",
-        "label" : "ProbHHH double",
-        "doSR" : "&& (ProbMultiH > 0.2)",
-        "doCR" : "&& !(ProbHHH > 0.2)",
-        "dataset" : "boosted-weights",
-
-        },
-
-    "ProbHHH_inclusive_0tau"              : {
-        "sel" : "(nprobejets >= 1  && ntaus == 0)",
-        "label" : "ProbHHH inclusive",
-        "doSR" : "&& (ProbMultiH > 0.2)",
-        "doCR" : "&& !(ProbHHH > 0.2)",
-        "dataset" : "boosted-weights",
-        },
-
-    "ProbHHH_resolved_0tau"              : {
-        "sel" : "(nprobejets == 0  && ntaus == 0)",
-        "label" : "ProbHHH single",
-        "doSR" : "&& (ProbMultiH > 0.2)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved-weights",
-
-        },
-
-
-    "ProbHHH_single_1tau"              : {
-        "sel" : "(nprobejets == 1 && ntaus == 1)",
-        "label" : "ProbHHH single",
-        "doSR" : "&& (ProbMultiH > 0.2)",
-        "doCR" : "&& !(ProbHHH > 0.2)",
-        "dataset" : "boosted-weights",
-
-        },
-
-    "ProbHHH_double_1tau"              : {
-        "sel" : "(nprobejets >= 2  && ntaus == 1)",
-        "label" : "ProbHHH double",
-        "doSR" : "&& (ProbMultiH > 0.2)",
-        "doCR" : "&& !(ProbHHH > 0.2)",
-        "dataset" : "boosted-weights",
-
-        },
-
-    "ProbHHH_inclusive_1tau"              : {
-        "sel" : "(nprobejets >= 1  && ntaus == 1)",
-        "label" : "ProbHHH inclusive",
-        "doSR" : "&& (ProbMultiH > 0.2)",
-        "doCR" : "&& !(ProbHHH > 0.2)",
-        "dataset" : "boosted-weights",
-        },
-
-    "ProbHHH_resolved_1tau"              : {
-        "sel" : "(nprobejets == 0  && ntaus == 1)",
-        "label" : "ProbHHH single",
-        "doSR" : "&& (ProbMultiH > 0.2)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved-weights",
-
-        },
-
-
-
-    "ProbHHH_single_2tau"              : {
-        "sel" : "(nprobejets == 1 && ntaus == 2)",
-        "label" : "ProbHHH single",
-        "doSR" : "&& (ProbMultiH > 0.2)",
-        "doCR" : "&& !(ProbHHH > 0.2)",
-        "dataset" : "boosted-weights",
-
-        },
-
-    "ProbHHH_double_2tau"              : {
-        "sel" : "(nprobejets >= 2  && ntaus == 2)",
-        "label" : "ProbHHH double",
-        "doSR" : "&& (ProbMultiH > 0.2)",
-        "doCR" : "&& !(ProbHHH > 0.2)",
-        "dataset" : "boosted-weights",
-
-        },
-
-    "ProbHHH_inclusive_2tau"              : {
-        "sel" : "(nprobejets >= 1  && ntaus == 2)",
-        "label" : "ProbHHH inclusive",
-        "doSR" : "&& (ProbMultiH > 0.2)",
-        "doCR" : "&& !(ProbHHH > 0.2)",
-        "dataset" : "boosted-weights",
-        },
-
-    "ProbHHH_resolved_2tau"              : {
-        "sel" : "(nprobejets == 0  && ntaus == 2)",
-        "label" : "ProbHHH single",
-        "doSR" : "&& (ProbMultiH > 0.2)",
-        "doCR" : "&& !(h_fit_mass > 80 && h_fit_mass < 150)",
-        "dataset" : "resolved-weights",
-
-        },
-
-    "ProbHHH_double_0tau_jets"              : {
-        "sel" : "(nprobejets >= 2  && ntaus == 0)",
-        "label" : "ProbHHH double",
-        "doSR" : "&& (ProbMultiH > 0.2 && (ProbHHH + ProbHHH4b2tau) > (ProbHH4b + ProbHH2b2tau))",
-        "doCR" : "&& (ProbHHH > 0.2 && (ProbHHH + ProbHHH4b2tau) < (ProbHH4b + ProbHH2b2tau))",
-        "dataset" : "boosted-weights",
-
-        },
-
-    "ProbHHH_single_0tau_jets"              : {
-        "sel" : "(nprobejets == 1  && ntaus == 0)",
-        "label" : "ProbHHH double",
-        "doSR" : "&& (ProbMultiH > 0.2 && (ProbHHH + ProbHHH4b2tau) > (ProbHH4b + ProbHH2b2tau))",
-        "doCR" : "&& (ProbHHH > 0.2 && (ProbHHH + ProbHHH4b2tau) < (ProbHH4b + ProbHH2b2tau))",
-        "dataset" : "boosted-weights",
-
-        },
-
-        "ProbHHH_double_1tau_jets"              : {
-        "sel" : "(nprobejets >= 2  && ntaus == 1 && nleps == 1)",
-        "label" : "ProbHHH double",
-        "doSR" : "&& (ProbMultiH > 0.2)",
-        "doCR" : "&& (ProbHHH > 0.2)",
-        "dataset" : "boosted-weights",
-
-        },
-
-    "ProbHHH_single_1tau_jets"              : {
-        "sel" : "(nprobejets == 1  && ntaus == 1 && nleps == 1)",
-        "label" : "ProbHHH double",
-        "doSR" : "&& (ProbMultiH > 0.2)",
-        "doCR" : "&& (ProbHHH > 0.2)",
-        "dataset" : "boosted-weights",
-
-        },
-
-        "ProbHHH_inclusive_1tau_jets"              : {
-        "sel" : "(nprobejets >= 1  && ntaus == 1)",
-        "label" : "ProbHHH double",
-        "doSR" : "&& (ProbMultiH > 0.2 && nleps == 1)",
-        "doCR" : "&& (ProbHHH > 0.2 && nleps != 1)",
-        "dataset" : "boosted-weights",
-
-        },
-
-        "ProbHHH_inclusive_2tau_jets"              : {
-        "sel" : "(nprobejets >= 1  && ntaus > 1 )",
-        "label" : "ProbHHH double",
-        "doSR" : "&& (ProbMultiH > 0.2 && nleps == 0)",
-        "doCR" : "&& (ProbHHH > 0.2 && nleps != 0)",
-        "dataset" : "boosted-weights",
-        },
         "ProbHHH6b_3bh0h_inclusive"              : {
         "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 1 )",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
         "dataset" : "-weights",
         },
 
         "ProbHHH6b_2bh1h_inclusive"              : {
         "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 2 )",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
         "dataset" : "-weights",
         },
 
         "ProbHHH6b_1bh2h_inclusive"              : {
         "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 3 )",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
         "dataset" : "-weights",
         },
 
         "ProbHHH6b_0bh3h_inclusive"              : {
         "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 4 )",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
         "dataset" : "-weights",
         },
 
         "ProbHHH6b_2bh0h_inclusive"              : {
         "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 5)",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
         "dataset" : "-weights",
         },
 
         "ProbHHH6b_1bh1h_inclusive"              : {
         "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 6)",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0.0 && ht > 450)",
         "dataset" : "-weights",
         },
         "ProbHHH6b_0bh2h_inclusive"              : {
         "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 7)",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0.0 && ht > 450)",
         "dataset" : "-weights",
         },
         "ProbHHH6b_1bh0h_inclusive"              : {
         "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 8)",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0.0 && ht > 450)",
         "dataset" : "-weights",
         },
         "ProbHHH6b_0bh1h_inclusive"              : {
         "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 9)",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0.0 && ht > 450)",
         "dataset" : "-weights",
         },
         "ProbHHH6b_0bh0h_inclusive"              : {
         "sel" : "(IndexMaxProb == 1 && IndexMaxCat == 0)",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
         "dataset" : "-weights",
         },
+
+
+
         "ProbHHH6b_3Higgs_inclusive"              : {
         "sel" : "(IndexMaxProb == 1 && (IndexMaxCat == 1 || IndexMaxCat == 2 || IndexMaxCat == 3 || IndexMaxCat == 4))",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
         "ProbHHH6b_2Higgs_inclusive"              : {
         "sel" : "(IndexMaxProb == 1 && (IndexMaxCat == 5 || IndexMaxCat == 6 || IndexMaxCat == 7 ))",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0 && ht > 450)",
         "dataset" : "-weights",
         },
         "ProbHHH6b_1Higgs_inclusive"              : {
         "sel" : "(IndexMaxProb == 1 && (IndexMaxCat == 8 || IndexMaxCat == 9 ))",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.2)",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
         "dataset" : "-weights",
         },
 # HH
         "ProbHH4b_3bh0h_inclusive"              : {
         "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 1 )",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0.0 && nmediumbtags >= 4)",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0.0 && ht > 450)",
         "dataset" : "-weights",
         },
 
         "ProbHH4b_2bh1h_inclusive"              : {
         "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 2 )",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0. && nmediumbtags >= 4)",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
         "dataset" : "-weights",
         },
 
         "ProbHH4b_1bh2h_inclusive"              : {
         "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 3 )",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0. && nmediumbtags >= 4)",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
         "dataset" : "-weights",
         },
 
         "ProbHH4b_0bh3h_inclusive"              : {
         "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 4 )",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0. && nmediumbtags >= 4)",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
         "dataset" : "-weights",
         },
 
         "ProbHH4b_2bh0h_inclusive"              : {
         "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 5)",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0  ",
-        "doCR" : "&& (ProbHHH > 0. && ht > 450 && (nmediumbtags >= 4 || nprobejets >= 1) )",
+        "doSR" : "&& ProbMultiH > 0.0  ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
         "dataset" : "-weights",
         },
 
         "ProbHH4b_1bh1h_inclusive"              : {
         "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 6)",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0. && ht > 450 && (nmediumbtags >= 4 || nprobejets >= 1) )",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
         "ProbHH4b_0bh2h_inclusive"              : {
         "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 7)",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0. && ht > 450 && (nmediumbtags >= 4 || nprobejets >= 1) )",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
         "dataset" : "-weights",
         },
         "ProbHH4b_1bh0h_inclusive"              : {
         "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 8)",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0. && nmediumbtags >= 4)",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
         "dataset" : "-weights",
         },
         "ProbHH4b_0bh1h_inclusive"              : {
         "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 9)",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0. && nmediumbtags >= 4)",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
         "dataset" : "-weights",
         },
         "ProbHH4b_0bh0h_inclusive"              : {
         "sel" : "(IndexMaxProb == 7 && IndexMaxCat == 0)",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0. && nmediumbtags >= 4)",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
         "dataset" : "-weights",
         },
         "ProbHH4b_3Higgs_inclusive"              : {
         "sel" : "(IndexMaxProb == 7 && (IndexMaxCat == 1 || IndexMaxCat == 2 || IndexMaxCat == 3 || IndexMaxCat == 4))",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0  ",
-        "doCR" : "&& (ProbHHH > 0. && (nmediumbtags >= 4 || nprobejets >= 2))",
+        "doSR" : "&& ProbMultiH > 0.0  ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
         "ProbHH4b_2Higgs_inclusive"              : {
         "sel" : "(IndexMaxProb == 7 && (IndexMaxCat == 5 || IndexMaxCat == 6 || IndexMaxCat == 7 ))",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0  ",
-        "doCR" : "&& (ProbHHH > 0. && ht > 450 && (nmediumbtags >= 4 || nprobejets >= 2) )",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
         "ProbHH4b_1Higgs_inclusive"              : {
         "sel" : "(IndexMaxProb == 7 && (IndexMaxCat == 8 || IndexMaxCat == 9 ))",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0. && (nmediumbtags >= 4 || nprobejets >= 2) )",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
         "dataset" : "-weights",
         },
 
         "ProbVV_2Higgs_inclusive"              : {
         "sel" : "(IndexMaxProb == 5 && (IndexMaxCat == 5 || IndexMaxCat == 6 || IndexMaxCat == 7 ))",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0  ",
-        "doCR" : "&& (ProbHHH > 0. && ht > 450 && (nmediumbtags >= 4 || nprobejets >= 2) )",
+        "doSR" : "&& ProbMultiH > 0.0  ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
         "ProbVV_2bh0h_inclusive"              : {
@@ -1016,21 +283,106 @@ selections = {
         "doCR" : "&& (ProbHHH > 0. && ht > 450 && (nmediumbtags >= 4 || nprobejets >= 2) )",
         "dataset" : "-weights",
         },
-        "ProbVV_0bh2h_inclusive"              : {
-        "sel" : "(IndexMaxProb == 5 && (IndexMaxCat == 7))",
+
+        # HHH4b2tau
+        "ProbHHH4b2tau_3Higgs_inclusive"              : {
+        "sel" : "(IndexMaxProb == 6 && (IndexMaxCat == 1 || IndexMaxCat == 8 || IndexMaxCat == 3 || IndexMaxCat == 4))",
         "label" : "ProbHHH ",
-        "doSR" : "&& ProbHHH > 0.0 ",
-        "doCR" : "&& (ProbHHH > 0. && ht > 450 && (nmediumbtags >= 4 || nprobejets >= 2) )",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
+        "dataset" : "-weights",
+        },
+        "ProbHHH4b2tau_2Higgs_inclusive"              : {
+        "sel" : "(IndexMaxProb == 6 && (IndexMaxCat == 5 || IndexMaxCat == 6 || IndexMaxCat == 7 ))",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0 && ht > 450)",
+        "dataset" : "-weights",
+        },
+        "ProbHHH4b2tau_1Higgs_inclusive"              : {
+        "sel" : "(IndexMaxProb == 6 && (IndexMaxCat == 8 || IndexMaxCat == 9 ))",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
         "dataset" : "-weights",
         },
 
-        "test"              : {
-        "sel" : "(nsmalljets >= 4)",
+        "ProbHHH4b2tau_3bh0h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 6 && IndexMaxCat == 1 )",
         "label" : "ProbHHH ",
-        "doSR" : "&& nprobejets > 0",
-        "doCR" : "&&  nprobejets == 0",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
         "dataset" : "-weights",
         },
+
+        "ProbHHH4b2tau_2bh1h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 6 && IndexMaxCat == 2 )",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
+        "dataset" : "-weights",
+        },
+
+        "ProbHHH4b2tau_1bh2h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 6 && IndexMaxCat == 3 )",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
+        "dataset" : "-weights",
+        },
+
+        "ProbHHH4b2tau_0bh3h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 6 && IndexMaxCat == 4 )",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
+        "dataset" : "-weights",
+        },
+
+        "ProbHHH4b2tau_2bh0h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 6 && IndexMaxCat == 5)",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
+        "dataset" : "-weights",
+        },
+
+        "ProbHHH4b2tau_1bh1h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 6 && IndexMaxCat == 6)",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0.0 && ht > 450)",
+        "dataset" : "-weights",
+        },
+        "ProbHHH4b2tau_0bh2h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 6 && IndexMaxCat == 7)",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0.0 && ht > 450)",
+        "dataset" : "-weights",
+        },
+        "ProbHHH4b2tau_1bh0h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 6 && IndexMaxCat == 8)",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0.0 && ht > 450)",
+        "dataset" : "-weights",
+        },
+        "ProbHHH4b2tau_0bh1h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 6 && IndexMaxCat == 9)",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0.0 && ht > 450)",
+        "dataset" : "-weights",
+        },
+        "ProbHHH4b2tau_0bh0h_inclusive"              : {
+        "sel" : "(IndexMaxProb == 6 && IndexMaxCat == 0)",
+        "label" : "ProbHHH ",
+        "doSR" : "&& ProbMultiH > 0.0 ",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450)",
+        "dataset" : "-weights",
+        },
+
 
 
 
@@ -1048,12 +400,24 @@ if do_CR :
 
 inputTree = 'Events'
 
-procstodo = ["ZZZ", "WZZ", "WWZ", "WWW", "ZZTo4Q", "WWTo4Q", "ZJetsToQQ", "WJetsToQQ", "TTToHadronic","TTo2L2Nu","TTToSemiLeptonic", "QCD", "data_obs","DYJetsToLL","GluGluToHHHTo6B_SM","GluGluToHHTo4B_cHHH1","GluGluToHHTo2B2Tau","GluGluToHHHTo4B2Tau_SM"]
+procstodo = ["ZZZ", "WZZ", "WWZ", "WWW", "ZZTo4Q", "WWTo4Q", "ZJetsToQQ", "WJetsToQQ", "TTToHadronic","TTo2L2Nu","TTToSemiLeptonic", "QCD", "data_obs","DYJetsToLL","GluGluToHHHTo6B_SM","GluGluToHHTo4B_cHHH1","GluGluToHHTo2B2Tau","GluGluToHHHTo4B2Tau_SM","QCD_datadriven"]
+#procstodo = ["ZZZ", "WZZ", "WWZ", "WWW", "ZZTo4Q", "WWTo4Q", "ZJetsToQQ", "WJetsToQQ", "TTToHadronic","TTo2L2Nu","TTToSemiLeptonic", "QCD", "data_obs","DYJetsToLL","GluGluToHHHTo6B_SM","GluGluToHHHTo4B2Tau_SM"]
+#procstodo = ["QCD_datadriven_data"]
+
+#procstodo = ["data_obs","GluGluToHHHTo6B_SM","GluGluToHHTo4B_cHHH1","GluGluToHHTo2B2Tau","GluGluToHHHTo4B2Tau_SM","QCD_datadriven"]
+
+#procstodo = ['GluGluToHHHTo6B_SM_jes_down_signal','GluGluToHHHTo6B_SM_jer_down_signal','GluGluToHHHTo6B_SM_jmr_down_signal','GluGluToHHHTo6B_SM_jes_up_signal','GluGluToHHHTo6B_SM_jer_up_signal','GluGluToHHHTo6B_SM_jmr_up_signal',]
+
+#procstodo+=['GluGluToHHTo4B_cHHH1_jes_down_signal','GluGluToHHTo4B_cHHH1_jer_down_signal','GluGluToHHTo4B_cHHH1_jmr_down_signal','GluGluToHHTo4B_cHHH1_jes_up_signal','GluGluToHHTo4B_cHHH1_jer_up_signal','GluGluToHHTo4B_cHHH1_jmr_up_signal',]
+
+#procstodo=['GluGluToHHTo2B2Tau_SM_jes_down_signal','GluGluToHHTo2B2Tau_SM_jer_down_signal','GluGluToHHTo2B2Tau_SM_jmr_down_signal','GluGluToHHTo2B2Tau_SM_jes_up_signal','GluGluToHHTo2B2Tau_SM_jer_up_signal','GluGluToHHTo2B2Tau_SM_jmr_up_signal',]
+
+
 if not process_to_compute == 'none' :
     procstodo     = [process_to_compute]
     skip_do_plots = True
 
-for era in ['2016APV', '2016', '2017', '2018','2016APV201620172018'] :
+for era in ['2016APV', '2016', '2017', '2018','2016APV201620172018','2022','2022EE'] :
 #for era in [2018] :
     if str(era) in input_tree : year = str(era)
 
@@ -1072,6 +436,8 @@ init_mhhh()
 #    ROOT.gInterpreter.Declare(triggersCorrections[year][0])
 init_get_max_prob()
 init_get_max_cat()
+jetveto_init(year)
+
 
 
 # define b-tagging
@@ -1079,12 +445,21 @@ if '2016APV' in year:
     btag_init('2016preVFP')
 elif '2016' in year:
     btag_init('2016postVFP')
+elif '2022' in year:
+    btag_init('2018')
 else:
     btag_init(year)
 
 
 csv_saved = False
-for selection in selections.keys() :
+category_list = selections.keys()
+if run_all_categories:
+    category_list = ['ProbHH4b_3bh0h_inclusive', 'ProbHH4b_2bh1h_inclusive', 'ProbHH4b_1bh2h_inclusive', 'ProbHH4b_0bh3h_inclusive', 'ProbHH4b_2bh0h_inclusive', 'ProbHH4b_1bh1h_inclusive', 'ProbHH4b_0bh2h_inclusive','ProbHH4b_1bh0h_inclusive','ProbHH4b_0bh1h_inclusive','ProbHH4b_0bh0h_inclusive', 'ProbHHH6b_3bh0h_inclusive', 'ProbHHH6b_2bh1h_inclusive', 'ProbHHH6b_1bh2h_inclusive', 'ProbHHH6b_0bh3h_inclusive', 'ProbHHH6b_2bh0h_inclusive', 'ProbHHH6b_1bh1h_inclusive', 'ProbHHH6b_0bh2h_inclusive','ProbHHH6b_1bh0h_inclusive','ProbHHH6b_0bh1h_inclusive','ProbHHH6b_0bh0h_inclusive',"ProbHH4b_1Higgs_inclusive","ProbHH4b_2Higgs_inclusive","ProbHH4b_3Higgs_inclusive", "ProbHHH6b_1Higgs_inclusive","ProbHHH6b_2Higgs_inclusive","ProbHHH6b_3Higgs_inclusive"]
+    #category_list = ['ProbHH4b_3Higgs_inclusive','ProbHH4b_2Higgs_inclusive', 'ProbHH4b_1Higgs_inclusive','ProbHH4b_0bh0h_inclusive','ProbHHH6b_3Higgs_inclusive','ProbHHH6b_2Higgs_inclusive','ProbHHH6b_1Higgs_inclusive','ProbHHH6b_0bh0h_inclusive']
+for selection in category_list:
+#for selection in ['ProbHH4b_3bh0h_inclusive', 'ProbHH4b_2bh1h_inclusive', 'ProbHH4b_1bh2h_inclusive', 'ProbHH4b_0bh3h_inclusive', 'ProbHH4b_2bh0h_inclusive', 'ProbHH4b_1bh1h_inclusive', 'ProbHH4b_0bh2h_inclusive','ProbHH4b_1bh0h_inclusive','ProbHH4b_0bh1h_inclusive','ProbHH4b_0bh0h_inclusive', 'ProbHHH6b_3bh0h_inclusive', 'ProbHHH6b_2bh1h_inclusive', 'ProbHHH6b_1bh2h_inclusive', 'ProbHHH6b_0bh3h_inclusive', 'ProbHHH6b_2bh0h_inclusive', 'ProbHHH6b_1bh1h_inclusive', 'ProbHHH6b_0bh2h_inclusive','ProbHHH6b_1bh0h_inclusive','ProbHHH6b_0bh1h_inclusive','ProbHHH6b_0bh0h_inclusive',"ProbHH4b_1Higgs_inclusive","ProbHH4b_2Higgs_inclusive","ProbHH4b_3Higgs_inclusive", "ProbHHH6b_1Higgs_inclusive","ProbHHH6b_2Higgs_inclusive","ProbHHH6b_3Higgs_inclusive"]:
+#for selection in ['ProbHHH6b_3bh0h_inclusive', 'ProbHHH6b_2bh1h_inclusive', 'ProbHHH6b_1bh2h_inclusive', 'ProbHHH6b_0bh3h_inclusive', 'ProbHHH6b_2bh0h_inclusive', 'ProbHHH6b_1bh1h_inclusive', 'ProbHHH6b_0bh2h_inclusive','ProbHHH6b_1bh0h_inclusive','ProbHHH6b_0bh1h_inclusive','ProbHHH6b_0bh0h_inclusive']:
+#for selection in ['ProbHH4b_2Higgs_inclusive','ProbHHH6b_3Higgs_inclusive','ProbHHH6b_2Higgs_inclusive','ProbHH4b_1Higgs_inclusive','ProbHH4b_3Higgs_inclusive']:
   if not cat == 'none' :
       if not selection == cat :
           continue
@@ -1094,6 +469,11 @@ for selection in selections.keys() :
       additional_selection = selections[selection]["doSR"]
   elif do_CR:
       additional_selection = selections[selection]["doCR"]
+      if '2016' in year:
+          hlt = hlt_paths['2016']
+      else:
+          hlt = hlt_paths[year]
+      additional_selection += ' && %s'%(hlt)
   if not additional_selection == "" :
       final_selection = "(%s %s)" % (selections[selection]["sel"], additional_selection)
 
@@ -1115,8 +495,10 @@ for selection in selections.keys() :
     if proctodo == "data_obs" :
         if year == '2018' or '2016' in year:
             datahist = 'JetHT'
-        else:
+        elif year == '2017':
             datahist = 'BTagCSV'
+        elif '2022' in year:
+            datahist = 'JetMET'
 
     outtree = "{}/{}_{}/{}.root".format(input_tree,selection,additional_label,proctodo)
 
@@ -1137,8 +519,13 @@ for selection in selections.keys() :
 
         chunk_df = ROOT.RDataFrame(inputTree, proc)
         chunk_df = chunk_df.Define('ProbMultiH','ProbHHH + ProbHHH4b2tau + ProbHH4b + ProbHH2b2tau')
+        
         chunk_df = chunk_df.Define('IndexMaxProb', 'get_max_prob(ProbHHH, ProbQCD, ProbTT, ProbVJets, ProbVV, ProbHHH4b2tau, ProbHH4b, ProbHH2b2tau)')
         chunk_df = chunk_df.Define('IndexMaxCat', 'get_max_cat(Prob3bh0h, Prob2bh1h, Prob1bh2h, Prob0bh3h, Prob2bh0h, Prob1bh1h, Prob0bh2h, Prob1bh0h, Prob0bh1h, Prob0bh0h)')
+        chunk_df = chunk_df.Define('Prob3Higgs','Prob3bh0h+Prob2bh1h+Prob1bh2h+Prob0bh3h')
+        chunk_df = chunk_df.Define('Prob2Higgs','Prob2bh0h+Prob1bh1h+Prob0bh2h')
+        chunk_df = chunk_df.Define('Prob1Higgs','Prob1bh0h+Prob0bh1h')
+        chunk_df = chunk_df.Define('Prob0Higgs','Prob0bh0h')
         # initialise df - so we don't need make_selection_rdataframes.py anymore
         print(dataset)
         if 'mvacut0' not in dataset and 'weights' not in dataset:
@@ -1146,8 +533,12 @@ for selection in selections.keys() :
         
         if firstProc:
             #init_bdt(chunk_df,year)
-            init_bdt(chunk_df,year)
-            init_bdt_boosted(chunk_df,year)
+            if '2022' in year:
+                init_bdt(chunk_df,'2018')
+                init_bdt_boosted(chunk_df,'2018')
+            else:
+                init_bdt(chunk_df,year)
+                init_bdt_boosted(chunk_df,year)
 
             firstProc = False
         try:
@@ -1161,11 +552,16 @@ for selection in selections.keys() :
             chunk_df = add_bdt_boosted(chunk_df,year)
             chunk_df = add_bdt(chunk_df,year)
 
+        chunk_df = addJetVetoFlag(chunk_df)
+        chunk_df = chunk_df.Filter('PassJetVeto == 1')
+
+        chunk_df = applySelection(chunk_df,year)
+        
         chunk_df = chunk_df.Filter(final_selection)
         entries = int(chunk_df.Count().GetValue())
 
 
-        #print("cut made, tree size: ", int(tree.GetEntries()), int(tree_cut.GetEntries()))
+        #print("cut made, tree size: ", int(tree.GetEntries()), (tree_cut.GetEntries()))
         print("cut made, tree size: ", entries_no_filter, entries)
         print("starting to construct calibrations")
         variables = list(chunk_df.GetColumnNames())
@@ -1219,16 +615,16 @@ for selection in selections.keys() :
                 to_multiply = to_multiply + ['jet{}MediumBTagEffSF'.format(jet_number)]
             for jet_number in range(nmedium_cut+1,7) :
                 to_multiply = to_multiply + ['jet{}LooseBTagEffSF'.format(jet_number)]
-        string_multiply = 'eventWeight2'
+        string_multiply = 'eventWeight'
         for ss in to_multiply :
             string_multiply = string_multiply + ' * {}'.format(ss)
 
         print( "Redefine eventWeight = {}".format(string_multiply))
         lumi = luminosities[year]
         # Re-definition of event weight to be used on v28 - will be fixed
-        if 'JetHT' in datahist: cutWeight = '1' 
-        else: cutWeight = '(%f * xsecWeight * l1PreFiringWeight * puWeight * genWeight * triggerSF)'%(lumi)
-        chunk_df = chunk_df.Define('eventWeight2', cutWeight)
+        #if 'JetHT' in datahist: cutWeight = '1' 
+        #else: cutWeight = '(%f * xsecWeight * l1PreFiringWeight * puWeight * genWeight * triggerSF)'%(lumi)
+        #chunk_df = chunk_df.Define('eventWeight2', cutWeight)
         chunk_df = chunk_df.Define('totalWeight', string_multiply)
 
         proc_yield = chunk_df.Sum('totalWeight')
@@ -1244,7 +640,7 @@ for selection in selections.keys() :
         #    chunk_df = chunk_df.Define('jet6HadronFlavrou', '-1')
 
         #chunk_df.Snapshot(inputTree, outtree, variables + ['totalWeight'])
-        to_save = [str(el) for el in chunk_df.GetColumnNames() if 'mva' not in str(el)]
+        to_save = [str(el) for el in chunk_df.GetColumnNames() if 'mva' not in str(el) and 'HLT' not in str(el) and 'trigger' not in str(el)]
 
         chunk_df.Snapshot(inputTree, outtree,to_save)
 
@@ -1265,7 +661,10 @@ for selection in selections.keys() :
     ## already doing plots, will do histogram file only to the chosen variable
     seconds0 = time.time()
     #histograms = []
-    proctodo = "GluGluToHHHTo6B_SM" ## for taking the list of variables and doing the first histogram in the file
+    if 'ProbHH4b_2Higgs' in selection:
+        proctodo = "GluGluToHHTo4B_cHHH1"
+    else:
+        proctodo = "GluGluToHHHTo6B_SM" ## for taking the list of variables and doing the first histogram in the file
     outtree = "{}/{}_{}/{}.root".format(input_tree,selection,additional_label,proctodo)
     chunk_df = ROOT.RDataFrame(inputTree, outtree)
     variables = chunk_df.GetColumnNames()
@@ -1304,10 +703,12 @@ for selection in selections.keys() :
 
                 datahist = proctodo
                 if proctodo == "data_obs" :
-                    if year == '2018' or year == '2016APV201620172018':
+                    if year == '2018' or year == '2016APV201620172018' or '2016' in year:
                         datahist = 'JetHT'
-                    else:
+                    elif '2017' in year:
                         datahist = 'BTagCSV'
+                    elif '2022' in year:
+                        datahist = 'JetMET'
 
                 char_var = var.c_str()
                 try:
@@ -1328,24 +729,10 @@ for selection in selections.keys() :
 
   if not skip_do_plots :
       # Draw the data/MC to this selection
-      command = "python3 draw_data_mc_categories.py --input_folder %s --plot_label '%s (%s)'" % (output_histos.replace('histograms',''), selections[selection]["label"], additional_label)
+      command = "python3 /isilon/data/users/mstamenk/hhh-6b-producer/master/CMSSW_12_5_2/src/hhh-master/hhh-analysis-framework/draw_data_mc_categories.py --input_folder %s --plot_label '%s (%s)'" % (output_histos.replace('histograms',''), selections[selection]["label"], additional_label)
       #if "0PFfat" in selection :
       #command = command + " --log"
       print(command)
 
       proc=subprocess.Popen([command],shell=True,stdout=subprocess.PIPE)
       out = proc.stdout.read()
-
-  #####do histograms first then do correction##########
-  ##############file_1Higgs corresponding to CR to calculate ratio#########
-  ##############file_2Higgs corresponding to SR to add correction###########
-  if not skip_do_correct :
-      path_to_histograms = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v32/%s'%(year)
-      Higgs_number_strings = ["2Higgs","3bh0h","2bh1h","1bh2h","0bh3h"]
-      for Higgs_number in Higgs_number_strings: 
-          file_1Higgs = "{}/ProbHHH6b_1Higgs_inclusive_/histograms/histograms_{}.root".format(path_to_histograms,do_limit_input)
-          file_2Higgs = "{}/ProbHHH6b_{}_inclusive_/histograms/histograms_{}.root".format(path_to_histograms,Higgs_number,do_limit_input)
-          Unc_Shape(file_1Higgs,file_2Higgs,do_limit_input,path_to_histograms,Higgs_number,year)
-    
-    
-    

@@ -12,6 +12,7 @@ parser.add_argument('--prob', default='ProbHHH6b')
 parser.add_argument('--doCR', action='store_true')
 parser.add_argument('--var', default = 'ProbMultiH')
 parser.add_argument('--doLog', action='store_true')
+parser.add_argument('--qcd', default = 'datadriven')
 
 args = parser.parse_args()
 
@@ -19,25 +20,34 @@ prob = args.prob
 version = args.version
 year = args.year
 var = args.var
+qcd_lab = args.qcd
 
+
+if qcd_lab == 'datadriven':
+    qcd = 'QCD_datadriven'
+elif qcd_lab == 'mc':
+    qcd = 'QCD_mc'
+elif qcd_lab == 'standard':
+    qcd = 'QCD'
 
 option = '_SR'
 if args.doCR:
     option = '_CR'
 
 first = True
-for cat in ['%s_3bh0h_inclusive', '%s_2bh1h_inclusive', '%s_1bh2h_inclusive', '%s_0bh3h_inclusive', '%s_2bh0h_inclusive', '%s_1bh1h_inclusive', '%s_0bh2h_inclusive', '%s_1bh0h_inclusive', '%s_0bh1h_inclusive', '%s_0bh0h_inclusive','%s_3Higgs_inclusive', '%s_2Higgs_inclusive', '%s_1Higgs_inclusive']:
+#for cat in ['%s_3bh0h_inclusive', '%s_2bh1h_inclusive', '%s_1bh2h_inclusive', '%s_0bh3h_inclusive', '%s_2bh0h_inclusive', '%s_1bh1h_inclusive', '%s_0bh2h_inclusive', '%s_1bh0h_inclusive', '%s_0bh1h_inclusive', '%s_0bh0h_inclusive','%s_3Higgs_inclusive', '%s_2Higgs_inclusive', '%s_1Higgs_inclusive']:
 #for cat in ['%s_0bh0h_inclusive','%s_3Higgs_inclusive', '%s_2Higgs_inclusive', '%s_1Higgs_inclusive']:
-#or cat in ['%s_3Higgs_inclusive']:
+for cat in ['%s_3Higgs_inclusive','%s_2Higgs_inclusive', '%s_1Higgs_inclusive','%s_0bh0h_inclusive']:
 
     category = cat%prob
     #path = '/isilon/data/users/mstamenk/eos-triple-h/v28-categorisation/mva-inputs-2018-categorisation-spanet-boosted-classification/%s/histograms'%category
 
     path = '/isilon/data/users/mstamenk/eos-triple-h/%s/mva-inputs-%s-categorisation-spanet-boosted-classification/%s%s/histograms'%(version,year,category,option)
 
-    filename = 'histograms_%s.root'%var
+    filename = 'histograms_%s_test.root'%var
 
     f = ROOT.TFile(path+'/'+filename)
+    print(path+'/'+filename)
 
     n_hhh = 'GluGluToHHHTo6B_SM'
 
@@ -92,6 +102,7 @@ for cat in ['%s_3bh0h_inclusive', '%s_2bh1h_inclusive', '%s_1bh2h_inclusive', '%
 
     legend = ROOT.TLegend(0.6,0.6,0.9,0.9)
     data.SetStats(0)
+    data_int = data.Integral()
     if first:
         hist_properties[n_hhh][3] += ' x 1000 SM'
         hist_properties[n_hh][3] += ' x 15 SM'
@@ -119,8 +130,7 @@ for cat in ['%s_3bh0h_inclusive', '%s_2bh1h_inclusive', '%s_1bh2h_inclusive', '%
 
 
     data.SetMaximum(data.GetMaximum()*2)
-    if not args.doLog:
-        data.SetMinimum(0.0)
+    data.SetMinimum(1.0)
 
     data.SetTitle('')
     data.GetYaxis().SetTitle('Events')
@@ -141,9 +151,16 @@ for cat in ['%s_3bh0h_inclusive', '%s_2bh1h_inclusive', '%s_1bh2h_inclusive', '%
 
     first = True
 
-    #for el in ['GluGluToHHTo2B2Tau', 'GluGluToHHTo4B_cHHH1','GluGluToHHHTo4B2Tau_SM','DYJetsToLL', 'ZZTo4Q', 'WWTo4Q', 'ZJetsToQQ',  'WJetsToQQ', 'TTToHadronic', 'TTToSemiLeptonic', 'QCD']: #backgrounds:
-    for el in ['GluGluToHHTo2B2Tau', 'GluGluToHHTo4B_cHHH1','GluGluToHHHTo4B2Tau_SM','QCD']:
+    ls = ['GluGluToHHTo2B2Tau', 'GluGluToHHTo4B_cHHH1','GluGluToHHHTo4B2Tau_SM','DYJetsToLL', 'ZZTo4Q', 'WWTo4Q', 'ZJetsToQQ',  'WJetsToQQ', 'TTToHadronic', 'TTToSemiLeptonic', qcd]
+    if qcd_lab == 'datadriven':
+        ls = ['GluGluToHHTo2B2Tau', 'GluGluToHHTo4B_cHHH1','GluGluToHHHTo4B2Tau_SM','QCD_datadriven']
+
+
+    for el in ls: #backgrounds:
+    #for el in ['GluGluToHHTo2B2Tau', 'GluGluToHHTo4B_cHHH1','GluGluToHHHTo4B2Tau_SM','QCD']:
         h_tmp = f.Get(el)
+        if 'QCD' in el:
+            h_tmp.Scale(data_int/float(h_tmp.Integral()))
         try:
             h_tmp.Rebin(rebin)
         except: continue
@@ -269,8 +286,8 @@ for cat in ['%s_3bh0h_inclusive', '%s_2bh1h_inclusive', '%s_1bh2h_inclusive', '%
     
 
     if args.doLog:
-        c.Print('%s_%s_%s%s_%s_log.png'%(category,version,year,option,var))
+        c.Print('%s_%s_%s%s_%s_log_%s.png'%(category,version,year,option,var,qcd_lab))
     else:
-        c.Print('%s_%s_%s%s_%s.png'%(category,version,year,option,var))
+        c.Print('%s_%s_%s%s_%s_%s.png'%(category,version,year,option,var,qcd_lab))
 
 
