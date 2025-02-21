@@ -282,6 +282,69 @@ histograms_dict = {
         'jet9Eta'  : { "nbins" : 10 , "xmin" : 0 , "xmax" : 2.5, "label" : 'Jet 9 #eta'},
         'jet10Eta'  : { "nbins" : 10 , "xmin" : 0 , "xmax" : 2.5, "label" : 'Jet 10 #eta'},
 
+        'jet1PNetBPlusC' : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet1PNetBPlusC'},
+        'jet2PNetBPlusC' : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet2PNetBPlusC'},
+        'jet3PNetBPlusC' : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet3PNetBPlusC'},
+        'jet4PNetBPlusC' : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet4PNetBPlusC'},
+        'jet5PNetBPlusC' : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet5PNetBPlusC'},
+        'jet6PNetBPlusC' : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet6PNetBPlusC'},
+        'jet7PNetBPlusC' : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet7PNetBPlusC'},
+        'jet8PNetBPlusC' : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet8PNetBPlusC'},
+        'jet9PNetBPlusC' : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet9PNetBPlusC'},
+        'jet10PNetBPlusC' : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet10PNetBPlusC'},
+
+        # 'jet1PNetBVsC' : { "nbins" : 50 , "xmin" : 0.40 , "xmax" : 1, "label" : 'jet1PNetBVsC'},
+        # 'jet2PNetBVsC' : { "nbins" : 50 , "xmin" : 0.40 , "xmax" : 1, "label" : 'jet2PNetBVsC'},
+        # 'jet3PNetBVsC' : { "nbins" : 50 , "xmin" : 0.40 , "xmax" : 1, "label" : 'jet3PNetBVsC'},
+        # 'jet4PNetBVsC' : { "nbins" : 50 , "xmin" : 0.40 , "xmax" : 1, "label" : 'jet4PNetBVsC'},
+        # 'jet5PNetBVsC' : { "nbins" : 50 , "xmin" : 0.40 , "xmax" : 1, "label" : 'jet5PNetBVsC'},
+        # 'jet6PNetBVsC' : { "nbins" : 50 , "xmin" : 0.40 , "xmax" : 1, "label" : 'jet6PNetBVsC'},
+        # 'jet7PNetBVsC' : { "nbins" : 50 , "xmin" : 0.40 , "xmax" : 1, "label" : 'jet7PNetBVsC'},
+        # 'jet8PNetBVsC' : { "nbins" : 50 , "xmin" : 0.40 , "xmax" : 1, "label" : 'jet8PNetBVsC'},
+        # 'jet9PNetBVsC' : { "nbins" : 50 , "xmin" : 0.40 , "xmax" : 1, "label" : 'jet9PNetBVsC'},
+        # 'jet10PNetBVsC' : { "nbins" : 50 , "xmin" : 0.40 , "xmax" : 1, "label" : 'jet10PNetBVsC'},
+
+        'jet1PNetBVsC' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet1PNetBVsC'},
+        'jet2PNetBVsC' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet2PNetBVsC'},
+        'jet3PNetBVsC' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet3PNetBVsC'},
+        'jet4PNetBVsC' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet4PNetBVsC'},
+        'jet5PNetBVsC' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet5PNetBVsC'},
+        'jet6PNetBVsC' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet6PNetBVsC'},
+        'jet7PNetBVsC' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet7PNetBVsC'},
+        'jet8PNetBVsC' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet8PNetBVsC'},
+        'jet9PNetBVsC' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet9PNetBVsC'},
+        'jet10PNetBVsC' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet10PNetBVsC'},
+
+        'jet1PNetB' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet1PNetB'},
+        'jet2PNetB' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet2PNetB'},
+        'jet3PNetB' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet3PNetB'},
+        'jet4PNetB' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet4PNetB'},
+        'jet5PNetB' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet5PNetB'},
+        'jet6PNetB' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet6PNetB'},
+        'jet7PNetB' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet7PNetB'},
+        'jet8PNetB' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet8PNetB'},
+        'jet9PNetB' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet9PNetB'},
+        'jet10PNetB' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet10PNetB'},
+
+        # 'fatJet1PNetXbb' : { "nbins" : 50 , "xmin" : 0.64 , "xmax" : 1, "label" : 'fatJet1PNetXbb'},
+        # 'fatJet2PNetXbb' : { "nbins" : 50 , "xmin" : 0.64 , "xmax" : 1, "label" : 'fatJet2PNetXbb'},
+        # 'fatJet3PNetXbb' : { "nbins" : 50 , "xmin" : 0.64 , "xmax" : 1, "label" : 'fatJet3PNetXbb'},
+        # 'fatJet4PNetXbb' : { "nbins" : 50 , "xmin" : 0.64 , "xmax" : 1, "label" : 'fatJet4PNetXbb'},
+
+        'fatJet1PNetXbb' : { "nbins" : 100 , "xmin" : 0.30 , "xmax" : 1, "label" : 'fatJet1PNetXbb'},
+        'fatJet2PNetXbb' : { "nbins" : 100 , "xmin" : 0.30 , "xmax" : 1, "label" : 'fatJet2PNetXbb'},
+        'fatJet3PNetXbb' : { "nbins" : 100 , "xmin" : 0.30 , "xmax" : 1, "label" : 'fatJet3PNetXbb'},
+        'fatJet4PNetXbb' : { "nbins" : 100 , "xmin" : 0.30 , "xmax" : 1, "label" : 'fatJet4PNetXbb'},
+
+        'nJetsPassed' : { "nbins" : 11 , "xmin" : -0.5 , "xmax" : 10.5, "label" : 'nJetsPassed'},
+        'nFatJetsPassed' : { "nbins" : 15 , "xmin" : -0.5 , "xmax" : 4.5, "label" : 'nFatJetsPassed'},
+
+        'hhh_mass1' : { "nbins" : 50 , "xmin" : 0 , "xmax" : 1000, "label" : 'm_fit * 3'},
+        'hhh_mass2' : { "nbins" : 100 , "xmin" : 0 , "xmax" : 2000, "label" : '(h1+h2+h3).Mass'},
+
+
+
+
         # skip phi up to put that more automatic
 
 }
@@ -756,9 +819,278 @@ def init_get_max_cat():
     ROOT.gInterpreter.Declare(getmaxcat)
 
 
+gethandcat = '''
+int get_hand_cat(int nFatJetsPassed, int nJetsPassed, float hhh_mass2) {
+    
+    if (hhh_mass2 > 700) {
+        if (nFatJetsPassed == 3) return 1;
+        else if (nFatJetsPassed == 2 && nJetsPassed >= 2) return 2;
+        else if (nFatJetsPassed == 2 && nJetsPassed < 2) return 5;
+        else if (nFatJetsPassed == 1 && nJetsPassed >= 4) return 3;
+        else if (nFatJetsPassed == 1 && nJetsPassed < 4 && nJetsPassed >= 2 ) return 6;
+        else if (nFatJetsPassed == 1 && nJetsPassed < 2) return 8;
+        else if (nFatJetsPassed == 0 && nJetsPassed == 6) return 4;
+        else if (nFatJetsPassed == 0 && nJetsPassed < 6 && nJetsPassed >= 4) return 7;
+        else if (nFatJetsPassed == 0 && nJetsPassed < 4 && nJetsPassed >= 2) return 9;
+        else if (nFatJetsPassed == 0 && nJetsPassed < 2) return 0;
+        }
+    else if (hhh_mass2 <= 700) {
+        if (nJetsPassed == 6) return 4;
+        else if (nJetsPassed < 6 && nJetsPassed >= 4 && nFatJetsPassed >= 1) return 3;
+        else if (nJetsPassed < 6 && nJetsPassed >= 4 && nFatJetsPassed < 1) return 7;
+        else if (nJetsPassed < 4 && nJetsPassed >= 2 && nFatJetsPassed >= 2) return 2;
+        else if (nJetsPassed < 4 && nJetsPassed >= 2 && nFatJetsPassed == 1) return 6;
+        else if (nJetsPassed < 4 && nJetsPassed >= 2 && nFatJetsPassed == 0) return 9;
+        else if (nJetsPassed < 2 && nFatJetsPassed == 3) return 1;
+        else if (nJetsPassed < 2 && nFatJetsPassed == 2) return 5;
+        else if (nJetsPassed < 2 && nFatJetsPassed == 1) return 8;
+        else if (nJetsPassed < 2 && nFatJetsPassed == 0) return 0;
+
+        }
+    return -1;
+}
+'''
+def init_get_hand_cat():
+    ROOT.gInterpreter.Declare(gethandcat)
+
+gethandcat_boosted_prio = '''
+int get_hand_cat_boosted_prio(int nFatJetsPassed, int nJetsPassed) {
+    
+    if (nFatJetsPassed == 3) return 1;
+    else if (nFatJetsPassed == 2 && nJetsPassed >= 2) return 2;
+    else if (nFatJetsPassed == 2 && nJetsPassed < 2) return 5;
+    else if (nFatJetsPassed == 1 && nJetsPassed >= 4) return 3;
+    else if (nFatJetsPassed == 1 && nJetsPassed < 4 && nJetsPassed >= 2 ) return 6;
+    else if (nFatJetsPassed == 1 && nJetsPassed < 2) return 8;
+    else if (nFatJetsPassed == 0 && nJetsPassed == 6) return 4;
+    else if (nFatJetsPassed == 0 && nJetsPassed < 6 && nJetsPassed >= 4) return 7;
+    else if (nFatJetsPassed == 0 && nJetsPassed < 4 && nJetsPassed >= 2) return 9;
+    else if (nFatJetsPassed == 0 && nJetsPassed < 2) return 0;
+
+    
+    return -1;
+}
+'''
+def init_get_hand_cat_boosted_prio():
+    ROOT.gInterpreter.Declare(gethandcat_boosted_prio)
 
 
 
+higgs_pair = '''
+#include "Math/Vector4D.h"
+
+ROOT::Math::PtEtaPhiMVector polarP4(float pt, float eta, float phi, float mass) {
+    return ROOT::Math::PtEtaPhiMVector(pt, eta, phi, mass);
+}
+
+    // 辅助函数：将字符串按 '_' 分割为集合
+std::set<std::string> splitAndCollect(const std::string& str) {
+    std::set<std::string> parts;
+    size_t start = str.find('_') + 1;  // 从第一个下划线之后开始
+    if (start == std::string::npos) return parts;  // 如果没有下划线，直接返回空集合
+
+    std::istringstream stream(str.substr(start));
+    std::string part;
+
+    while (std::getline(stream, part, '_')) {
+        parts.insert(part);
+    }
+
+    return parts;
+}
+# // 定义 Jet 结构体
+struct Jet {
+    ROOT::Math::PtEtaPhiMVector fourVector;
+    double PNetB;
+};
+
+// 定义 FatJet 结构体
+struct FatJet {
+    ROOT::Math::PtEtaPhiMVector fourVector;
+    double Xbb;
+};
+
+// 实现 manualPermutation 函数，保留功能与原 Python 代码一致
+std::vector<std::vector<std::string>> manualPermutation(
+    const std::vector<std::string>& input1,
+    const std::vector<std::string>& input2,
+    const std::vector<std::string>& input3 = {"0"}
+) {
+    std::vector<std::vector<std::string>> output;
+
+    for (size_t i1 = 0; i1 < input1.size(); ++i1) {
+        const std::string& v1 = input1[i1];
+        for (size_t i2 = 0; i2 < input2.size(); ++i2) {
+            const std::string& v2 = input2[i2];
+            if (v1 == v2 || (input1 == input2 && i2 <= i1)) continue;
+
+            // 检查 JP 类型过滤条件
+            if (v1.rfind("JP", 0) == 0 && v2.rfind("JP", 0) == 0) {
+                std::set<std::string> combined_parts = splitAndCollect(v1);
+                std::set<std::string> v2_parts = splitAndCollect(v2);
+                combined_parts.insert(v2_parts.begin(), v2_parts.end());
+                if (combined_parts.size() < 4) continue;
+            }
+
+            for (size_t i3 = 0; i3 < input3.size(); ++i3) {
+                const std::string& v3 = input3[i3];
+                if (v3 != "0") {
+                    if (v1 == v3 || (input1 == input3 && i3 <= i1)) continue;
+                    if (v2 == v3 || (input2 == input3 && i3 <= i2)) continue;
+
+                    // 检查 JP 类型的继续条件
+                    if (v1.rfind("JP", 0) == 0 && v3.rfind("JP", 0) == 0) {
+                        std::set<std::string> combined_parts = splitAndCollect(v1);
+                        std::set<std::string> v3_parts = splitAndCollect(v3);
+                        combined_parts.insert(v3_parts.begin(), v3_parts.end());
+                        if (combined_parts.size() < 4) continue;
+                    }
+                    if (v2.rfind("JP", 0) == 0 && v3.rfind("JP", 0) == 0) {
+                        std::set<std::string> combined_parts = splitAndCollect(v2);
+                        std::set<std::string> v3_parts = splitAndCollect(v3);
+                        combined_parts.insert(v3_parts.begin(), v3_parts.end());
+                        if (combined_parts.size() < 4) continue;
+                    }
+
+                    output.push_back({v1, v2, v3});
+                } else {
+                    output.push_back({v1, v2});
+                }
+            }
+        }
+    }
+
+    return output;
+}
+
+#include <vector>
+#include <string>
+#include <set>
+#include <sstream>
+#include <algorithm>
+#include <map>
+#include <tuple>
+#include <limits>
+#include <cmath>
+#include <numeric>
+#include <iostream>
+#include "Math/Vector4D.h"  // 包含 ROOT 的四矢量类型定义
+#include <tuple> 
+
+
+
+
+
+// Higgs pairing 函数
+
+std::tuple<float, float, std::vector<std::tuple<float, float, float, float>>> higgsPairing(
+    const std::vector<Jet>& jets_4vec,
+    const std::vector<FatJet>& fatjets,
+    float XbbWP,
+    int Run = 2
+) {
+    // 筛选符合条件的 fatjets
+    std::vector<FatJet> probejets;
+    for (const auto& fj : fatjets) {
+        if (fj.Xbb > XbbWP) probejets.push_back(fj);
+    }
+    std::sort(probejets.begin(), probejets.end(), [](const FatJet& a, const FatJet& b) {
+        return a.Xbb > b.Xbb;
+    });
+
+    // 构建 jet pairs
+    std::vector<std::tuple<int, int, ROOT::Math::PtEtaPhiMVector, float, std::string, float>> jetpairs;
+    for (size_t i1 = 0; i1 < jets_4vec.size(); ++i1) {
+        for (size_t i2 = i1 + 1; i2 < jets_4vec.size(); ++i2) {
+            ROOT::Math::PtEtaPhiMVector sumVector = jets_4vec[i1].fourVector + jets_4vec[i2].fourVector;
+            float score = jets_4vec[i1].PNetB * jets_4vec[i2].PNetB;
+            jetpairs.emplace_back(i1, i2, sumVector, score, "Jet", sumVector.M());
+        }
+    }
+
+    std::sort(jetpairs.begin(), jetpairs.end(), [](const auto& a, const auto& b) {
+        return std::get<3>(a) > std::get<3>(b);
+    });
+
+    // 构建所有对象
+    std::map<std::string, std::variant<decltype(jetpairs)::value_type, FatJet>> allobjects;
+    for (const auto& p : jetpairs) {
+        std::string name = "JP_" + std::to_string(std::get<0>(p) + 1) + "_" + std::to_string(std::get<1>(p) + 1);
+        allobjects[name] = p;
+    }
+    for (size_t i = 0; i < probejets.size(); ++i) {
+        allobjects["FJ" + std::to_string(i + 1)] = probejets[i];
+    }
+
+    // 获取对象列表并进行排列组合
+    std::vector<std::string> objlist_jet;
+    for (const auto& [key, _] : allobjects) {
+        if (key.find("J") != std::string::npos) objlist_jet.push_back(key);
+    }
+
+    std::vector<std::vector<std::string>> permutations = manualPermutation(objlist_jet, objlist_jet, objlist_jet);
+    if (permutations.empty()) {
+        permutations = manualPermutation(objlist_jet, objlist_jet);
+    }
+    if (permutations.empty() && !objlist_jet.empty()) {
+        permutations = {{objlist_jet[0]}};
+    }
+
+    // Chi2 计算和最终配对
+    int nHiggs = permutations[0].size();
+    float min_chi2 = std::numeric_limits<float>::infinity();
+    std::vector<std::string> finalPermutation;
+    float m_fit = 0.0;
+
+    if (nHiggs <= 1) {
+        return std::make_tuple(-1.0f, -1.0f, std::vector<std::tuple<float, float, float, float>>());
+    }
+
+    for (const auto& permutation : permutations) {
+        std::vector<float> masses;
+        for (const auto& name : permutation) {
+            if (name.rfind("JP", 0) == 0) {
+                masses.push_back(std::get<5>(std::get<decltype(jetpairs)::value_type>(allobjects[name])));
+            } else {
+                masses.push_back(std::get<FatJet>(allobjects[name]).fourVector.M());
+            }
+        }
+
+        float avg_mass = std::accumulate(masses.begin(), masses.end(), 0.0f) / nHiggs;
+        float chi2 = 0.0f;
+        for (float mass : masses) {
+            chi2 += std::pow(mass - avg_mass, 2);
+        }
+
+        if (chi2 < min_chi2) {
+            min_chi2 = chi2;
+            m_fit = avg_mass;
+            finalPermutation = permutation;
+        }
+    }
+
+    // 构建最终 Higgs 对象
+    ROOT::Math::PtEtaPhiMVector hhh_sum_vector;
+    std::vector<std::tuple<float, float, float, float>> finalHiggs;
+    for (const auto& name : finalPermutation) {
+        if (name.rfind("FJ", 0) == 0) {
+            const auto& obj = std::get<FatJet>(allobjects[name]);
+            finalHiggs.emplace_back(obj.fourVector.Pt(), obj.fourVector.Eta(), obj.fourVector.Phi(), obj.fourVector.M());
+            hhh_sum_vector += obj.fourVector;  // 累加四矢量
+        } else {
+            const auto& obj = std::get<decltype(jetpairs)::value_type>(allobjects[name]);
+            finalHiggs.emplace_back(std::get<2>(obj).Pt(), std::get<2>(obj).Eta(), std::get<2>(obj).Phi(), std::get<5>(obj));
+            hhh_sum_vector += std::get<2>(obj);  // 累加四矢量
+        }
+    }
+
+    float hhh_mass2 = hhh_sum_vector.M();
+    return std::make_tuple(hhh_mass2, m_fit, finalHiggs);
+}
+'''
+
+def init_higgs_pair():
+    ROOT.gInterpreter.Declare(higgs_pair)
 
 cat = '''
     int categorisation(int nAK4HiggsReco, int nAK8HiggsReco){
@@ -788,6 +1120,8 @@ cat = '''
 '''
 
 ROOT.gInterpreter.Declare(cat)
+
+
 
 
 def matching_variables(df):
