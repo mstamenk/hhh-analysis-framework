@@ -1,0 +1,7 @@
+Universe   = vanilla
+Executable = jobs/job_QCD_HT700to1000_TuneCP5_13TeV-madgraphMLM-pythia8_tree_2017_v31.sh
+Arguments  = $(ClusterId) $(ProcId)
+Log        = log/job_QCD_HT700to1000_TuneCP5_13TeV-madgraphMLM-pythia8_tree_2017_v31.log
+Output     = output/job_QCD_HT700to1000_TuneCP5_13TeV-madgraphMLM-pythia8_tree_2017_v31.out
+Error      = error/job_QCD_HT700to1000_TuneCP5_13TeV-madgraphMLM-pythia8_tree_2017_v31.error
+Queue 1

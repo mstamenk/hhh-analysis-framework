@@ -1,0 +1,21 @@
+WARNING: In non-interactive mode release checks e.g. deprecated releases, production architectures are disabled.
+WARNING: In non-interactive mode release checks e.g. deprecated releases, production architectures are disabled.
+input_line_142:2:16: error: redefinition of 'get_false'
+        Bool_t get_false(){return 0;}
+               ^
+input_line_58:2:16: note: previous definition is here
+        Bool_t get_false(){return 0;}
+               ^
+input_line_144:2:16: error: redefinition of 'get_false'
+        Bool_t get_false(){return 0;}
+               ^
+input_line_58:2:16: note: previous definition is here
+        Bool_t get_false(){return 0;}
+               ^
+input_line_146:2:16: error: redefinition of 'get_false'
+        Bool_t get_false(){return 0;}
+               ^
+input_line_58:2:16: note: previous definition is here
+        Bool_t get_false(){return 0;}
+               ^
+/var/lib/condor/execute/dir_9749/condor_exec.exe: line 9: 15246 Killed                  python3 /isilon/data/users/mstamenk/hhh-6b-producer/master/CMSSW_12_5_2/src/hhh-master/hhh-analysis-framework//process_qcd_sample_no_trigger.py --f_in /isilon/data/users/mstamenk/hhh-6b-producer/CMSSW_11_1_0_pre5_PY3/src/PhysicsTools/NanoAODTools/condor/v31_ak8_option4_2018/mc/parts/QCD_HT700to1000_TuneCP5_13TeV-madgraphMLM-pythia8_tree.root --year 2018 --version v31
