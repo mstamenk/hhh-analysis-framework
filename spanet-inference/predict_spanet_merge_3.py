@@ -134,7 +134,7 @@ sess_options.intra_op_num_threads = 23
 sess_options.execution_mode = onnxruntime.ExecutionMode.ORT_PARALLEL
 
 
-session_class = onnxruntime.InferenceSession("/eos/home-x/xiangran/CMSSW_12_5_2/src/hhh-analysis-framework/spanet-inference/spanet_pnet_all_vars_v0.onnx",sess_options,providers=['CPUExecutionProvider'])
+session_class = onnxruntime.InferenceSession("/afs/cern.ch/user/x/xgeng/public/v34_training/output_xinyue1_model.onnx",sess_options,providers=['CPUExecutionProvider'])
 session_cat   = onnxruntime.InferenceSession("/eos/home-x/xiangran/CMSSW_12_5_2/src/hhh-analysis-framework/spanet-inference/spanet_categorisation_v6.onnx",sess_options,providers=['CPUExecutionProvider'])
 
 
@@ -508,6 +508,9 @@ for i in ['1','2','3']:
 lep_arrays = []
 lep_vars = ['lep%sPt', 'lep%sEta','lep%sSinPhi','lep%sCosPhi']
 for i in ['1','2']:
+    df = df.Define('lep%sCosPhi'%i, 'TMath::Cos(lep%sPhi)'%i)
+    df = df.Define('lep%sSinPhi'%i, 'TMath::Sin(lep%sPhi)'%i)
+    df = df.Define('lep%sLogPt'%i, 'TMath::Log(lep%sPt + 1)'%i)
     column = [el%i for el in lep_vars]
     np_dict = df.AsNumpy(column)
     np_arr = np.vstack(np_dict[col] for col in column).T.astype(np.float32)
@@ -516,6 +519,9 @@ for i in ['1','2']:
 tau_arrays = []
 tau_vars = ['tau%sPt', 'tau%sEta','tau%sSinPhi','tau%sCosPhi']
 for i in ['1','2']:
+    df = df.Define('tau%sCosPhi'%i, 'TMath::Cos(tau%sPhi)'%i)
+    df = df.Define('tau%sSinPhi'%i, 'TMath::Sin(tau%sPhi)'%i)
+    df = df.Define('tau%sLogPt'%i, 'TMath::Log(tau%sPt + 1)'%i)
     column = [el%i for el in tau_vars]
     np_dict = df.AsNumpy(column)
     np_arr = np.vstack(np_dict[col] for col in column).T.astype(np.float32)
