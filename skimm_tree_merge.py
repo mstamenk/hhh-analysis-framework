@@ -11,7 +11,6 @@ ROOT.gROOT.SetBatch(ROOT.kTRUE)
 ROOT.ROOT.EnableImplicitMT()
 
 from utils import histograms_dict, wps_years, wps, tags, luminosities, hlt_paths, triggersCorrections, hist_properties, init_mhhh, addMHHH, clean_variables, initialise_df, save_variables, init_get_max_cat, applySelection
-from machinelearning import init_bdt, add_bdt, init_bdt_boosted, add_bdt_boosted
 from calibrations import btag_init, addBTagSF, addBTagEffSF
 from hhh_variables import add_hhh_variables
 
@@ -223,7 +222,6 @@ for selection in category_list:
 
   if not skip_do_trees :
 
-   firstProc = True
    for proctodo in procstodo :
     datahist = proctodo
     if proctodo == "data_obs" :
@@ -259,9 +257,6 @@ for selection in category_list:
         chunk_df = chunk_df.Define('Prob0Higgs','Prob0bh0h')
         print(dataset)
         
-        if firstProc:
-            init_bdt(chunk_df,year)
-            firstProc = False
         try:
             entries_no_filter = int(chunk_df.Count().GetValue())
         except:

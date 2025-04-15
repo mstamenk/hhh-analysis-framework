@@ -1,8 +1,6 @@
 {
-  "procstodo":{
-    "data_obs"
-  },
-  "remove_ratio":0.98,
+  "procstodo":["data_obs"],
+  "remove_ratio":0.999,
   "scriptsdir":"/eos/home-x/xiangran/CMSSW_12_5_2/src/hhh-analysis-framework/",
   "inputdir":"/eos/cms/store/group/phys_higgs/cmshhh/v34_ak8_option4_2016/mva-inputs-2016/",
   "outputdir":"/eos/home-x/xiangran/samples/v34_2016_test3/",
@@ -10,9 +8,9 @@
   "version":"v34",
   "batch_size":5000,
 
-  "apply_training":"spanet-inference/predict_spanet_merge3.py",
-  "qcd_datadriven":true,
-  "datadriven_retrain":"spanet-inference/predict_spanet_merge3.py",
+  "apply_training":"spanet-inference/predict_spanet_merge_3.py",
+  "qcd_datadriven":"datadriven_model_new.py",
+  "datadriven_retrain":"spanet-inference/predict_spanet_merge_3.py",
   "skimm_tree":"skimm_tree_merge.py",
   "apply_binning":false,
   "QCD_shapeUnc":false

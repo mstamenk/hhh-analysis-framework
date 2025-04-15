@@ -61,7 +61,7 @@ datas = {'2018' : 'JetHT',
          '2016APV' : 'JetHT'}
 
 config = load_input('config.yaml')
-pwd = "/afs/cern.ch/user/x/xiangran/CMSSW_13_3_0/src/condor-run/"
+pwd = "/afs/cern.ch/user/x/xiangran/CMSSW_13_3_0/src/condor-unified/"
 
 if not path.exists(config['outputdir']):
     procs=subprocess.Popen(['mkdir %s' % config['outputdir']],shell=True,stdout=subprocess.PIPE)
@@ -150,7 +150,7 @@ if apply_training:
 
 
 if qcd_datadriven:
-    script = config["scriptsdir"] + '/' + 'datadriven_model.py'
+    script = config["scriptsdir"] + '/' + config['qcd_datadriven']
     cmd_resolved = 'python3 %s --year %s --version %s --type %s --path %s' %(script,config['year'],config['version'],"resolved",config['outputdir'])
     cmd_boosted = 'python3 %s --year %s --version %s --type %s --path %s' %(script,config['year'],config['version'],"boosted",config['outputdir'])
     resolved=runCmd(cmd_resolved)
@@ -226,8 +226,12 @@ if datadriven_retrain:
 
 if skimm_tree:
     script = config["scriptsdir"] + '/' + config['skimm_tree']
-    for f_in in config["procstodo"]+["QCD_datadriven"]:
-        cmd = 'python3 %s --base_folder %s --process %s --run_all_category' %(script,config['outputdir'],f_in)
+    for f_in in config["procstodo"]:
+        cmd = 'python3 %s --base_folder %s --process %s --run_all_categories --do_CR' %(script,config['outputdir'],f_in)
+        runCmd(cmd)
+    if datadriven_retrain:
+        f_in ='QCD_datadriven'
+        cmd = 'python3 %s --base_folder %s --process %s --run_all_categories --do_CR' %(script,config['outputdir'],f_in)
         runCmd(cmd)
 
 # if apply_binning:
