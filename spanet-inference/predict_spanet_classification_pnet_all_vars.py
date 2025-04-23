@@ -10,7 +10,7 @@ import numpy as np
 import argparse
 parser = argparse.ArgumentParser(description='Args')
 parser.add_argument('--f_in', default = 'GluGluToHHHTo6B_SM') # input samples
-parser.add_argument('-v','--version', default='v31-merged-selection-no-lhe') # version of NanoNN production
+parser.add_argument('-v','--version', default='v33') # version of NanoNN production
 parser.add_argument('--year', default='2018') # year
 parser.add_argument('--batch_size', default='100') # year
 parser.add_argument('--batch_number',default = '0')
@@ -110,9 +110,20 @@ def process(i):
     bh3 = output_values[5][i]
 
     boosted_higgs = find_boosted_higgs(bh1,bh2,bh3)
+    
+    try:
+        higgses = boosted_higgs + pair_higgs(max_h1.tolist(),index_h1.tolist(), max_h2.tolist(),index_h2.tolist(), max_h3.tolist(),index_h3.tolist(),h1Det,h2Det,h3Det)
+        return higgses[0], higgses[1], higgses[2]
+    except: 
+        h_1 = ROOT.TLorentzVector()
+        h_2 = ROOT.TLorentzVector()
+        h_3 = ROOT.TLorentzVector()
+        h_1.SetPtEtaPhiM(0,0,0,0)
+        h_2.SetPtEtaPhiM(0,0,0,0)
+        h_3.SetPtEtaPhiM(0,0,0,0)
+        return h_1,h_2,h_3 
 
-    higgses = boosted_higgs + pair_higgs(max_h1.tolist(),index_h1.tolist(), max_h2.tolist(),index_h2.tolist(), max_h3.tolist(),index_h3.tolist(),h1Det,h2Det,h3Det)
-    return higgses[0], higgses[1], higgses[2]
+        
 
 # return df.Define(name, [&](ULong64_t e) { return v[e]; }, {"rdfentry_"});
 # return df.Define(name, [&](ULong64_t e) { return v[e]; }, {"rdfentry_"});
@@ -138,7 +149,10 @@ sess_options.intra_op_num_threads = 23
 sess_options.execution_mode = onnxruntime.ExecutionMode.ORT_PARALLEL
 
 
-session = onnxruntime.InferenceSession("/users/mstamenk/hhh-analysis-framework/spanet-inference/spanet_pnet_all_vars_v0.onnx",sess_options)
+if '2022' in args.year:
+    session = onnxruntime.InferenceSession("/users/mstamenk/hhh-analysis-framework/spanet-inference/spanet_classification_2022_optimised.onnx",sess_options, providers=['CPUExecutionProvider'])
+else:
+    session = onnxruntime.InferenceSession("/users/mstamenk/hhh-analysis-framework/spanet-inference/spanet_pnet_all_vars_v0.onnx",sess_options, providers=['CPUExecutionProvider'])
 
 
 input_name = session.get_inputs()[0].name
@@ -165,7 +179,10 @@ if event_min > entries:
 df = df.Range(event_min,event_max)
 df = df.Define('counter','counter++')
 
-jet_vars = ["%sPtCorr", "%sEta","%sSinPhi","%sCosPhi", "%sPNetB","%sMass"]
+if '2022' in args.year:
+    jet_vars = ["%sPt", "%sEta","%sSinPhi","%sCosPhi", "%sPNetB","%sMass"]
+else:
+    jet_vars = ["%sPtCorr", "%sEta","%sSinPhi","%sCosPhi", "%sPNetB","%sMass"]
 arrays = []
 
 
@@ -173,13 +190,16 @@ for i in ['1','2','3','4','5','6','7','8','9','10']:
     df = df.Define('jet%sCosPhi'%i, 'TMath::Cos(jet%sPhi)'%i)
     df = df.Define('jet%sSinPhi'%i, 'TMath::Sin(jet%sPhi)'%i)
     df = df.Define('jet%sLogPt'%i, 'TMath::Log(jet%sPt+1)'%i)
+    if '2022' in args.year:
+        df = df.Define('jet%sbRegCorr'%i, '1')
     df = df.Define('jet%sPtCorr'%i, 'jet%sPt * jet%sbRegCorr'%(i,i))
-    if 'JetHT' in args.f_in or 'BTagCSV' in args.f_in or 'SingleMuon' in args.f_in:
+    if 'JetHT' in args.f_in or 'BTagCSV' in args.f_in or 'SingleMuon' in args.f_in or 'JetMET' in args.f_in:
         df = df.Define('jet%sHiggsMatchedIndex'%i,'-1')
+    
     
     column = [el%'jet%s'%i for el in jet_vars]
     np_dict = df.AsNumpy(column)
-    np_arr = np.vstack(np_dict[col] for col in column).T.astype(np.float32)
+    np_arr = np.vstack([np_dict[col] for col in column]).T.astype(np.float32)
     arrays.append(np_arr)
 
 # Boosted arrays
@@ -195,7 +215,7 @@ for i in ['1','2','3']:
 
     column = [el%i for el in fatjet_vars]
     np_dict = df.AsNumpy(column)
-    np_arr = np.vstack(np_dict[col] for col in column).T.astype(np.float32)
+    np_arr = np.vstack([np_dict[col] for col in column]).T.astype(np.float32)
     boosted_arrays.append(np_arr)
 
 lep_arrays = []
@@ -210,7 +230,7 @@ for i in ['1','2']:
 
     column = [el%i for el in lep_vars]
     np_dict = df.AsNumpy(column)
-    np_arr = np.vstack(np_dict[col] for col in column).T.astype(np.float32)
+    np_arr = np.vstack([np_dict[col] for col in column]).T.astype(np.float32)
     lep_arrays.append(np_arr)
 
 tau_arrays = []
@@ -224,7 +244,7 @@ for i in ['1','2']:
     
     column = [el%i for el in tau_vars]
     np_dict = df.AsNumpy(column)
-    np_arr = np.vstack(np_dict[col] for col in column).T.astype(np.float32)
+    np_arr = np.vstack([np_dict[col] for col in column]).T.astype(np.float32)
     tau_arrays.append(np_arr)
 
 
@@ -243,7 +263,7 @@ for i in ['1','2','3','4','5','6','7','8','9','10']:
         
         column = [el%(i,j) for el in Higgs_vars]
         np_dict = df.AsNumpy(column)
-        np_arr = np.vstack(np_dict[col] for col in column).T.astype(np.float32)
+        np_arr = np.vstack([np_dict[col] for col in column]).T.astype(np.float32)
         Higgs_list.append(np_arr)
     Jets_arrays[name] = Higgs_list
 
@@ -256,14 +276,14 @@ met_arrays = []
 met_vars = ['met']
 column = [el for el in met_vars]
 np_dict = df.AsNumpy(column)
-np_arr = np.vstack(np_dict[col] for col in column).T.astype(np.float32)
+np_arr = np.vstack([np_dict[col] for col in column]).T.astype(np.float32)
 met_arrays.append(np_arr)
 
 ht_arrays = []
 ht_vars = ['ht']
 column = [el for el in ht_vars]
 np_dict = df.AsNumpy(column)
-np_arr = np.vstack(np_dict[col] for col in column).T.astype(np.float32)
+np_arr = np.vstack([np_dict[col] for col in column]).T.astype(np.float32)
 ht_arrays.append(np_arr)
 
 
@@ -273,7 +293,7 @@ array_4vec = []
 for i in ['1','2','3','4','5','6','7','8','9','10']:
     column_4vec = [el%'jet%s'%i for el in jet_4vec]
     np_4vec = df.AsNumpy(column_4vec)
-    np_arr_4vec = np.vstack(np_4vec[col] for col in column_4vec).T
+    np_arr_4vec = np.vstack([np_4vec[col] for col in column_4vec]).T
     array_4vec.append(np_arr_4vec)
 
 jets = []
@@ -292,7 +312,7 @@ array_fj_4vec = []
 for i in ['1','2','3']:
     column_4vec = [el%'fatJet%s'%i for el in jet_4vec]
     np_4vec = df.AsNumpy(column_4vec)
-    np_arr_4vec = np.vstack(np_4vec[col] for col in column_4vec).T
+    np_arr_4vec = np.vstack([np_4vec[col] for col in column_4vec]).T
     array_fj_4vec.append(np_arr_4vec)
 
 fatjets = []
@@ -372,7 +392,14 @@ Jet9_Mass = Jet9_data[:,:,0]
 Jet9_mask = Jet9_Mass > 20
 
 
+print(Jet9_data)
+
+
 input_dict = {"Jets_data": Jets_data, "Jets_mask": Jets_mask, "BoostedJets_data":BoostedJets_data, "BoostedJets_mask": BoostedJets_mask, "Leptons_data" : Leptons_data, "Leptons_mask" : Leptons_mask, 'Taus_data' : Taus_data, 'Taus_mask': Taus_mask, "MET_data" : MET_data, "MET_mask": MET_mask, 'HT_data': HT_data, "HT_mask" : HT_mask, 'Jet1_data' : Jet1_data, 'Jet1_mask': Jet1_mask, 'Jet2_data' : Jet2_data, 'Jet2_mask': Jet2_mask, 'Jet3_data' : Jet3_data, 'Jet3_mask': Jet3_mask, 'Jet4_data' : Jet4_data, 'Jet4_mask': Jet4_mask, 'Jet5_data' : Jet5_data, 'Jet5_mask': Jet5_mask, 'Jet6_data' : Jet6_data, 'Jet6_mask': Jet6_mask, 'Jet7_data' : Jet7_data, 'Jet7_mask': Jet7_mask, 'Jet8_data' : Jet8_data, 'Jet8_mask': Jet8_mask,'Jet9_data' : Jet9_data, 'Jet9_mask': Jet9_mask}
+
+
+for key, value in input_dict.items():
+    print(key, value.shape)
 
 output_nodes = session.get_outputs()
 output_names = [node.name for node in output_nodes]
