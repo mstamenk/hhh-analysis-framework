@@ -659,14 +659,14 @@ selections = {
         "sel" : "(IndexMaxProb == 7 && (IndexMaxCat == 1 || IndexMaxCat == 2 || IndexMaxCat == 3 || IndexMaxCat == 4))",
         "label" : "ProbHHH ",
         "doSR" : "&& ProbHHH > 0.0  ",
-        "doCR" : "&& (ht > 450)",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
         "ProbHH4b_2Higgs_inclusive"              : {
         "sel" : "(IndexMaxProb == 7 && (IndexMaxCat == 5 || IndexMaxCat == 6 || IndexMaxCat == 7 ))",
         "label" : "ProbHHH ",
         "doSR" : "&& ProbHHH > 0.0  ",
-        "doCR" : "&& (ht > 450)",
+        "doCR" : "&& (ProbMultiH > 0. && ht > 450 )",
         "dataset" : "-weights",
         },
         "ProbHH4b_1Higgs_inclusive"              : {
@@ -1128,8 +1128,10 @@ for selection in selections.keys() :
 
   if not skip_do_correct :
     # path_to_histograms = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/2016_merged'
-    path_to_histograms = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/run2'
-    Higgs_number_strings = ["2bh0h","1bh1h","0bh2h","3bh0h","2bh1h","1bh2h","0bh3h","3Higgs","2Higgs"]
+    # path_to_histograms = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/run2'
+    path_to_histograms = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/run2_separate'
+
+    Higgs_number_strings = ["3Higgs","2Higgs","3bh0h","2bh1h","1bh2h","0bh3h","2bh0h","1bh1h","0bh2h"]
     # Higgs_number_strings = []
 
     for Higgs_number in Higgs_number_strings: 

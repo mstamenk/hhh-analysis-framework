@@ -68,15 +68,19 @@ def code_for_plot(Hist_up,Hist_down,Hist_nom,pro,syst,path_for_plot):
 
 # path_hist = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33/Marko_sample_1Higgs'
 # cat_list=  ["ProbHHH6b_2bh0h_inclusive_CR","ProbHHH6b_1bh1h_inclusive_CR","ProbHHH6b_0bh2h_inclusive_CR","ProbHHH6b_0bh0h_inclusive_CR","ProbHHH6b_1Higgs_inclusive_CR","ProbHHH6b_3bh0h_inclusive_CR","ProbHHH6b_2bh1h_inclusive_CR","ProbHHH6b_1bh2h_inclusive_CR","ProbHHH6b_0bh3h_inclusive_CR"]
-cat_list=  ["ProbHH4b_2bh0h_inclusive_CR","ProbHH4b_1bh1h_inclusive_CR","ProbHH4b_0bh2h_inclusive_CR","ProbHH4b_0bh0h_inclusive_CR","ProbHH4b_1Higgs_inclusive_CR","ProbHH4b_3bh0h_inclusive_CR","ProbHH4b_2bh1h_inclusive_CR","ProbHH4b_1bh2h_inclusive_CR","ProbHH4b_0bh3h_inclusive_CR"]
+# cat_list=  ["ProbHH4b_2bh0h_inclusive_CR","ProbHH4b_1bh1h_inclusive_CR","ProbHH4b_0bh2h_inclusive_CR","ProbHH4b_0bh0h_inclusive_CR","ProbHH4b_1Higgs_inclusive_CR","ProbHH4b_3bh0h_inclusive_CR","ProbHH4b_2bh1h_inclusive_CR","ProbHH4b_1bh2h_inclusive_CR","ProbHH4b_0bh3h_inclusive_CR","ProbHHH6b_2bh0h_inclusive_CR","ProbHHH6b_1bh1h_inclusive_CR","ProbHHH6b_0bh2h_inclusive_CR","ProbHHH6b_0bh0h_inclusive_CR","ProbHHH6b_1Higgs_inclusive_CR","ProbHHH6b_3bh0h_inclusive_CR","ProbHHH6b_2bh1h_inclusive_CR","ProbHHH6b_1bh2h_inclusive_CR","ProbHHH6b_0bh3h_inclusive_CR"]
+cat_list=  ["ProbHHH6b_2bh0h_inclusive_CR","ProbHHH6b_1bh1h_inclusive_CR","ProbHHH6b_0bh2h_inclusive_CR","ProbHHH6b_0bh0h_inclusive_CR","ProbHHH6b_1Higgs_inclusive_CR","ProbHHH6b_3bh0h_inclusive_CR","ProbHHH6b_2bh1h_inclusive_CR","ProbHHH6b_1bh2h_inclusive_CR","ProbHHH6b_0bh3h_inclusive_CR"]
 # cat_list=  ["ProbHHH6b_2bh0h_inclusive_CR","ProbHHH6b_1bh1h_inclusive_CR","ProbHHH6b_0bh2h_inclusive_CR"]
 pro_list = ["GluGluToHHHTo6B_SM","GluGluToHHTo4B_cHHH1"]
 syst_list = ["PNetAK4_Stat","PNetAK4_FSR","PNetAK4_zjets_muF","PNetAK4_ISR","PNetAK4_ttbar_muR","PNetAK4_ttbar_muF","JES","PNetAK4_wjets_muR","PNetAK4_wjets_muF","JER","JMR","PileUp","l1Prefiring","PNetAK4_zjets_muR","PNetAK4_jetID","PNetAK4_wjets_c_xsec","PNetAK4_zjets_c_xsec"]
 other_syst = ["MUR","MUF","PNetAK8","PNetAK4_zjets_b_xsec","FSR","ISR","PNetAK4_pileup","PNetAK4_wjets_b_xsec"]
 year_list = ["2018","2017","2016_all"]
+# year_list = ["2018"]
 for year in year_list:
 
     path_hist = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/%s'%(year)
+    # path_hist = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/cat_new_boosted_prio/%s'%(year)
+
     # path_hist = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/run2'
 
     if year == '2016_all':
@@ -101,7 +105,7 @@ for year in year_list:
         Hist_QCD = file_o.Get("QCD").Clone()
         Hist_QCD.SetName("QCD"+ "_" + year)
         Hist_4B2Tau = file_o.Get("GluGluToHHHTo4B2Tau_SM").Clone()
-        Hist_4B2Tau.SetName("GluGluToHHHTo4B2Tau_SM"+ "_" + year)
+        Hist_4B2Tau.SetName("GluGluToHHHTo4B2Tau_SM" + "_" + year)
         Hist_6b = file_o.Get("GluGluToHHHTo6B_SM").Clone()
         Hist_6b.SetName("GluGluToHHHTo6B_SM"+ "_" + year)
         Hist_4b = file_o.Get("GluGluToHHTo4B_cHHH1").Clone()

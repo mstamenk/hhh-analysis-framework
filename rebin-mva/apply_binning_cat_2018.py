@@ -677,12 +677,12 @@ for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0
         else:
             h_mva = ROOT.TH1F(s,s,len(binning),0,len(binning))
 
-        weight = 'totalWeight'
+        weight = 'eventWeight'
 
         
 
         
-        #    weight = 'totalWeight / (flavTagWeight * fatJetFlavTagWeight)'
+        #    weight = 'eventWeight / (flavTagWeight * fatJetFlavTagWeight)'
 
         for i in range(1,h_mva.GetNbinsX() + 1):
 
@@ -751,16 +751,16 @@ for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0
                 h_mva = ROOT.TH1F(s,s,len(binning),0,len(binning))
 
             if 'nominal' in syst:
-                weight = 'totalWeight'
+                weight = 'eventWeight'
             elif 'LHE' in syst or 'PSWeight' in syst:
-                weight = 'totalWeight * %s'%syst
+                weight = 'eventWeight * %s'%syst
 
             elif 'flavTag' in syst or 'FlavTag' in syst:
                 w = syst.split('_')[0]
-                weight = '(totalWeight / %s) * %s'%(w,syst)
+                weight = '(eventWeight / %s) * %s'%(w,syst)
 
             
-            #    weight = 'totalWeight / (flavTagWeight * fatJetFlavTagWeight)'
+            #    weight = 'eventWeight / (flavTagWeight * fatJetFlavTagWeight)'
 
             for i in range(1,h_mva.GetNbinsX() + 1):
 
@@ -804,7 +804,7 @@ for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0
         low,up = binning[i]
 
         h_name = 'QCD' + '_histo_%d'%i
-        tree.Draw("%s>>%s(100,0,1)"%(var,h_name),'(%s && %s > %f && %s < %f) * totalWeight'%(cut, var,low, var,up))
+        tree.Draw("%s>>%s(100,0,1)"%(var,h_name),'(%s && %s > %f && %s < %f) * eventWeight'%(cut, var,low, var,up))
         try:
             h = ROOT.gPad.GetPrimitive(h_name)
             integral, error = get_integral_and_error(h)

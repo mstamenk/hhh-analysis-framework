@@ -790,7 +790,6 @@ for selection in selections.keys() :
   print(final_selection)
 
   output_tree = "/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/%s"%(year)
-#   output_tree = "/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33/%s"%(year)
   output_folder = "{}/{}_{}".format(output_tree,selection,additional_label)
   if not path.exists(output_folder) :
       procs=subprocess.Popen(['mkdir %s' % output_folder],shell=True,stdout=subprocess.PIPE)
@@ -1110,7 +1109,7 @@ for selection in selections.keys() :
       # Draw the data/MC to this selection
     #   year = 'run2'
       year = '2018'
-      path_to_plots = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/plots/v33/%s/'%(year)
+      path_to_plots = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/plots/v33_new/%s/'%(year)
       output_folder_draw = "{}/{}_{}/".format(path_to_plots,selection,additional_label)
       input_folder_for_plots  = output_folder_draw
 
@@ -1133,10 +1132,13 @@ for selection in selections.keys() :
 
   if not skip_do_correct :
     # path_to_histograms = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/%s'%(year)
-    path_to_histograms = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/run2_separate'
+    # path_to_histograms = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/run2_separate'
+    # path_to_histograms = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/2018'
+    path_to_histograms = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/2016'
+    
     # Higgs_number_strings = ["3Higgs","2Higgs","3bh0h","2bh1h","1bh2h","0bh3h","2bh0h","1bh1h","0bh2h"]
-    Higgs_number_strings = ["3bh0h","2bh1h","1bh2h","0bh3h","2bh0h","1bh1h","0bh2h"]
-    # Higgs_number_strings = ["3Higgs"]
+    Higgs_number_strings = ["3Higgs","2Higgs","3bh0h","2bh1h","1bh2h","0bh3h","2bh0h","1bh1h","0bh2h"]
+    # Higgs_number_strings = ["3bh0h"]
     for Higgs_number in Higgs_number_strings: 
         file_1Higgs = "{}/ProbHHH6b_1Higgs_inclusive_CR/histograms/histograms_{}_fixAsy.root".format(path_to_histograms,do_limit_input)
         file_2Higgs = "{}/ProbHHH6b_{}_inclusive_CR/histograms/histograms_{}_fixAsy.root".format(path_to_histograms,Higgs_number,do_limit_input)

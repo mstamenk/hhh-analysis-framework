@@ -27,11 +27,13 @@ year = args.year
 
 #path = '/isilon/data/users/mstamenk/eos-triple-h/samples-%s-%s-spanet-boosted-variables-nanoaod'%(version,year)
 #path = '/isilon/data/users/mstamenk/eos-triple-h/samples-%s-%s-nanoaod'%(version,year)
-path = '/isilon/data/users/mstamenk/hhh-6b-producer/CMSSW_11_1_0_pre5_PY3/src/PhysicsTools/NanoAODTools/condor/%s_ak8_option4_%s/*/parts/'%(version,year)
+# path = '/isilon/data/users/mstamenk/hhh-6b-producer/CMSSW_11_1_0_pre5_PY3/src/PhysicsTools/NanoAODTools/condor/%s_ak8_option4_%s/*/parts/'%(version,year)
+path = '/eos/cms/store/group/phys_higgs/cmshhh/%s_ak8_option4_%s/signal/parts'%(version,year)
 
 print(path)
 
-output = '/isilon/data/users/mstamenk/eos-triple-h/%s-parts/mva-inputs-%s/'%(version,year)
+# output = '/isilon/data/users/mstamenk/eos-triple-h/%s-parts/mva-inputs-%s/'%(version,year)
+output = '/eos/cms/store/group/phys_higgs/cmshhh/%s_ak8_option4_%s/mva-inputs-%s'%(version,year,year)
 
 
 inclusive_resolved = 'inclusive_resolved-weights'
@@ -122,8 +124,7 @@ if 'HLT_PFMET100_PFMHT100_IDTight_CaloBTagDeepCSV_3p1' not in list_inputs:
 if 'HLT_AK8PFJet330_PFAK8BTagCSV_p17' not in list_inputs:
     df = df.Define('HLT_AK8PFJet330_PFAK8BTagCSV_p17','get_false()')
 
-if 'HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0' not in list_inputs:
-    df = df.Define('HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0','get_false()')
+
 
 
 if 'HLT_AK8PFHT750_TrimMass50' not in list_inputs:
@@ -142,6 +143,9 @@ if 'HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2' not in list_inputs:
 if 'HLT_PFHT430_SixPFJet40_PFBTagCSV_1p5' not in list_inputs:
     df = df.Define('HLT_PFHT430_SixPFJet40_PFBTagCSV_1p5','get_false()')
 
+if 'HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0' not in list_inputs:
+    df = df.Define('HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0','get_false()')
+    
 hlt = hlt_paths[year]
 df = df.Filter(hlt)
 

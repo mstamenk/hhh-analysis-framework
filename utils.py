@@ -1,6 +1,4 @@
 # Script to store labels and cut definitions
-
-
 import random
 import ROOT
 
@@ -12,53 +10,43 @@ luminosities = {#'2016' : 36330.0,
                 '2016' : 17122.0,
                 '2017' : 41480.0,
                 '2018' : 59830.0,
-                'run2' : 137639.0
+                '2022' : 8174.68,
+                '2022EE': 27007.2,
+                '2023' : 17628.0,
+                '2023BPix' : 9525.0, 
         }
 
 
 hlt_paths = {
-       '2016' : '( HLT_QuadJet45_TripleBTagCSV_p087||  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056||  HLT_PFHT450_SixJet40_BTagCSV_p056||  HLT_AK8PFJet360_TrimMass30||  HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20||  HLT_AK8PFJet450||  HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200||  HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20||  HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20||  HLT_PFJet450 ||  HLT_QuadJet45_DoubleBTagCSV_p087 )',
-        #'2016' : '( HLT_QuadJet45_TripleBTagCSV_p087 || HLT_DoubleJet90_Double30_TripleBTagCSV_p087)',
+       #'2016' : '( HLT_QuadJet45_TripleBTagCSV_p087||  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056||  HLT_PFHT450_SixJet40_BTagCSV_p056||  HLT_AK8PFJet360_TrimMass30||  HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20||  HLT_AK8PFJet450||  HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200||  HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20||  HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20||  HLT_PFJet450 ||  HLT_QuadJet45_DoubleBTagCSV_p087 )',
+        '2016' : '( HLT_QuadJet45_TripleBTagCSV_p087 || HLT_DoubleJet90_Double30_TripleBTagCSV_p087)',
         #'2016PostAPV' : '( HLT_QuadJet45_TripleBTagCSV_p087 || HLT_DoubleJet90_Double30_TripleBTagCSV_p087)',
-        '2016APV' : '( HLT_QuadJet45_TripleBTagCSV_p087||  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056||  HLT_PFHT450_SixJet40_BTagCSV_p056||  HLT_AK8PFJet360_TrimMass30||  HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20||  HLT_AK8PFJet450||  HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200||  HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20||  HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20||  HLT_PFJet450||  HLT_PFMET120_BTagCSV_p067||  HLT_QuadJet45_DoubleBTagCSV_p087 )',
+        #'2016APV' : '( HLT_QuadJet45_TripleBTagCSV_p087||  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056||  HLT_PFHT450_SixJet40_BTagCSV_p056||  HLT_AK8PFJet360_TrimMass30||  HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20||  HLT_AK8PFJet450||  HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200||  HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20||  HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20||  HLT_PFJet450||  HLT_PFMET120_BTagCSV_p067||  HLT_QuadJet45_DoubleBTagCSV_p087 )',
         #'2016APV' : '( HLT_QuadJet45_TripleBTagCSV_p087)',
 #        '2016PostAPV' : '( HLT_QuadJet45_TripleBTagCSV_p087||  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056||  HLT_PFHT450_SixJet40_BTagCSV_p056||  HLT_AK8PFJet360_TrimMass30||  HLT_AK8DiPFJet280_200_TrimMass30_BTagCSV_p20||  HLT_AK8PFJet450||  HLT_QuadPFJet_BTagCSV_p016_p11_VBF_Mqq200||  HLT_AK8PFHT600_TrimR0p1PT0p03Mass50_BTagCSV_p20||  HLT_AK8DiPFJet250_200_TrimMass30_BTagCSV_p20||  HLT_PFJet450||  HLT_QuadJet45_DoubleBTagCSV_p087 )',
-             '2017' : '(HLT_PFJet450 || HLT_PFJet500 || HLT_PFHT1050 || HLT_AK8PFJet550 || HLT_AK8PFJet360_TrimMass30 || HLT_AK8PFJet400_TrimMass30 || HLT_AK8PFHT750_TrimMass50 || HLT_AK8PFJet330_PFAK8BTagCSV_p17 || HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0 || HLT_PFMET100_PFMHT100_IDTight_CaloBTagCSV_3p1 || HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2 || HLT_PFHT380_SixPFJet32_DoublePFBTagDeepCSV_2p2 || HLT_PFHT430_SixPFJet40_PFBTagCSV_1p5 || HLT_QuadPFJet98_83_71_15_DoubleBTagCSV_p013_p08_VBF1 || HLT_QuadPFJet98_83_71_15_BTagCSV_p013_VBF2 )',
-             #'2017' : '(HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0 )',
-             '2018' : '(HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCSV_4p5||HLT_PFHT1050||HLT_PFJet500||HLT_AK8PFJet500||HLT_AK8PFJet400_TrimMass30||HLT_AK8PFHT800_TrimMass50||HLT_AK8PFJet330_TrimMass30_PFAK8BoostedDoubleB_np4||HLT_QuadPFJet103_88_75_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1||HLT_QuadPFJet103_88_75_15_PFBTagDeepCSV_1p3_VBF2||HLT_PFHT400_SixPFJet32_DoublePFBTagDeepCSV_2p94||HLT_PFHT450_SixPFJet36_PFBTagDeepCSV_1p59||HLT_AK8PFJet330_TrimMass30_PFAK8BTagDeepCSV_p17||HLT_QuadPFJet98_83_71_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1||HLT_QuadPFJet98_83_71_15_PFBTagDeepCSV_1p3_VBF2|| HLT_PFMET100_PFMHT100_IDTight_CaloBTagDeepCSV_3p1)',
-             #'2018' : '(HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCSV_4p5)',
+             #'2017' : '(HLT_PFJet450 || HLT_PFJet500 || HLT_PFHT1050 || HLT_AK8PFJet550 || HLT_AK8PFJet360_TrimMass30 || HLT_AK8PFJet400_TrimMass30 || HLT_AK8PFHT750_TrimMass50 || HLT_AK8PFJet330_PFAK8BTagCSV_p17 || HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0 || HLT_PFMET100_PFMHT100_IDTight_CaloBTagCSV_3p1 || HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2 || HLT_PFHT380_SixPFJet32_DoublePFBTagDeepCSV_2p2 || HLT_PFHT430_SixPFJet40_PFBTagCSV_1p5 || HLT_QuadPFJet98_83_71_15_DoubleBTagCSV_p013_p08_VBF1 || HLT_QuadPFJet98_83_71_15_BTagCSV_p013_VBF2 || HLT_HT300PT30_QuadJet_75_60_45_40_TripeCSV_p07 )',
+             #'2017' : '(HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0  || HLT_HT300PT30_QuadJet_75_60_45_40_TripeCSV_p07)',
+
+            '2017' : '(HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0)',
+
+             #'2018' : '(HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCSV_4p5||HLT_PFHT1050||HLT_PFJet500||HLT_AK8PFJet500||HLT_AK8PFJet400_TrimMass30||HLT_AK8PFHT800_TrimMass50||HLT_AK8PFJet330_TrimMass30_PFAK8BoostedDoubleB_np4||HLT_QuadPFJet103_88_75_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1||HLT_QuadPFJet103_88_75_15_PFBTagDeepCSV_1p3_VBF2||HLT_PFHT400_SixPFJet32_DoublePFBTagDeepCSV_2p94||HLT_PFHT450_SixPFJet36_PFBTagDeepCSV_1p59||HLT_AK8PFJet330_TrimMass30_PFAK8BTagDeepCSV_p17||HLT_QuadPFJet98_83_71_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1||HLT_QuadPFJet98_83_71_15_PFBTagDeepCSV_1p3_VBF2|| HLT_PFMET100_PFMHT100_IDTight_CaloBTagDeepCSV_3p1)',
+             '2018' : '(HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCSV_4p5)',
+             '2022' : '((HLT_QuadPFJet70_50_40_30_PFBTagParticleNet_2BTagSum0p65 || HLT_QuadPFJet70_50_40_35_PFBTagParticleNet_2BTagSum0p65 || HLT_QuadPFJet70_50_45_35_PFBTagParticleNet_2BTagSum0p65 || HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepJet_4p5 || HLT_PFHT450_SixPFJet36_PFBTagDeepJet_1p59))',
+
+             '2022EE' : '(HLT_QuadPFJet70_50_40_30_PFBTagParticleNet_2BTagSum0p65 || HLT_QuadPFJet70_50_40_35_PFBTagParticleNet_2BTagSum0p65 || HLT_QuadPFJet70_50_45_35_PFBTagParticleNet_2BTagSum0p65 || HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepJet_4p5 || HLT_PFHT450_SixPFJet36_PFBTagDeepJet_1p59)'
         }
 
 
 
 phi_bins = 5
 eta_bins = 10
-# define generate_reversed_bins(year):
-#     base_value = 0.669 if year == 2018 or year == 2017 else 0.673
-bins_ProbHHH6b_3Higgs = [1.0 ] + [ 0.673- 0.013 * i for i in range(10)]
-# bins_ProbHHH6b_3Higgs = [1.0 ] + [ 0.699- 0.013 * i for i in range(10)]
-# bins_ProbHHH6b_3Higgs = [1.0 ] + [ 0.35- 0.013 * i for i in range(10)]
-reversed_bins = bins_ProbHHH6b_3Higgs[::-1]
-
-ProbMultiH_cut = {'ProbHHH6b_3bh0h_inclusive' : 0.952,
-                  'ProbHHH6b_2bh1h_inclusive' : 0.9825,
-                  'ProbHHH6b_1bh2h_inclusive' : 0.981,
-                  'ProbHHH6b_0bh3h_inclusive' : 0.9825,
-                  'ProbHHH6b_2bh0h_inclusive' : 0.9825,
-                  'ProbHHH6b_1bh1h_inclusive' : 0.983,
-                  'ProbHHH6b_0bh2h_inclusive' : 0.9845,
-                  'ProbHHH6b_1Higgs_inclusive': 0.9862, 
-                  'ProbHHH6b_0bh0h_inclusive' : 0.982
-}
-
-
 histograms_dict = {
         'h1_t3_mass'  : { "nbins" : 13 , "xmin" : 70 , "xmax" : 200, "label" : 'm(H1) (GeV)'},
         'h2_t3_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H2) (GeV)'},
         'h3_t3_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H3) (GeV)'},
-        'h1_mass'  : { "nbins" : 13 , "xmin" : 70 , "xmax" : 200, "label" : 'm(H1) (GeV)'},
-        'h2_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H2) (GeV)'},
-        'h3_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H3) (GeV)'},
+        'h1_spanet_boosted_mass'  : { "nbins" : 13 , "xmin" : 70 , "xmax" : 200, "label" : 'm(H1) (GeV)'},
+        'h2_spanet_boosted_mass'  : { "nbins" : 13 , "xmin" : 70 , "xmax" : 200, "label" : 'm(H2) (GeV)'},
+        'h3_spanet_boosted_mass'  : { "nbins" : 13 , "xmin" : 70 , "xmax" : 200, "label" : 'm(H3) (GeV)'},
 
         #'h1_spanet_boosted_mass'  : { "nbins" : 13 , "xmin" : 70 , "xmax" : 200, "label" : 'm(H1) (GeV)'},
         #'h2_spanet_boosted_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H2) (GeV)'},
@@ -68,50 +56,39 @@ histograms_dict = {
         #'h2_spanet_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H2) (GeV)'},
         #'h3_spanet_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H3) (GeV)'},
 
-        'h_fit_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H) fitted (GeV)'},
-        'h_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H) fitted (GeV)'},
+        #'h_fit_mass'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'm(H) fitted (GeV)'},
 
-        'h1_t3_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H1)'},
-        'h2_t3_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H2)'},
-        'h3_t3_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H3)'},
+        #'h1_t3_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H1)'},
+        #'h2_t3_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H2)'},
+        #'h3_t3_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H3)'},
 
-        #'h1_spanet_boosted_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H1)'},
-        #'h2_spanet_boosted_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H2)'},
-        #'h3_spanet_boosted_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H3)'},
+        'h1_spanet_boosted_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H1)'},
+        'h2_spanet_boosted_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H2)'},
+        'h3_spanet_boosted_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H3)'},
 
         #'h1_spanet_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H1)'},
         #'h2_spanet_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H2)'},
         #'h3_spanet_pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 500, "label" : 'p_{T}(H3)'},
 
-        'h1_t3_eta'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 3, "label" : '#eta(H1)'},
-        'h2_t3_eta'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 3, "label" : '#eta(H2)'},
-        'h3_t3_eta'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 3, "label" : '#eta(H3)'},
-
-        'h1_spanet_boosted_mass' : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'mass(H1) (GeV)'},
-        'h2_spanet_boosted_mass' : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'mass(H2) (GeV)'},
-        'h3_spanet_boosted_mass' : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'mass(H3) (GeV)'},
+        #'h1_t3_eta'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 3, "label" : '#eta(H1)'},
+        #'h2_t3_eta'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 3, "label" : '#eta(H2)'},
+        #'h3_t3_eta'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 3, "label" : '#eta(H3)'},
 
         'h1_spanet_boosted_eta'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 3, "label" : '#eta(H1)'},
         'h2_spanet_boosted_eta'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 3, "label" : '#eta(H2)'},
         'h3_spanet_boosted_eta'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 3, "label" : '#eta(H3)'},
 
-        'max_eta_Higgs_mass'     : { "nbins" : 30 , "xmin" : 0 , "xmax" : 300, "label" : 'mass(Max eta H) (GeV)'},
-        'max_eta'                : { "nbins" : 4 , "xmin" : 0 , "xmax" : 4, "label" : '#eta_max index'},
-         
-
-
-
         #'h1_spanet_eta'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 3, "label" : '#eta(H1)'},
         #'h2_spanet_eta'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 3, "label" : '#eta(H2)'},
         #'h3_spanet_eta'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 3, "label" : '#eta(H3)'},
 
-        'h1_t3_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H1)'},
-        'h2_t3_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H2)'},
-        'h3_t3_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H3)'},
+        #'h1_t3_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H1)'},
+        #'h2_t3_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H2)'},
+        #'h3_t3_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H3)'},
 
-        #'h1_spanet_boosted_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H1)'},
-        #'h2_spanet_boosted_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H2)'},
-        #'h3_spanet_boosted_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H3)'},
+        'h1_spanet_boosted_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H1)'},
+        'h2_spanet_boosted_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H2)'},
+        'h3_spanet_boosted_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H3)'},
 
         #'h1_spanet_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H1)'},
         #'h2_spanet_phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : '#phi(H2)'},
@@ -121,9 +98,9 @@ histograms_dict = {
         'h2_t3_dRjets'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 5.0, "label" : '#Delta R(j3,j4) H2'},
         'h3_t3_dRjets'  : { "nbins" : 30 , "xmin" : 0 , "xmax" : 5.0, "label" : '#Delta R(j5,j6) H3'},
 
-        'h1_t3_match'  : { "nbins" : 2 , "xmin" : 0 , "xmax" : 2, "label" : 'H1 truth matched'},
-        'h2_t3_match'  : { "nbins" : 2 , "xmin" : 0 , "xmax" : 2, "label" : 'H2 truth matched'},
-        'h3_t3_match'  : { "nbins" : 2 , "xmin" : 0 , "xmax" : 2, "label" : 'H3 truth matched'},
+        #'h1_t3_match'  : { "nbins" : 2 , "xmin" : 0 , "xmax" : 2, "label" : 'H1 truth matched'},
+        #'h2_t3_match'  : { "nbins" : 2 , "xmin" : 0 , "xmax" : 2, "label" : 'H2 truth matched'},
+        #'h3_t3_match'  : { "nbins" : 2 , "xmin" : 0 , "xmax" : 2, "label" : 'H3 truth matched'},
 
         #'h1_spanet_boosted_match'  : { "nbins" : 2 , "xmin" : 0 , "xmax" : 2, "label" : 'H1 truth matched'},
         #'h2_spanet_boosted_match'  : { "nbins" : 2 , "xmin" : 0 , "xmax" : 2, "label" : 'H2 truth matched'},
@@ -133,26 +110,44 @@ histograms_dict = {
         #'h2_spanet_match'  : { "nbins" : 2 , "xmin" : 0 , "xmax" : 2, "label" : 'H2 truth matched'},
         #'h3_spanet_match'  : { "nbins" : 2 , "xmin" : 0 , "xmax" : 2, "label" : 'H3 truth matched'},
 
-        'bcand1Pt'  : { "nbins" : 50 , "xmin" : 0 , "xmax" : 500, "label" : 'b-candidate 1 p_{T} (GeV)'},
-        'bcand2Pt'  : { "nbins" : 50 , "xmin" : 0 , "xmax" : 500, "label" : 'b-candidate 2 p_{T} (GeV)'},
-        'bcand3Pt'  : { "nbins" : 45 , "xmin" : 0 , "xmax" : 450, "label" : 'b-candidate 3 p_{T} (GeV)'},
-        'bcand4Pt'  : { "nbins" : 35 , "xmin" : 0 , "xmax" : 350, "label" : 'b-candidate 4 p_{T} (GeV)'},
-        'bcand5Pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 250, "label" : 'b-candidate 5 p_{T} (GeV)'},
-        'bcand6Pt'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 150, "label" : 'b-candidate 6 p_{T} (GeV)'},
+        #'bcand1Pt'  : { "nbins" : 50 , "xmin" : 0 , "xmax" : 500, "label" : 'b-candidate 1 p_{T} (GeV)'},
+        #'bcand2Pt'  : { "nbins" : 50 , "xmin" : 0 , "xmax" : 500, "label" : 'b-candidate 2 p_{T} (GeV)'},
+        #'bcand3Pt'  : { "nbins" : 45 , "xmin" : 0 , "xmax" : 450, "label" : 'b-candidate 3 p_{T} (GeV)'},
+        #'bcand4Pt'  : { "nbins" : 35 , "xmin" : 0 , "xmax" : 350, "label" : 'b-candidate 4 p_{T} (GeV)'},
+        #'bcand5Pt'  : { "nbins" : 25 , "xmin" : 0 , "xmax" : 250, "label" : 'b-candidate 5 p_{T} (GeV)'},
+        #'bcand6Pt'  : { "nbins" : 15 , "xmin" : 0 , "xmax" : 150, "label" : 'b-candidate 6 p_{T} (GeV)'},
 
-        'bcand1Eta'  : { "nbins" : eta_bins , "xmin" : 0 , "xmax" : 2.5, "label" : 'b-candidate  1 #eta'},
-        'bcand2Eta'  : { "nbins" : eta_bins , "xmin" : 0 , "xmax" : 2.5, "label" : 'b-candidate  2 #eta'},
-        'bcand3Eta'  : { "nbins" : eta_bins , "xmin" : 0 , "xmax" : 2.5, "label" : 'b-candidate  3 #eta'},
-        'bcand4Eta'  : { "nbins" : eta_bins , "xmin" : 0 , "xmax" : 2.5, "label" : 'b-candidate  4 #eta'},
-        'bcand5Eta'  : { "nbins" : eta_bins , "xmin" : 0 , "xmax" : 2.5, "label" : 'b-candidate  5 #eta'},
-        'bcand6Eta'  : { "nbins" : eta_bins , "xmin" : 0 , "xmax" : 2.5, "label" : 'b-candidate  6 #eta'},
+        #'bcand1Eta'  : { "nbins" : eta_bins , "xmin" : 0 , "xmax" : 2.5, "label" : 'b-candidate  1 #eta'},
+        #'bcand2Eta'  : { "nbins" : eta_bins , "xmin" : 0 , "xmax" : 2.5, "label" : 'b-candidate  2 #eta'},
+        #'bcand3Eta'  : { "nbins" : eta_bins , "xmin" : 0 , "xmax" : 2.5, "label" : 'b-candidate  3 #eta'},
+        #'bcand4Eta'  : { "nbins" : eta_bins , "xmin" : 0 , "xmax" : 2.5, "label" : 'b-candidate  4 #eta'},
+        #'bcand5Eta'  : { "nbins" : eta_bins , "xmin" : 0 , "xmax" : 2.5, "label" : 'b-candidate  5 #eta'},
+        #'bcand6Eta'  : { "nbins" : eta_bins , "xmin" : 0 , "xmax" : 2.5, "label" : 'b-candidate  6 #eta'},
 
-        'bcand1Phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : 'b-candidate  1 #phi'},
-        'bcand2Phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : 'b-candidate  2 #phi'},
-        'bcand3Phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : 'b-candidate  3 #phi'},
-        'bcand4Phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : 'b-candidate  4 #phi'},
-        'bcand5Phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : 'b-candidate  5 #phi'},
-        'bcand6Phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : 'b-candidate  5 #phi'},
+        'jet1Phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : 'b-candidate  1 #phi'},
+        'jet2Phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : 'b-candidate  2 #phi'},
+        'jet3Phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : 'b-candidate  3 #phi'},
+        'jet4Phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : 'b-candidate  4 #phi'},
+        'jet5Phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : 'b-candidate  5 #phi'},
+        'jet6Phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : 'b-candidate  5 #phi'},
+
+         'jet7Phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : 'b-candidate  7 #phi'},
+        'jet8Phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : 'b-candidate  8 #phi'},
+        'jet9Phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : 'b-candidate  9 #phi'},
+
+         'jet10Phi'  : { "nbins" : phi_bins , "xmin" : 0 , "xmax" : 3.2, "label" : 'b-candidate  10 #phi'},
+
+
+        'jet1Mass'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 100, "label" : 'b-candidate  1 Mass'},
+        'jet2Mass'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 100, "label" : 'b-candidate  2 Mass'},
+        'jet3Mass'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 100, "label" : 'b-candidate  3 Mass'},
+        'jet4Mass'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 100, "label" : 'b-candidate  4 Mass'},
+        'jet5Mass'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 100, "label" : 'b-candidate  5 Mass'},
+        'jet6Mass'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 100, "label" : 'b-candidate  6 Mass'},
+        'jet7Mass'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 100, "label" : 'b-candidate  7 Mass'},
+        'jet8Mass'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 100, "label" : 'b-candidate  8 Mass'},
+        'jet9Mass'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 100, "label" : 'b-candidate  9 Mass'},
+        'jet10Mass'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 100, "label" : 'b-candidate  10 Mass'},
 
         #'bcand1DeepFlavB'  : { "nbins" : 40 , "xmin" : 0 , "xmax" : 1, "label" : 'Jet 1 b-tag score'},
         #'bcand2DeepFlavB'  : { "nbins" : 40 , "xmin" : 0 , "xmax" : 1, "label" : 'Jet 2 b-tag score'},
@@ -196,9 +191,9 @@ histograms_dict = {
         'fatJet2PNetQCD'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'PNet QCD(fatJet2)'},
         'fatJet3PNetQCD'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'PNet QCD(fatJet3)'},
 
-        'HHH_mass'   : { "nbins" : 80 , "xmin" : 0 , "xmax" : 1600, "label" : 'm(HHH) (GeV)'},
-        'HHH_pt'     : { "nbins" : 80 , "xmin" : 0 , "xmax" : 800, "label" : 'p_{T}(HHH) (GeV)'},
-        'HHH_eta'    : { "nbins" : 15 , "xmin" : 0 , "xmax" : 2.5, "label" : '#eta(HHH) (GeV)'},
+        #'HHH_mass'   : { "nbins" : 80 , "xmin" : 0 , "xmax" : 1600, "label" : 'm(HHH) (GeV)'},
+        #'HHH_pt'     : { "nbins" : 80 , "xmin" : 0 , "xmax" : 800, "label" : 'p_{T}(HHH) (GeV)'},
+        #'HHH_eta'    : { "nbins" : 15 , "xmin" : 0 , "xmax" : 2.5, "label" : '#eta(HHH) (GeV)'},
 
         #'nfatjets'    : { "nbins" : 5 , "xmin" : 0 , "xmax" : 5, "label" : 'N fat-jets'},
         'nprobejets'  : { "nbins" : 5 , "xmin" : 0 , "xmax" : 5, "label" : 'N fat-jets'},
@@ -216,41 +211,22 @@ histograms_dict = {
         'bdt'  : { "nbins" : 20 , "xmin" : -1 , "xmax" : 1, "label" : 'BDT output score'},
         #'mva'  : { "nbins" : 10 , "xmin" : 0.0 , "xmax" : 1.0, "label" : 'BDT output score'},
         #'mvaBoosted'  : { "nbins" : 20 , "xmin" : -0.6 , "xmax" : 0.8, "label" : 'BDT output score (boosted)'},
-        'ProbHHH'  : { "nbins" :10, "xmin" : 0.0 , "xmax" : 1.0,"define_bins":reversed_bins,"label" : 'ProbHHH'},
+        'ProbHHH'  : { "nbins" : 40, "xmin" : 0 , "xmax" : 1.0, "label" : 'ProbHHH'},
         'ProbHH4b'  : { "nbins" : 40, "xmin" : 0 , "xmax" : 1.0, "label" : 'ProbHH4b'},
         'ProbHHH4b2tau'  : { "nbins" : 40, "xmin" : 0 , "xmax" : 1.0, "label" : 'ProbHHH4b2tau'},
-        'ProbMultiH'  : { "nbins" : 20, "xmin" : 0 , "xmax" : 1.0, "label" : 'Prob multi-Higgs'},
+        'ProbMultiH'  : { "nbins" : 40, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'Prob multi-Higgs'},
         'ProbVV'  : { "nbins" : 40, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'ProbVV'},
-        'ProbQCD'  : { "nbins" : 100, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'ProbQCD'},
-        'ProbTT'  : { "nbins" : 100, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'ProbTT'},
-        'ProbVJets'  : { "nbins" : 100, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'ProbVJets'},
-        'ProbHH2b2tau'  : { "nbins" : 40, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'ProbHH2b2tau'},
 
-
-        'Prob3bh0h'  : { "nbins" : 40, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'Prob3bh0h'},
-        'Prob2bh1h'  : { "nbins" : 40, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'Prob2bh1h'},
-        'Prob1bh2h'  : { "nbins" : 40, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'Prob1bh2h'},
-        'Prob1bh2h'  : { "nbins" : 40, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'Prob1bh2h'},
-        'Prob0bh3h'  : { "nbins" : 40, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'Prob0bh3h'},
-
-        'Prob2bh0h'  : { "nbins" : 40, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'Prob2bh0h'},
-        'Prob1bh1h'  : { "nbins" : 40, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'Prob1bh1h'},
-        'Prob0bh2h'  : { "nbins" : 40, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'Prob0bh2h'},
-
-        'Prob1bh0h'  : { "nbins" : 40, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'Prob1bh0h'},
-        'Prob0bh1h'  : { "nbins" : 40, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'Prob0bh1h'},
-        'Prob0bh0h'  : { "nbins" : 40, "xmin" : 0.2 , "xmax" : 1.0, "label" : 'Prob0bh0h'},
-
-        'jet1DeepFlavB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 1 DeepJet b-score'},
-        'jet2DeepFlavB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 2 DeepJet b-score'},
-        'jet3DeepFlavB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 3 DeepJet b-score'},
-        'jet4DeepFlavB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 4 DeepJet b-score'},
-        'jet5DeepFlavB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 5 DeepJet b-score'},
-        'jet6DeepFlavB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 6 DeepJet b-score'},
-        'jet7DeepFlavB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 7 DeepJet b-score'},
-        'jet8DeepFlavB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 8 DeepJet b-score'},
-        'jet9DeepFlavB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 9 DeepJet b-score'},
-        'jet10DeepFlavB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 10 DeepJet b-score'},
+        'jet1PNetB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 1 PNetB b-score'},
+        'jet2PNetB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 2 PNetB b-score'},
+        'jet3PNetB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 3 PNetB b-score'},
+        'jet4PNetB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 4 PNetB b-score'},
+        'jet5PNetB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 5 PNetB b-score'},
+        'jet6PNetB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 6 PNetB b-score'},
+        'jet7PNetB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 7 PNetB b-score'},
+        'jet8PNetB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 8 PNetB b-score'},
+        'jet9PNetB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 9 PNetB b-score'},
+        'jet10PNetB'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet 10 PNetB b-score'},
 
         'jet1HadronFlavour'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 20, "label" : 'jet 1 hadron flavour'},
         'jet2HadronFlavour'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 20, "label" : 'jet 2 hadron flavour'},
@@ -260,16 +236,16 @@ histograms_dict = {
         'jet6HadronFlavour'  : { "nbins" : 20 , "xmin" : 0 , "xmax" : 20, "label" : 'jet 6 hadron flavour'},
 
 
-        'jet1Pt'  : { "nbins" : 50 , "xmin" : 0 , "xmax" : 500, "label" : 'jet 1 p_{T} (GeV)'},
-        'jet2Pt'  : { "nbins" : 50 , "xmin" : 0 , "xmax" : 500, "label" : 'jet 2 p_{T} (GeV)'},
-        'jet3Pt'  : { "nbins" : 50 , "xmin" : 0 , "xmax" : 500, "label" : 'jet 3 p_{T} (GeV)'},
-        'jet4Pt'  : { "nbins" : 50 , "xmin" : 0 , "xmax" : 500, "label" : 'jet 4 p_{T} (GeV)'},
-        'jet5Pt'  : { "nbins" : 50 , "xmin" : 0 , "xmax" : 500, "label" : 'jet 5 p_{T} (GeV)'},
-        'jet6Pt'  : { "nbins" : 50 , "xmin" : 0 , "xmax" : 500, "label" : 'jet 6 p_{T} (GeV)'},
-        'jet7Pt'  : { "nbins" : 50 , "xmin" : 0 , "xmax" : 500, "label" : 'jet 7 p_{T} (GeV)'},
-        'jet8Pt'  : { "nbins" : 50 , "xmin" : 0 , "xmax" : 500, "label" : 'jet 8 p_{T} (GeV)'},
-        'jet9Pt'  : { "nbins" : 50 , "xmin" : 0 , "xmax" : 500, "label" : 'jet 9 p_{T} (GeV)'},
-        'jet10Pt'  : { "nbins" : 50 , "xmin" : 0 , "xmax" : 500, "label" : 'jet 10 p_{T} (GeV)'},
+        'jet1Pt'  : { "nbins" : 25 , "xmin" : 20 , "xmax" : 500, "label" : 'jet 1 p_{T} (GeV)'},
+        'jet2Pt'  : { "nbins" : 25 , "xmin" : 20 , "xmax" : 500, "label" : 'jet 2 p_{T} (GeV)'},
+        'jet3Pt'  : { "nbins" : 25 , "xmin" : 20 , "xmax" : 500, "label" : 'jet 3 p_{T} (GeV)'},
+        'jet4Pt'  : { "nbins" : 25 , "xmin" : 20 , "xmax" : 500, "label" : 'jet 4 p_{T} (GeV)'},
+        'jet5Pt'  : { "nbins" : 25 , "xmin" : 20 , "xmax" : 500, "label" : 'jet 5 p_{T} (GeV)'},
+        'jet6Pt'  : { "nbins" : 25 , "xmin" : 20 , "xmax" : 500, "label" : 'jet 6 p_{T} (GeV)'},
+        'jet7Pt'  : { "nbins" : 25 , "xmin" : 20 , "xmax" : 500, "label" : 'jet 7 p_{T} (GeV)'},
+        'jet8Pt'  : { "nbins" : 25 , "xmin" : 20 , "xmax" : 500, "label" : 'jet 8 p_{T} (GeV)'},
+        'jet9Pt'  : { "nbins" : 25 , "xmin" : 20 , "xmax" : 500, "label" : 'jet 9 p_{T} (GeV)'},
+        'jet10Pt'  : { "nbins" : 25 , "xmin" : 20 , "xmax" : 500, "label" : 'jet 10 p_{T} (GeV)'},
 
         'jet1Eta'  : { "nbins" : 10 , "xmin" : 0 , "xmax" : 2.5, "label" : 'Jet 1 #eta'},
         'jet2Eta'  : { "nbins" : 10 , "xmin" : 0 , "xmax" : 2.5, "label" : 'Jet 2 #eta'},
@@ -281,69 +257,6 @@ histograms_dict = {
         'jet8Eta'  : { "nbins" : 10 , "xmin" : 0 , "xmax" : 2.5, "label" : 'Jet 8 #eta'},
         'jet9Eta'  : { "nbins" : 10 , "xmin" : 0 , "xmax" : 2.5, "label" : 'Jet 9 #eta'},
         'jet10Eta'  : { "nbins" : 10 , "xmin" : 0 , "xmax" : 2.5, "label" : 'Jet 10 #eta'},
-
-        'jet1PNetBPlusC' : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet1PNetBPlusC'},
-        'jet2PNetBPlusC' : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet2PNetBPlusC'},
-        'jet3PNetBPlusC' : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet3PNetBPlusC'},
-        'jet4PNetBPlusC' : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet4PNetBPlusC'},
-        'jet5PNetBPlusC' : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet5PNetBPlusC'},
-        'jet6PNetBPlusC' : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet6PNetBPlusC'},
-        'jet7PNetBPlusC' : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet7PNetBPlusC'},
-        'jet8PNetBPlusC' : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet8PNetBPlusC'},
-        'jet9PNetBPlusC' : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet9PNetBPlusC'},
-        'jet10PNetBPlusC' : { "nbins" : 20 , "xmin" : 0 , "xmax" : 1, "label" : 'jet10PNetBPlusC'},
-
-        # 'jet1PNetBVsC' : { "nbins" : 50 , "xmin" : 0.40 , "xmax" : 1, "label" : 'jet1PNetBVsC'},
-        # 'jet2PNetBVsC' : { "nbins" : 50 , "xmin" : 0.40 , "xmax" : 1, "label" : 'jet2PNetBVsC'},
-        # 'jet3PNetBVsC' : { "nbins" : 50 , "xmin" : 0.40 , "xmax" : 1, "label" : 'jet3PNetBVsC'},
-        # 'jet4PNetBVsC' : { "nbins" : 50 , "xmin" : 0.40 , "xmax" : 1, "label" : 'jet4PNetBVsC'},
-        # 'jet5PNetBVsC' : { "nbins" : 50 , "xmin" : 0.40 , "xmax" : 1, "label" : 'jet5PNetBVsC'},
-        # 'jet6PNetBVsC' : { "nbins" : 50 , "xmin" : 0.40 , "xmax" : 1, "label" : 'jet6PNetBVsC'},
-        # 'jet7PNetBVsC' : { "nbins" : 50 , "xmin" : 0.40 , "xmax" : 1, "label" : 'jet7PNetBVsC'},
-        # 'jet8PNetBVsC' : { "nbins" : 50 , "xmin" : 0.40 , "xmax" : 1, "label" : 'jet8PNetBVsC'},
-        # 'jet9PNetBVsC' : { "nbins" : 50 , "xmin" : 0.40 , "xmax" : 1, "label" : 'jet9PNetBVsC'},
-        # 'jet10PNetBVsC' : { "nbins" : 50 , "xmin" : 0.40 , "xmax" : 1, "label" : 'jet10PNetBVsC'},
-
-        'jet1PNetBVsC' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet1PNetBVsC'},
-        'jet2PNetBVsC' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet2PNetBVsC'},
-        'jet3PNetBVsC' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet3PNetBVsC'},
-        'jet4PNetBVsC' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet4PNetBVsC'},
-        'jet5PNetBVsC' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet5PNetBVsC'},
-        'jet6PNetBVsC' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet6PNetBVsC'},
-        'jet7PNetBVsC' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet7PNetBVsC'},
-        'jet8PNetBVsC' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet8PNetBVsC'},
-        'jet9PNetBVsC' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet9PNetBVsC'},
-        'jet10PNetBVsC' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet10PNetBVsC'},
-
-        'jet1PNetB' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet1PNetB'},
-        'jet2PNetB' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet2PNetB'},
-        'jet3PNetB' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet3PNetB'},
-        'jet4PNetB' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet4PNetB'},
-        'jet5PNetB' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet5PNetB'},
-        'jet6PNetB' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet6PNetB'},
-        'jet7PNetB' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet7PNetB'},
-        'jet8PNetB' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet8PNetB'},
-        'jet9PNetB' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet9PNetB'},
-        'jet10PNetB' : { "nbins" : 100 , "xmin" : 0.00 , "xmax" : 1, "label" : 'jet10PNetB'},
-
-        # 'fatJet1PNetXbb' : { "nbins" : 50 , "xmin" : 0.64 , "xmax" : 1, "label" : 'fatJet1PNetXbb'},
-        # 'fatJet2PNetXbb' : { "nbins" : 50 , "xmin" : 0.64 , "xmax" : 1, "label" : 'fatJet2PNetXbb'},
-        # 'fatJet3PNetXbb' : { "nbins" : 50 , "xmin" : 0.64 , "xmax" : 1, "label" : 'fatJet3PNetXbb'},
-        # 'fatJet4PNetXbb' : { "nbins" : 50 , "xmin" : 0.64 , "xmax" : 1, "label" : 'fatJet4PNetXbb'},
-
-        'fatJet1PNetXbb' : { "nbins" : 100 , "xmin" : 0.30 , "xmax" : 1, "label" : 'fatJet1PNetXbb'},
-        'fatJet2PNetXbb' : { "nbins" : 100 , "xmin" : 0.30 , "xmax" : 1, "label" : 'fatJet2PNetXbb'},
-        'fatJet3PNetXbb' : { "nbins" : 100 , "xmin" : 0.30 , "xmax" : 1, "label" : 'fatJet3PNetXbb'},
-        'fatJet4PNetXbb' : { "nbins" : 100 , "xmin" : 0.30 , "xmax" : 1, "label" : 'fatJet4PNetXbb'},
-
-        'nJetsPassed' : { "nbins" : 11 , "xmin" : -0.5 , "xmax" : 10.5, "label" : 'nJetsPassed'},
-        'nFatJetsPassed' : { "nbins" : 15 , "xmin" : -0.5 , "xmax" : 4.5, "label" : 'nFatJetsPassed'},
-
-        'hhh_mass1' : { "nbins" : 50 , "xmin" : 0 , "xmax" : 1000, "label" : 'm_fit * 3'},
-        'hhh_mass2' : { "nbins" : 100 , "xmin" : 0 , "xmax" : 2000, "label" : '(h1+h2+h3).Mass'},
-
-
-
 
         # skip phi up to put that more automatic
 
@@ -360,27 +273,32 @@ hist_properties = {'JetHT' : [ROOT.kBlack, 0.8, 0, 'Data', True] ,
                    'WWW' : [ROOT.kGreen, 0, 0, 'VVV', False],
                    'WZZ' : [ROOT.kGreen, 0, 0, 'VVV', False],
                    'WWZ' : [ROOT.kGreen, 0, 0, 'VVV', False],
-                   'TTTo2L2Nu' : [ROOT.kBlue, 0,0, 't#bar{t}', True],
+                   'TT' : [ROOT.kBlue, 0,0, 't#bar{t}', True],
                    'TTToHadronic' : [ROOT.kBlue, 0,0, 't#bar{t}', True],
+                   'TTto4Q' : [ROOT.kBlue, 0,0, 't#bar{t}', True],
+                   'TTtoLNu2Q' : [ROOT.kBlue, 0,0, 't#bar{t}', True],
+
                    'TTToSemiLeptonic' : [ROOT.kBlue, 0,0, 't#bar{t}', False],
                    'ZZTo4Q' : [ROOT.kGray, 0, 0, 'VV', True],
+                   'ZZ' : [ROOT.kGray, 0, 0, 'VV', True],
                    'WWTo4Q' : [ROOT.kGray, 0, 0, 'VV', False],
                    'ZJetsToQQ'   : [ROOT.kCyan, 0, 0, 'V+jets', True],
+                   'Zto2Q-4Jets'   : [ROOT.kCyan, 0, 0, 'V+jets', True],
                    'WJetsToQQ'   : [ROOT.kCyan, 0, 0, 'V+jets', False],
-                   'WJetsToLNu_0J'   : [ROOT.kCyan, 0, 0, 'V+jets', False],
-                   'WJetsToLNu_1J'   : [ROOT.kCyan, 0, 0, 'V+jets', False],
-                   'WJetsToLNu_2J'   : [ROOT.kCyan, 0, 0, 'V+jets', False],
-                   'QCD'   : [ROOT.kOrange -4, 0, 0, 'bkg', True],
-                   'QCD_datadriven_data'   : [ROOT.kOrange -4, 0, 0, 'bkg_modelling', True],
-                   'QCD_datadriven'   : [ROOT.kOrange -4, 0, 0, 'bkg_modelling', True],
-                   'QCD_modelling'   : [ROOT.kOrange -4, 0, 0, 'QCD_modelling', True],
+                  'Wto2Q-3Jets'   : [ROOT.kCyan, 0, 0, 'V+jets', False],
+                   'QCD'   : [ROOT.kOrange, 0, 0, 'QCD', True],
+                   'QCD_mc'   : [ROOT.kOrange, 0, 0, 'QCD', True],
+                   'QCD_datadriven'   : [ROOT.kOrange, 0, 0, 'Bkg model', True],
+                   'QCD-4Jets'   : [ROOT.kOrange, 0, 0, 'QCD', True],
+                   'QCD_bEnriched'   : [ROOT.kOrange + 1, 0, 0, 'QCD b-enriched', True],
                    'QCD6B'   : [ROOT.kOrange + 2, 0, 0, 'QCD6B', True],
+                   'DYJetsToLL'   : [ROOT.kYellow + 2, 0, 0, 'DY + jets', True],
                    'GluGluToHHHTo6B_SM' : [ROOT.kRed, 0,3, 'SM HHH', True],
-                   'GluGluToHHHTo4B2Tau_SM' : [ROOT.kMagenta, 0,3, 'SM HHH4b2tau', True],
-                   'DYJetsToLL' : [ROOT.kGreen-7, 0,3, 'DY', True],
-                   'GluGluToHHTo2B2Tau' : [ROOT.kMagenta+3, 0,3, 'SM HHH2b2tau', True],
-                   'GluGluToHHTo4B_cHHH1' : [ROOT.kMagenta-9, 0,3, 'SM HHH4b', True],
-                   'GluGluToHHTo2B2Tau' : [ROOT.kViolet+8, 0,3, 'SM HHH2b2tau', True],
+                   'GluGluToHHHTo4B2Tau_SM' : [ROOT.kRed, 0,3, 'SM HHH4b2tau', True],
+                   'GluGluToHHH' : [ROOT.kRed, 0,3, 'SM HHH', True],
+                   'GluGluToHHTo4B_cHHH1' : [ROOT.kViolet + 2, 0,3, 'SM HH', True],
+                   'GluGluToHHTo2B2Tau' : [ROOT.kViolet + 3, 0,3, 'SM HH2b2tau', True],
+                   'QCD_datadriven_data' : [ROOT.kOrange + 3, 0,3, 'Background model', True],
 
         }
 
@@ -494,9 +412,9 @@ wps = { 'loose'  : '0.0490',
         'tight'  : '0.7100',
         }
 
-wps_years = { 'loose' : {'2016APV': 0.0508, '2016': 0.0480, '2016PostAPV': 0.0480, '2017': 0.0532, '2018': 0.0490},
-              'medium': {'2016APV': 0.2598, '2016': 0.2489, '2016PostAPV': 0.2489, '2017': 0.3040, '2018': 0.2783},
-              'tight' : {'2016APV': 0.6502, '2016': 0.6377, '2016PostAPV': 0.6377, '2017': 0.7476, '2018': 0.7100},
+wps_years = { 'loose' : {'2016APV': 0.0508, '2016': 0.0480, '2016PostAPV': 0.0480, '2017': 0.0532, '2018': 0.0490, '2022': 0.0490, '2022EE': 0.0490},
+              'medium': {'2016APV': 0.2598, '2016': 0.2489, '2016PostAPV': 0.2489, '2017': 0.3040, '2018': 0.2783,'2022': 0.0490, '2022EE': 0.0490},
+              'tight' : {'2016APV': 0.6502, '2016': 0.6377, '2016PostAPV': 0.6377, '2017': 0.7476, '2018': 0.7100, '2022': 0.0490, '2022EE': 0.0490},
         }
 
 label_dict = {'L': [wps_years['loose'],'Loose'],
@@ -621,9 +539,9 @@ float getTriggerSF(int HLT_QuadJet45_TripleBTagCSV_p087, int HLT_PFHT400_SixJet3
 hlt_sf_2017 = """
 float getTriggerSF(int HLT_PFJet450, int HLT_PFJet500, int HLT_PFHT1050, int HLT_AK8PFJet550, int HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0, int HLT_AK8PFJet360_TrimMass30, int HLT_AK8PFHT750_TrimMass50, int HLT_AK8PFJet400_TrimMass30, int HLT_PFMET100_PFMHT100_IDTight_CaloBTagCSV_3p1, int HLT_PFHT380_SixPFJet32_DoublePFBTagDeepCSV_2p2, int HLT_AK8PFJet330_PFAK8BTagCSV_p17, int HLT_QuadPFJet98_83_71_15_BTagCSV_p013_VBF2, int HLT_PFHT380_SixPFJet32_DoublePFBTagCSV_2p2, int HLT_PFHT430_SixPFJet40_PFBTagCSV_1p5, int HLT_QuadPFJet98_83_71_15_DoubleBTagCSV_p013_p08_VBF1 ){
     float triggerSF = 1;
-        //if (HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0) {triggerSF = 36.67/41.48;}
-        if (HLT_PFJet500 || HLT_PFHT1050 || HLT_AK8PFJet550) {triggerSF = 1;}
-        else if (HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0 || HLT_AK8PFJet400_TrimMass30 ) {triggerSF = 36.67/41.48;}
+        if (HLT_PFHT300PT30_QuadPFJet_75_60_45_40_TriplePFBTagCSV_3p0) {triggerSF = 41.48/41.48;}
+        else if (HLT_PFJet500 || HLT_PFHT1050 || HLT_AK8PFJet550) {triggerSF = 1;}
+        else if (HLT_AK8PFJet400_TrimMass30 ) {triggerSF = 36.67/41.48;}
         else if (HLT_AK8PFHT750_TrimMass50) {triggerSF=30.90/41.48;}
         else if (HLT_AK8PFJet360_TrimMass30 || HLT_PFMET100_PFMHT100_IDTight_CaloBTagCSV_3p1) {triggerSF = 28.23/41.48;}
         else if (HLT_PFHT380_SixPFJet32_DoublePFBTagDeepCSV_2p2) {triggerSF = 17.68/41.48;}
@@ -649,6 +567,13 @@ float getTriggerSF( int HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCS
 }
 """
 
+hlt_sf_2022 = """
+float getTriggerSF(){
+    float triggerSF = 1;
+    return triggerSF;
+}
+"""
+
 
 
 
@@ -658,11 +583,15 @@ hlt_method_2017 = ' getTriggerSF( HLT_PFJet450,  HLT_PFJet500,  HLT_PFHT1050,  H
 
 hlt_method_2018 = ' getTriggerSF(HLT_PFHT330PT30_QuadPFJet_75_60_45_40_TriplePFBTagDeepCSV_4p5,HLT_PFHT1050,HLT_PFJet500,HLT_AK8PFJet500,HLT_AK8PFJet400_TrimMass30,HLT_AK8PFHT800_TrimMass50,HLT_AK8PFJet330_TrimMass30_PFAK8BoostedDoubleB_np4,HLT_QuadPFJet103_88_75_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1,HLT_QuadPFJet103_88_75_15_PFBTagDeepCSV_1p3_VBF2,HLT_PFHT400_SixPFJet32_DoublePFBTagDeepCSV_2p94,HLT_PFHT450_SixPFJet36_PFBTagDeepCSV_1p59,HLT_AK8PFJet330_TrimMass30_PFAK8BTagDeepCSV_p17,HLT_QuadPFJet98_83_71_15_DoublePFBTagDeepCSV_1p3_7p7_VBF1,HLT_QuadPFJet98_83_71_15_PFBTagDeepCSV_1p3_VBF2, HLT_PFMET100_PFMHT100_IDTight_CaloBTagDeepCSV_3p1);'
 
+hlt_method_2022 = 'getTriggerSF()'
+
 
 triggersCorrections = {
                        '2016' : [hlt_sf_2016,hlt_method_2016],
                        '2017' : [hlt_sf_2017,hlt_method_2017],
                        '2018' : [hlt_sf_2018,hlt_method_2018],
+                       '2022' : [hlt_sf_2022,hlt_method_2022],
+                       '2022EE' : [hlt_sf_2022,hlt_method_2022],
         }
 
 computeMHHH = '''
@@ -719,14 +648,14 @@ def initialise_df(df,year,proc):
 
     lumi = luminosities[year]
     if '2016' in year:
-        #df = df.Define('triggerSF', triggersCorrections['2016'][1] )
-        df = df.Define('triggerSF', '1')
-        print('2016 buggy to be fixed in v32')
+        df = df.Define('triggerSF', triggersCorrections['2016'][1] )
+        #df = df.Define('triggerSF', '1')
+        
     else:
         df = df.Define('triggerSF', triggersCorrections[year][1] )
     #cutWeight = '(%f * weight * xsecWeight * l1PreFiringWeight * puWeight * genWeight * triggerSF)'%(lumi)
-    cutWeight = '(%f * xsecWeight * l1PreFiringWeight * puWeight * genWeight * triggerSF)'%(lumi)
-    if 'JetHT' in proc or 'BTagCSV' in proc or 'SingleMuon' or 'QCD_datadriven_data' in proc:
+    cutWeight = '(%f * xsecWeight * l1PreFiringWeight * puWeight * genWeight * triggerSF * fatJetFlavTagWeight * flavTagWeight)'%(lumi)
+    if 'JetHT' in proc or 'BTagCSV' in proc or 'SingleMuon' in proc or 'JetMET' in proc:
         df = df.Define('eventWeight','1')
     else:
         df = df.Define('eventWeight',cutWeight)
@@ -740,23 +669,23 @@ def initialise_df(df,year,proc):
     count_medium = []
     count_tight = []
 
-    for jet in ['jet1','jet2','jet3','jet4','jet5','jet6','jet7','jet8','jet9','jet10']:
-        count_loose.append('int(%sDeepFlavB > %f)'%(jet,wp_loose))
-        count_medium.append('int(%sDeepFlavB > %f)'%(jet,wp_medium))
-        count_tight.append('int(%sDeepFlavB > %f)'%(jet,wp_tight))
+    #for jet in ['jet1','jet2','jet3','jet4','jet5','jet6','jet7','jet8','jet9','jet10']:
+    #    count_loose.append('int(%sDeepFlavB > %f)'%(jet,wp_loose))
+    #    count_medium.append('int(%sDeepFlavB > %f)'%(jet,wp_medium))
+    #    count_tight.append('int(%sDeepFlavB > %f)'%(jet,wp_tight))
 
-    nloose = '+'.join(count_loose)
-    nmedium = '+'.join(count_medium)
-    ntight = '+'.join(count_tight)
+    #nloose = '+'.join(count_loose)
+    #nmedium = '+'.join(count_medium)
+    #ntight = '+'.join(count_tight)
 
 
-    df = df.Define('nloosebtags',nloose)
-    df = df.Define('nmediumbtags',nmedium)
-    df = df.Define('ntightbtags',ntight)
+    #df = df.Define('nloosebtags',nloose)
+    #df = df.Define('nmediumbtags',nmedium)
+    #df = df.Define('ntightbtags',ntight)
 
-    df = addBTagEffSF(df,proc,'loose')
-    df = addBTagEffSF(df,proc,'medium')
-    df = addBTagEffSF(df,proc,'tight')
+    #df = addBTagEffSF(df,proc,'loose')
+    #df = addBTagEffSF(df,proc,'medium')
+    #df = addBTagEffSF(df,proc,'tight')
 
     return df
 
@@ -764,16 +693,17 @@ def initialise_df(df,year,proc):
 
 
 getmax = '''
-int get_max_prob(float ProbHHH, float ProbQCD, float ProbTT, float ProbVJets, float ProbVV , float ProbHHH4b2tau, float ProbHH4b, float ProbHH2b2tau){
+int get_max_prob(float ProbHHH, float ProbQCD, float ProbTT, float ProbVJets, float ProbVV, float ProbHHH4b2tau, float ProbHH4b, float ProbHH2b2tau){
     std::vector<float> probs;
-    probs.push_back(ProbHHH);
-    probs.push_back(ProbQCD);
-    probs.push_back(ProbTT);
-    probs.push_back(ProbVJets);
-    probs.push_back(ProbVV);
-    probs.push_back(ProbHHH4b2tau);
-    probs.push_back(ProbHH4b);
-    probs.push_back(ProbHH2b2tau);
+    probs.push_back(ProbHHH); // 1
+    probs.push_back(ProbQCD); // 2
+    probs.push_back(ProbTT); // 3
+    probs.push_back(ProbVJets); // 4
+    probs.push_back(ProbVV); // 5
+    probs.push_back(ProbHHH4b2tau); // 6
+    probs.push_back(ProbHH4b); // 7
+    probs.push_back(ProbHH2b2tau); // 8
+    //probs.push_back(ProbDY); // 9
 
     auto it = std::max_element(probs.begin(), probs.end());
     int index = std::distance(probs.begin(), it);
@@ -793,16 +723,17 @@ def init_get_max_prob():
 getmaxcat = '''
 int get_max_cat(float Prob3bh0h, float Prob2bh1h, float Prob1bh2h, float Prob0bh3h, float Prob2bh0h, float Prob1bh1h, float Prob0bh2h, float Prob1bh0h, float Prob0bh1h, float Prob0bh0h){
     std::vector<float> probs;
-    probs.push_back(Prob0bh0h);
-    probs.push_back(Prob3bh0h);
-    probs.push_back(Prob2bh1h);
-    probs.push_back(Prob1bh2h);
-    probs.push_back(Prob0bh3h);
-    probs.push_back(Prob2bh0h);
-    probs.push_back(Prob1bh1h);
-    probs.push_back(Prob0bh2h);
-    probs.push_back(Prob1bh0h);
-    probs.push_back(Prob0bh1h);
+    probs.push_back(Prob0bh0h); // 0
+
+    probs.push_back(Prob3bh0h); // 1
+    probs.push_back(Prob2bh1h); // 2
+    probs.push_back(Prob1bh2h); // 3
+    probs.push_back(Prob0bh3h); // 4
+    probs.push_back(Prob2bh0h); // 5
+    probs.push_back(Prob1bh1h); // 6
+    probs.push_back(Prob0bh2h); // 7
+    probs.push_back(Prob1bh0h); // 8
+    probs.push_back(Prob0bh1h); // 9
 
     auto it = std::max_element(probs.begin(), probs.end());
     int index = std::distance(probs.begin(), it);
@@ -819,278 +750,9 @@ def init_get_max_cat():
     ROOT.gInterpreter.Declare(getmaxcat)
 
 
-gethandcat = '''
-int get_hand_cat(int nFatJetsPassed, int nJetsPassed, float hhh_mass2) {
-    
-    if (hhh_mass2 > 700) {
-        if (nFatJetsPassed == 3) return 1;
-        else if (nFatJetsPassed == 2 && nJetsPassed >= 2) return 2;
-        else if (nFatJetsPassed == 2 && nJetsPassed < 2) return 5;
-        else if (nFatJetsPassed == 1 && nJetsPassed >= 4) return 3;
-        else if (nFatJetsPassed == 1 && nJetsPassed < 4 && nJetsPassed >= 2 ) return 6;
-        else if (nFatJetsPassed == 1 && nJetsPassed < 2) return 8;
-        else if (nFatJetsPassed == 0 && nJetsPassed == 6) return 4;
-        else if (nFatJetsPassed == 0 && nJetsPassed < 6 && nJetsPassed >= 4) return 7;
-        else if (nFatJetsPassed == 0 && nJetsPassed < 4 && nJetsPassed >= 2) return 9;
-        else if (nFatJetsPassed == 0 && nJetsPassed < 2) return 0;
-        }
-    else if (hhh_mass2 <= 700) {
-        if (nJetsPassed == 6) return 4;
-        else if (nJetsPassed < 6 && nJetsPassed >= 4 && nFatJetsPassed >= 1) return 3;
-        else if (nJetsPassed < 6 && nJetsPassed >= 4 && nFatJetsPassed < 1) return 7;
-        else if (nJetsPassed < 4 && nJetsPassed >= 2 && nFatJetsPassed >= 2) return 2;
-        else if (nJetsPassed < 4 && nJetsPassed >= 2 && nFatJetsPassed == 1) return 6;
-        else if (nJetsPassed < 4 && nJetsPassed >= 2 && nFatJetsPassed == 0) return 9;
-        else if (nJetsPassed < 2 && nFatJetsPassed == 3) return 1;
-        else if (nJetsPassed < 2 && nFatJetsPassed == 2) return 5;
-        else if (nJetsPassed < 2 && nFatJetsPassed == 1) return 8;
-        else if (nJetsPassed < 2 && nFatJetsPassed == 0) return 0;
-
-        }
-    return -1;
-}
-'''
-def init_get_hand_cat():
-    ROOT.gInterpreter.Declare(gethandcat)
-
-gethandcat_boosted_prio = '''
-int get_hand_cat_boosted_prio(int nFatJetsPassed, int nJetsPassed) {
-    
-    if (nFatJetsPassed == 3) return 1;
-    else if (nFatJetsPassed == 2 && nJetsPassed >= 2) return 2;
-    else if (nFatJetsPassed == 2 && nJetsPassed < 2) return 5;
-    else if (nFatJetsPassed == 1 && nJetsPassed >= 4) return 3;
-    else if (nFatJetsPassed == 1 && nJetsPassed < 4 && nJetsPassed >= 2 ) return 6;
-    else if (nFatJetsPassed == 1 && nJetsPassed < 2) return 8;
-    else if (nFatJetsPassed == 0 && nJetsPassed == 6) return 4;
-    else if (nFatJetsPassed == 0 && nJetsPassed < 6 && nJetsPassed >= 4) return 7;
-    else if (nFatJetsPassed == 0 && nJetsPassed < 4 && nJetsPassed >= 2) return 9;
-    else if (nFatJetsPassed == 0 && nJetsPassed < 2) return 0;
-
-    
-    return -1;
-}
-'''
-def init_get_hand_cat_boosted_prio():
-    ROOT.gInterpreter.Declare(gethandcat_boosted_prio)
 
 
 
-higgs_pair = '''
-#include "Math/Vector4D.h"
-
-ROOT::Math::PtEtaPhiMVector polarP4(float pt, float eta, float phi, float mass) {
-    return ROOT::Math::PtEtaPhiMVector(pt, eta, phi, mass);
-}
-
-    // 辅助函数：将字符串按 '_' 分割为集合
-std::set<std::string> splitAndCollect(const std::string& str) {
-    std::set<std::string> parts;
-    size_t start = str.find('_') + 1;  // 从第一个下划线之后开始
-    if (start == std::string::npos) return parts;  // 如果没有下划线，直接返回空集合
-
-    std::istringstream stream(str.substr(start));
-    std::string part;
-
-    while (std::getline(stream, part, '_')) {
-        parts.insert(part);
-    }
-
-    return parts;
-}
-# // 定义 Jet 结构体
-struct Jet {
-    ROOT::Math::PtEtaPhiMVector fourVector;
-    double PNetB;
-};
-
-// 定义 FatJet 结构体
-struct FatJet {
-    ROOT::Math::PtEtaPhiMVector fourVector;
-    double Xbb;
-};
-
-// 实现 manualPermutation 函数，保留功能与原 Python 代码一致
-std::vector<std::vector<std::string>> manualPermutation(
-    const std::vector<std::string>& input1,
-    const std::vector<std::string>& input2,
-    const std::vector<std::string>& input3 = {"0"}
-) {
-    std::vector<std::vector<std::string>> output;
-
-    for (size_t i1 = 0; i1 < input1.size(); ++i1) {
-        const std::string& v1 = input1[i1];
-        for (size_t i2 = 0; i2 < input2.size(); ++i2) {
-            const std::string& v2 = input2[i2];
-            if (v1 == v2 || (input1 == input2 && i2 <= i1)) continue;
-
-            // 检查 JP 类型过滤条件
-            if (v1.rfind("JP", 0) == 0 && v2.rfind("JP", 0) == 0) {
-                std::set<std::string> combined_parts = splitAndCollect(v1);
-                std::set<std::string> v2_parts = splitAndCollect(v2);
-                combined_parts.insert(v2_parts.begin(), v2_parts.end());
-                if (combined_parts.size() < 4) continue;
-            }
-
-            for (size_t i3 = 0; i3 < input3.size(); ++i3) {
-                const std::string& v3 = input3[i3];
-                if (v3 != "0") {
-                    if (v1 == v3 || (input1 == input3 && i3 <= i1)) continue;
-                    if (v2 == v3 || (input2 == input3 && i3 <= i2)) continue;
-
-                    // 检查 JP 类型的继续条件
-                    if (v1.rfind("JP", 0) == 0 && v3.rfind("JP", 0) == 0) {
-                        std::set<std::string> combined_parts = splitAndCollect(v1);
-                        std::set<std::string> v3_parts = splitAndCollect(v3);
-                        combined_parts.insert(v3_parts.begin(), v3_parts.end());
-                        if (combined_parts.size() < 4) continue;
-                    }
-                    if (v2.rfind("JP", 0) == 0 && v3.rfind("JP", 0) == 0) {
-                        std::set<std::string> combined_parts = splitAndCollect(v2);
-                        std::set<std::string> v3_parts = splitAndCollect(v3);
-                        combined_parts.insert(v3_parts.begin(), v3_parts.end());
-                        if (combined_parts.size() < 4) continue;
-                    }
-
-                    output.push_back({v1, v2, v3});
-                } else {
-                    output.push_back({v1, v2});
-                }
-            }
-        }
-    }
-
-    return output;
-}
-
-#include <vector>
-#include <string>
-#include <set>
-#include <sstream>
-#include <algorithm>
-#include <map>
-#include <tuple>
-#include <limits>
-#include <cmath>
-#include <numeric>
-#include <iostream>
-#include "Math/Vector4D.h"  // 包含 ROOT 的四矢量类型定义
-#include <tuple> 
-
-
-
-
-
-// Higgs pairing 函数
-
-std::tuple<float, float, std::vector<std::tuple<float, float, float, float>>> higgsPairing(
-    const std::vector<Jet>& jets_4vec,
-    const std::vector<FatJet>& fatjets,
-    float XbbWP,
-    int Run = 2
-) {
-    // 筛选符合条件的 fatjets
-    std::vector<FatJet> probejets;
-    for (const auto& fj : fatjets) {
-        if (fj.Xbb > XbbWP) probejets.push_back(fj);
-    }
-    std::sort(probejets.begin(), probejets.end(), [](const FatJet& a, const FatJet& b) {
-        return a.Xbb > b.Xbb;
-    });
-
-    // 构建 jet pairs
-    std::vector<std::tuple<int, int, ROOT::Math::PtEtaPhiMVector, float, std::string, float>> jetpairs;
-    for (size_t i1 = 0; i1 < jets_4vec.size(); ++i1) {
-        for (size_t i2 = i1 + 1; i2 < jets_4vec.size(); ++i2) {
-            ROOT::Math::PtEtaPhiMVector sumVector = jets_4vec[i1].fourVector + jets_4vec[i2].fourVector;
-            float score = jets_4vec[i1].PNetB * jets_4vec[i2].PNetB;
-            jetpairs.emplace_back(i1, i2, sumVector, score, "Jet", sumVector.M());
-        }
-    }
-
-    std::sort(jetpairs.begin(), jetpairs.end(), [](const auto& a, const auto& b) {
-        return std::get<3>(a) > std::get<3>(b);
-    });
-
-    // 构建所有对象
-    std::map<std::string, std::variant<decltype(jetpairs)::value_type, FatJet>> allobjects;
-    for (const auto& p : jetpairs) {
-        std::string name = "JP_" + std::to_string(std::get<0>(p) + 1) + "_" + std::to_string(std::get<1>(p) + 1);
-        allobjects[name] = p;
-    }
-    for (size_t i = 0; i < probejets.size(); ++i) {
-        allobjects["FJ" + std::to_string(i + 1)] = probejets[i];
-    }
-
-    // 获取对象列表并进行排列组合
-    std::vector<std::string> objlist_jet;
-    for (const auto& [key, _] : allobjects) {
-        if (key.find("J") != std::string::npos) objlist_jet.push_back(key);
-    }
-
-    std::vector<std::vector<std::string>> permutations = manualPermutation(objlist_jet, objlist_jet, objlist_jet);
-    if (permutations.empty()) {
-        permutations = manualPermutation(objlist_jet, objlist_jet);
-    }
-    if (permutations.empty() && !objlist_jet.empty()) {
-        permutations = {{objlist_jet[0]}};
-    }
-
-    // Chi2 计算和最终配对
-    int nHiggs = permutations[0].size();
-    float min_chi2 = std::numeric_limits<float>::infinity();
-    std::vector<std::string> finalPermutation;
-    float m_fit = 0.0;
-
-    if (nHiggs <= 1) {
-        return std::make_tuple(-1.0f, -1.0f, std::vector<std::tuple<float, float, float, float>>());
-    }
-
-    for (const auto& permutation : permutations) {
-        std::vector<float> masses;
-        for (const auto& name : permutation) {
-            if (name.rfind("JP", 0) == 0) {
-                masses.push_back(std::get<5>(std::get<decltype(jetpairs)::value_type>(allobjects[name])));
-            } else {
-                masses.push_back(std::get<FatJet>(allobjects[name]).fourVector.M());
-            }
-        }
-
-        float avg_mass = std::accumulate(masses.begin(), masses.end(), 0.0f) / nHiggs;
-        float chi2 = 0.0f;
-        for (float mass : masses) {
-            chi2 += std::pow(mass - avg_mass, 2);
-        }
-
-        if (chi2 < min_chi2) {
-            min_chi2 = chi2;
-            m_fit = avg_mass;
-            finalPermutation = permutation;
-        }
-    }
-
-    // 构建最终 Higgs 对象
-    ROOT::Math::PtEtaPhiMVector hhh_sum_vector;
-    std::vector<std::tuple<float, float, float, float>> finalHiggs;
-    for (const auto& name : finalPermutation) {
-        if (name.rfind("FJ", 0) == 0) {
-            const auto& obj = std::get<FatJet>(allobjects[name]);
-            finalHiggs.emplace_back(obj.fourVector.Pt(), obj.fourVector.Eta(), obj.fourVector.Phi(), obj.fourVector.M());
-            hhh_sum_vector += obj.fourVector;  // 累加四矢量
-        } else {
-            const auto& obj = std::get<decltype(jetpairs)::value_type>(allobjects[name]);
-            finalHiggs.emplace_back(std::get<2>(obj).Pt(), std::get<2>(obj).Eta(), std::get<2>(obj).Phi(), std::get<5>(obj));
-            hhh_sum_vector += std::get<2>(obj);  // 累加四矢量
-        }
-    }
-
-    float hhh_mass2 = hhh_sum_vector.M();
-    return std::make_tuple(hhh_mass2, m_fit, finalHiggs);
-}
-'''
-
-def init_higgs_pair():
-    ROOT.gInterpreter.Declare(higgs_pair)
 
 cat = '''
     int categorisation(int nAK4HiggsReco, int nAK8HiggsReco){
@@ -1120,8 +782,6 @@ cat = '''
 '''
 
 ROOT.gInterpreter.Declare(cat)
-
-
 
 
 def matching_variables(df):
@@ -1167,5 +827,25 @@ def matching_variables(df):
     df = df.Define('nAK4HiggsReco', 'int(h1Match >= 2)+ int(h2Match >= 2)+ int(h3Match >= 2)')
     df = df.Define('nAK8HiggsReco', 'int(fj_h1Match >= 1)+ int(fj_h2Match >= 1)+ int(fj_h3Match >= 1)')
     df = df.Define('categorisation','categorisation( nAK4HiggsReco,nAK8HiggsReco)')
+
+    return df
+
+
+def applySelection(df, year):
+    print("Applying selection: passmetfilter")
+    df = df.Filter('passmetfilters')
+    print("Applying nsmalljets >= 4 || nprobejets > 0")
+    df = df.Filter('nsmalljets >= 4 || nprobejets > 0')
+    print("Applying trigger")
+    if '2016' in year:
+        hlt = hlt_paths['2016']
+    else:
+        hlt = hlt_paths[year]
+    df = df.Filter(hlt)
+    print("Filter jet veto")
+    #df = df.Filter('PassJetVeto == 1')
+    print("filter HT")
+    
+    df = df.Filter('ht > 450')
 
     return df
