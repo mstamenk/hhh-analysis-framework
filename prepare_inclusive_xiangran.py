@@ -29,7 +29,7 @@ year = args.year
 #path = '/isilon/data/users/mstamenk/eos-triple-h/samples-%s-%s-nanoaod'%(version,year)
 # path = '/isilon/data/users/mstamenk/hhh-6b-producer/CMSSW_11_1_0_pre5_PY3/src/PhysicsTools/NanoAODTools/condor/%s_ak8_option4_%s/*/parts/'%(version,year)
 # path = '/eos/cms/store/group/phys_higgs/cmshhh/%s_ak8_option4_%s/mc/parts/'%(version,year)
-path = '/eos/cms/store/group/phys_higgs/cmshhh/%s_ak8_option4_%s/mc/v34_mc_ak8_option4_2018/mc/parts'%(version,year)
+path = '/eos/cms/store/group/phys_higgs/cmshhh/%s_ak8_option4_%s/mc/parts'%(version,year)
 
 
 print(path)
