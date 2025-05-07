@@ -16,144 +16,7 @@ parser.add_argument('-v','--version', default='v33')
 parser.add_argument('--year', default='2018')
 parser.add_argument('--prob', default='ProbHHH6b')
 parser.add_argument('--var', default = 'ProbMultiH')
-parser.add_argument('--doSyst', action = 'store_true')
 args = parser.parse_args()
-
-if args.doSyst:
-    systematics = [
-        # FTAG
-        'nominal',
-        #'1./flavTagWeight_Stat_DOWN',
-        #'flavTagWeight_LHEScaleWeight_muF_ttbar_UP',
-        #'flavTagWeight_LHEScaleWeight_muF_wjets_UP',
-        #'flavTagWeight_LHEScaleWeight_muF_zjets_UP',
-        #'flavTagWeight_LHEScaleWeight_muR_ttbar_UP',
-        #'flavTagWeight_LHEScaleWeight_muR_wjets_UP',
-        #'flavTagWeight_LHEScaleWeight_muR_zjets_UP',
-        #'flavTagWeight_PSWeightISR_UP',
-        #'flavTagWeight_PSWeightFSR_UP',
-        #'flavTagWeight_XSec_WJets_c_UP',
-        #'flavTagWeight_XSec_WJets_b_UP',
-        #'flavTagWeight_XSec_ZJets_c_UP',
-        #'flavTagWeight_XSec_ZJets_b_UP',
-        #'flavTagWeight_PUWeight_UP',
-        #'flavTagWeight_PUJetID_UP',
-
-        'flavTagWeight_Stat_DOWN',
-        'flavTagWeight_LHEScaleWeight_muF_ttbar_DOWN',
-        'flavTagWeight_LHEScaleWeight_muF_wjets_DOWN',
-        'flavTagWeight_LHEScaleWeight_muF_zjets_DOWN',
-        'flavTagWeight_LHEScaleWeight_muR_ttbar_DOWN',
-        'flavTagWeight_LHEScaleWeight_muR_wjets_DOWN',
-        'flavTagWeight_LHEScaleWeight_muR_zjets_DOWN',
-        'flavTagWeight_PSWeightISR_DOWN',
-        'flavTagWeight_PSWeightFSR_DOWN',
-        'flavTagWeight_XSec_WJets_c_DOWN',
-        'flavTagWeight_XSec_WJets_b_DOWN',
-        'flavTagWeight_XSec_ZJets_c_DOWN',
-        'flavTagWeight_XSec_ZJets_b_DOWN',
-        'flavTagWeight_PUWeight_DOWN',
-        'flavTagWeight_PUJetID_DOWN',
-
-        # Fatjet FLAV TAG
-        'fatJetFlavTagWeight_UP',
-        'fatJetFlavTagWeight_DOWN',
-
-        # L1 prefiring
-        'l1PreFiringWeightUp', 
-        'l1PreFiringWeightDown',
-
-        # Pile-up
-        'puWeightUp',
-        'puWeightDown',
-
-        # ISR
-        'PSWeight[0]',
-        'PSWeight[2]',
-
-        # FSR
-        'PSWeight[1]',
-        'PSWeight[3]', 
-
-        # MUR
-        'LHEScaleWeight[6]',
-        'LHEScaleWeight[1]',
-
-        # MUF
-        'LHEScaleWeight[4]',
-        'LHEScaleWeight[3]',
-
-        # PDF
-        'LHEPdfWeight[0]', 
-        '1./LHEPdfWeight[0]'
-
-    ]
-else:
-    systematics = ['nominal']
-
-
-labels = {
-        'nominal' : '',
-        '1./flavTagWeight_Stat_DOWN' : 'PNetAK4_Stat_Up',
-        'flavTagWeight_LHEScaleWeight_muF_ttbar_UP' : 'PNetAK4_ttbar_muF_Up',
-        'flavTagWeight_LHEScaleWeight_muF_wjets_UP' :'PNetAK4_wjets_muF_Up',
-        'flavTagWeight_LHEScaleWeight_muF_zjets_UP' :'PNetAK4_zjets_muF_Up',
-        'flavTagWeight_LHEScaleWeight_muR_ttbar_UP' :'PNetAK4_ttbar_muR_Up',
-        'flavTagWeight_LHEScaleWeight_muR_wjets_UP' :'PNetAK4_wjets_muR_Up',
-        'flavTagWeight_LHEScaleWeight_muR_zjets_UP' :'PNetAK4_zjets_muR_Up',
-        'flavTagWeight_PSWeightISR_UP' : 'PNetAK4_ISR_Up',
-        'flavTagWeight_PSWeightFSR_UP' : 'PNetAK4_FSR_Up',
-        'flavTagWeight_XSec_WJets_c_UP' : 'PNetAK4_wjets_c_xsec_Up',
-        'flavTagWeight_XSec_WJets_b_UP':  'PNetAK4_wjets_b_xsec_Up',
-        'flavTagWeight_XSec_ZJets_c_UP' : 'PNetAK4_zjets_c_xsec_Up',
-        'flavTagWeight_XSec_ZJets_b_UP': 'PNetAK4_zjets_b_xsec_Up',
-        'flavTagWeight_PUWeight_UP' : 'PNetAK4_pileup_Up',
-        'flavTagWeight_PUJetID_UP' : 'PNetAK4_jetID_Up',
-
-        'flavTagWeight_Stat_DOWN' : 'PNetAK4_Stat_Down',
-        'flavTagWeight_LHEScaleWeight_muF_ttbar_DOWN' : 'PNetAK4_ttbar_muF_Down',
-        'flavTagWeight_LHEScaleWeight_muF_wjets_DOWN' :'PNetAK4_wjets_muF_Down',
-        'flavTagWeight_LHEScaleWeight_muF_zjets_DOWN' :'PNetAK4_zjets_muF_Down',
-        'flavTagWeight_LHEScaleWeight_muR_ttbar_DOWN' :'PNetAK4_ttbar_muR_Down',
-        'flavTagWeight_LHEScaleWeight_muR_wjets_DOWN' :'PNetAK4_wjets_muR_Down',
-        'flavTagWeight_LHEScaleWeight_muR_zjets_DOWN' :'PNetAK4_zjets_muR_Down',
-        'flavTagWeight_PSWeightISR_DOWN' : 'PNetAK4_ISR_Down',
-        'flavTagWeight_PSWeightFSR_DOWN' : 'PNetAK4_FSR_Down',
-        'flavTagWeight_XSec_WJets_c_DOWN' : 'PNetAK4_wjets_c_xsec_Down',
-        'flavTagWeight_XSec_WJets_b_DOWN':  'PNetAK4_wjets_b_xsec_Down',
-        'flavTagWeight_XSec_ZJets_c_DOWN' : 'PNetAK4_zjets_c_xsec_Down',
-        'flavTagWeight_XSec_ZJets_b_DOWN': 'PNetAK4_zjets_b_xsec_Down',
-        'flavTagWeight_PUWeight_DOWN' : 'PNetAK4_pileup_Down',
-        'flavTagWeight_PUJetID_DOWN' : 'PNetAK4_jetID_Down',
-
-        'fatJetFlavTagWeight_UP' : 'PNetAK8_Up',
-        'fatJetFlavTagWeight_DOWN': 'PNetAK8_Down',
-
-        'l1PreFiringWeightUp' : 'l1Prefiring_Up', 
-        'l1PreFiringWeightDown' : 'l1Prefiring_Down',
-    
-        'puWeightUp' : 'PileUp_Up',
-        'puWeightDown': 'PileUp_Down',
-    
-        'PSWeight[0]': 'ISR_Up', 
-        'PSWeight[2]': 'ISR_Down',
-        'PSWeight[1]': 'FSR_Up',
-        'PSWeight[3]': 'FSR_Down',  
-
-             # MUR
-        'LHEScaleWeight[6]': 'MUR_Up',
-        'LHEScaleWeight[1]': 'MUR_Down',
-
-        # MUF
-        'LHEScaleWeight[4]': 'MUF_Up',
-        'LHEScaleWeight[3]': 'MUF_Down',
-
-        # PDF
-        'LHEPdfWeight[0]' : 'PDF_Up',
-        '1./LHEPdfWeight[0]' : 'PDF_Down', 
-
-
- }
 
 def convert_list_to_dict(ls):
     length = len(ls)
@@ -170,46 +33,21 @@ def convert_list_to_dict(ls):
 #ProbHHH
 opt_bins_probHHH = {'2018': 0.7225, 
             '2017': 0.7075,
-            '2016': 0.7185,
-            '2016APV': 0.71,
-            '2016APV201620172018': 0.7275 , 
+            '2016': 0.718,
+            '2016APV': 0.727,
 }
 
-opt_bins_probMultiH = {'2018': 0.997, 
-            '2017': 0.9965,
-            '2016': 0.9965,
-            '2016APV': 0.9965,
-            '2016APV201620172018': 0.9975 , 
-            '2022' : 0.62,
-            '2022EE': 0.695,
-}
-
-opt_bins_probHHH_2Higgs = {'2018': 0.7225, 
-            '2017': 0.7075,
-            '2016': 0.7185,
-            '2016APV': 0.71,
-            '2016APV201620172018': 0.7045, 
-}
-
-opt_bins_probMultiH_2Higgs = {'2018': 0.9975, 
-            '2017': 0.997,
-            '2016': 0.9965,
-            '2016APV': 0.9965,
-            '2016APV201620172018': 0.997, 
-            '2022': 0.685,
-            '2022EE': 0.75,
-
+opt_bins_probMultiH = {'2018': 0.9975, 
+            '2017': 0.9945,
+            '2016': 0.99,
+            '2016APV': 0.99,
 }
 
 
-
-opt_bins_probMultiH_HH4b = {'2018': 0.9965, 
-            '2017': 0.997,
-            '2016': 0.9945,
-            '2016APV': 0.996,
-            '2016APV201620172018': 0.9985,
-            '2022': 0.9985, 
-            '2022EE': 0.9985, 
+opt_bins_probMultiH_HH4b = {'2018': 0.9999, 
+            '2017': 0.9999,
+            '2016': 0.956,
+            '2016APV': 0.96,
 }
 
 
@@ -229,105 +67,52 @@ opt_bins_split_probHHH = {'2018': {'3bh0h' : 0.652, #0.667,
                            '1bh1h' : 0.6935,
                            '0bh2h' : 0.712,
                             },
-                  '2016': {'3bh0h' : 0.650,
-                           '2bh1h' : 0.6795,
-                           '1bh2h' : 0.6935,
-                           '0bh3h' : 0.713,
-                           '2bh0h' : 0.6895,
-                           '1bh1h' : 0.6795,
-                           '0bh2h' : 0.7005,
-                            },
-                  '2016APV': {'3bh0h' : 0.649,
-                           '2bh1h' : 0.6755,
-                           '1bh2h' : 0.6845,
-                           '0bh3h' : 0.705,
-                           '2bh0h' : 0.68,
+                  '2016': {'3bh0h' : 0.613,
+                           '2bh1h' : 0.593,
+                           '1bh2h' : 0.611,
+                           '0bh3h' : 0.647,
+                           '2bh0h' : 0.691,
                            '1bh1h' : 0.6935,
-                           '0bh2h' : 0.708,
+                           '0bh2h' : 0.712,
                             },
-                   '2016APV201620172018': {'3bh0h' : 0.650,
-                           '2bh1h' : 0.697,
-                           '1bh2h' : 0.702,
-                           '0bh3h' : 0.7125,
-                           '2bh0h' : 0.679,
-                           '1bh1h' : 0.682,
-                           '0bh2h' : 0.651,
-                            },
-                    '2022': {'3bh0h' : 0.650,
-                           '2bh1h' : 0.697,
-                           '1bh2h' : 0.702,
-                           '0bh3h' : 0.7125,
-                           '2bh0h' : 0.679,
-                           '1bh1h' : 0.682,
-                           '0bh2h' : 0.651,
-                            },
-
-                    '2022EE': {'3bh0h' : 0.650,
-                           '2bh1h' : 0.697,
-                           '1bh2h' : 0.702,
-                           '0bh3h' : 0.7125,
-                           '2bh0h' : 0.679,
-                           '1bh1h' : 0.682,
-                           '0bh2h' : 0.651,
+                  '2016APV': {'3bh0h' : 0.613,
+                           '2bh1h' : 0.598,
+                           '1bh2h' : 0.613,
+                           '0bh3h' : 0.646,
+                           '2bh0h' : 0.691,
+                           '1bh1h' : 0.6935,
+                           '0bh2h' : 0.712,
                             },
 }
 
-opt_bins_split_probMultiH = {'2018': {'3bh0h' : 0.9875,
-                           '2bh1h' : 0.9935,
-                           '1bh2h' : 0.9945,
+opt_bins_split_probMultiH = {'2018': {'3bh0h' : 0.9915,
+                           '2bh1h' : 0.994,
+                           '1bh2h' : 0.995,
                            '0bh3h' : 0.997,
-                           '2bh0h' : 0.994,
-                           '1bh1h' : 0.9965,
-                           '0bh2h' : 0.9975,
-                            },
-                  '2017': {'3bh0h' : 0.9885,
-                           '2bh1h' : 0.9915,
-                           '1bh2h' : 0.9935,
-                           '0bh3h' : 0.9965,
-                           '2bh0h' : 0.9935,
-                           '1bh1h' : 0.9945,
-                           '0bh2h' : 0.997,
-                            },
-                  '2016': {'3bh0h' : 0.985,
-                           '2bh1h' : 0.992,
-                           '1bh2h' : 0.994,
-                           '0bh3h' : 0.9965,
-                           '2bh0h' : 0.993,
-                           '1bh1h' : 0.994,
-                           '0bh2h' : 0.996,
-                            },
-                  '2016APV': {'3bh0h' : 0.985,
-                           '2bh1h' : 0.992,
-                           '1bh2h' : 0.994,
-                           '0bh3h' : 0.9965,
-                           '2bh0h' : 0.993,
-                           '1bh1h' : 0.994,
-                           '0bh2h' : 0.996,
-                            },
-
-                  '2016APV201620172018': {'3bh0h' : 0.9925,
-                           '2bh1h' : 0.996,
-                           '1bh2h' : 0.9945,
-                           '0bh3h' : 0.996,
-                           '2bh0h' : 0.996,
+                           '2bh0h' : 0.995,
                            '1bh1h' : 0.9965,
                            '0bh2h' : 0.998,
                             },
-                  '2022': {'3bh0h' : 0.565,
-                           '2bh1h' : 0.64,
-                           '1bh2h' : 0.649,
-                           '0bh3h' : 0.649,
-                           '2bh0h' : 0.72,
-                           '1bh1h' : 0.659,
-                           '0bh2h' : 0.53,
+                  '2017': {'3bh0h' : 0.991,
+                           '2bh1h' : 0.9935,
+                           '1bh2h' : 0.9945,
+                           '0bh3h' : 0.996,
+                           '2bh0h' : 0.9945,
+                           '1bh1h' : 0.995,
+                           '0bh2h' : 0.9975,
                             },
-                  '2022EE': {'3bh0h' : 0.565,
-                           '2bh1h' : 0.64,
-                           '1bh2h' : 0.649,
-                           '0bh3h' : 0.649,
-                           '2bh0h' : 0.72,
-                           '1bh1h' : 0.659,
-                           '0bh2h' : 0.53,
+                  '2016': {'3bh0h' : 0.972,
+                           '2bh1h' : 0.988,
+                           '1bh2h' : 0.985,
+                           '0bh3h' : 0.956,
+                            },
+                  '2016APV': {'3bh0h' : 0.98,
+                           '2bh1h' : 0.988,
+                           '1bh2h' : 0.984,
+                           '0bh3h' : 0.958,
+                           '2bh0h' : 0.691,
+                           '1bh1h' : 0.6935,
+                           '0bh2h' : 0.712,
                             },
 }
 
@@ -354,30 +139,19 @@ opt_bins_split_probMultiH_HH4b = {'2018': {
                            '2bh1h' : 0.9965,
                            '1bh2h' : 0.996,
                            '0bh3h' : 0.997,
-                           '2bh0h' : 0.9965,
-                           '1bh1h' : 0.9965,
-                           '0bh2h' : 0.9965,
+                           '2bh0h' : 0.995,
+                           '1bh1h' : 0.986,
+                           '0bh2h' : 0.956,
                             },
                   '2016APV': {
-                           '3bh0h' : 0.956,
+                           '3bh0h' : 0.9865,
                            '2bh1h' : 0.9965,
                            '1bh2h' : 0.996,
                            '0bh3h' : 0.997,
-                           '2bh0h' : 0.9965,
-                           '1bh1h' : 0.9965,
-                           '0bh2h' : 0.9965,
+                           '2bh0h' : 0.988,
+                           '1bh1h' : 0.984,
+                           '0bh2h' : 0.958,
                             },
-                  '2016APV201620172018': {'3bh0h' : 0.9865,
-                           '2bh1h' : 0.996,
-                           '1bh2h' : 0.9945,
-                           '0bh3h' : 0.9925,
-                           '2bh0h' : 0.996,
-                           '1bh1h' : 0.996,
-                           '0bh2h' : 0.9975,
-                            },
-
-
-
 }
 
 
@@ -387,12 +161,10 @@ var = args.var
 
 if 'ProbHHH' in var:
     opt_bins = opt_bins_probHHH
-    opt_bins_2Higgs = opt_bins_probHHH_2Higgs
     opt_bins_split = opt_bins_split_probHHH
 
 elif 'ProbMultiH' in var:
     opt_bins = opt_bins_probMultiH
-    opt_bins_2Higgs = opt_bins_probMultiH_2Higgs
     opt_bins_split = opt_bins_split_probMultiH
     if 'ProbHH4b' in args.prob:
         opt_bins = opt_bins_probMultiH_HH4b
@@ -400,7 +172,7 @@ elif 'ProbMultiH' in var:
 
 #bins_ProbHH4b_2Higgs = [1.0, 0.942, 0.91, 0.901, 0.879, 0.862, 0.844, 0.8240000000000001,0.808, 0.8049999999999999, 0.7949999999999999]
 if 'ProbMultiH' in var:
-    delta = 0.0015
+    delta =  0.005
 elif 'ProbHHH' in var:
     delta = 0.013
 
@@ -417,15 +189,10 @@ if '2016' in args.year:
 
 
 
-bins_ProbHHH6b_2Higgs = [1.0] + [opt_bins_2Higgs[year] - delta * i for i in range(10)]
-bins_ProbHHH6b_0Higgs = [1.0] + [(opt_bins_2Higgs[year]- delta) - delta * i for i in range(10)]
-bins_ProbHHH6b_1Higgs = [1.0] + [opt_bins_2Higgs[year] - delta * 0.8 * i for i in range(10)]
-
-
-
+bins_ProbHHH6b_2Higgs = [1.0] + [opt_bins[year] - delta * i for i in range(10)]
 bins_ProbVV_2Higgs = [1.0] + [0.57 - delta * i for i in range(10)]
 
-bins_ProbHHH6b_3bh0h = [1.0 ] + [opt_bins_split[year]['3bh0h'] - (delta*3.0) * i for i in range(10)]
+bins_ProbHHH6b_3bh0h = [1.0 ] + [opt_bins_split[year]['3bh0h'] - delta * i for i in range(10)]
 bins_ProbHHH6b_2bh1h = [1.0 ] + [opt_bins_split[year]['2bh1h'] - delta * i for i in range(10)]
 bins_ProbHHH6b_1bh2h = [1.0 ] + [opt_bins_split[year]['1bh2h'] - delta * i for i in range(10)]
 bins_ProbHHH6b_0bh3h = [1.0 ] + [opt_bins_split[year]['0bh3h'] - delta * i for i in range(10)]
@@ -433,8 +200,8 @@ bins_ProbHHH6b_2bh0h = [1.0 ] + [opt_bins_split[year]['2bh0h'] - delta * i for i
 bins_ProbHHH6b_1bh1h = [1.0 ] + [opt_bins_split[year]['1bh1h'] - delta * i for i in range(10)]
 bins_ProbHHH6b_0bh2h = [1.0 ] + [opt_bins_split[year]['0bh2h'] - delta * i for i in range(10)]
 
-bins_ProbHHH6b_1bh0h = [1.0 ] + [0.996 - delta * i for i in range(10)]
-bins_ProbHHH6b_0bh1h = [1.0 ] + [0.9975 - delta * i for i in range(10)]
+bins_ProbHHH6b_1bh0h = [1.0 ] + [opt_bins[year] - delta * i for i in range(10)]
+bins_ProbHHH6b_0bh1h = [1.0 ] + [opt_bins[year] - delta * i for i in range(10)]
 bins_ProbHHH6b_0bh0h = [1.0 ] + [opt_bins[year] - delta * i for i in range(10)]
 
 
@@ -518,8 +285,8 @@ binnings = {
     'ProbHH4b_0bh0h_inclusive' : convert_list_to_dict(bins_ProbHH4b_2Higgs),
 
     'ProbHHH6b_3Higgs_inclusive' : convert_list_to_dict(bins_ProbHHH6b_3Higgs),
-    'ProbHHH6b_1Higgs_inclusive' : convert_list_to_dict(bins_ProbHHH6b_1Higgs),
-    'ProbHHH6b_2Higgs_inclusive' : convert_list_to_dict(bins_ProbHHH6b_2Higgs),
+    'ProbHHH6b_1Higgs_inclusive' : convert_list_to_dict(bins_ProbHHH6b_3Higgs),
+    'ProbHHH6b_2Higgs_inclusive' : convert_list_to_dict(bins_ProbHHH6b_3Higgs),
 
     'ProbVV_2Higgs_inclusive' : convert_list_to_dict(bins_ProbVV_2Higgs),
     'ProbVV_2bh0h_inclusive' : convert_list_to_dict(bins_ProbVV_2Higgs),
@@ -537,7 +304,7 @@ binnings = {
 
     'ProbHHH6b_1bh0h_inclusive' : convert_list_to_dict(bins_ProbHHH6b_1bh0h),
     'ProbHHH6b_0bh1h_inclusive' : convert_list_to_dict(bins_ProbHHH6b_0bh1h),
-    'ProbHHH6b_0bh0h_inclusive' : convert_list_to_dict(bins_ProbHHH6b_0Higgs),
+    'ProbHHH6b_0bh0h_inclusive' : convert_list_to_dict(bins_ProbHHH6b_0bh0h),
 
     'ProbHHH4b2tau_3bh0h_inclusive' : convert_list_to_dict(bins_ProbHHH6b_3bh0h),
     'ProbHHH4b2tau_2bh1h_inclusive' : convert_list_to_dict(bins_ProbHHH6b_2bh1h),
@@ -613,14 +380,14 @@ def get_integral_and_error(hist):
 #path = '/isilon/data/users/mstamenk/eos-triple-h/v28-categorisation/mva-inputs-2018-categorisation-spanet-boosted-classification/'
 path = '/isilon/data/users/mstamenk/eos-triple-h/%s/mva-inputs-%s-categorisation-spanet-boosted-classification/'%(version,year)
 
-cat = 'ProbHH4b_1bh1h_inclusive'
-option = '_CR'
+cat = 'ProbHHH6b_3Higgs_inclusive'
+option = '_SR'
 
 prob = args.prob#'ProbHHH6b'
 
 
 
-#for cat in ['%s_0bh1h_inclusive']:# variables:
+#for cat in ['%s_2Higgs_inclusive','%s_1Higgs_inclusive','%s_3Higgs_inclusive','%s_0bh0h_inclusive']:# variables:
 for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0bh3h_inclusive','%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_1bh0h_inclusive','%s_0bh1h_inclusive','%s_0bh0h_inclusive','%s_2Higgs_inclusive','%s_1Higgs_inclusive','%s_3Higgs_inclusive']:# variables:
 #for cat in ['%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_1bh0h_inclusive','%s_0bh1h_inclusive','%s_0bh0h_inclusive','%s_2Higgs_inclusive','%s_1Higgs_inclusive','%s_3Higgs_inclusive']:# variables:
     cat = cat%prob
@@ -634,7 +401,7 @@ for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0
     file_path = '%s'%cat + option +'/'
 
     samples = glob.glob(path+'/'+file_path+'/*.root')
-    samples = [os.path.basename(s).replace('.root','') for s in samples]
+    samples = [os.path.basename(s).replace('.root','') for s in samples if 'QCD' not in s]
 
     #var = "ProbMultiH" #variables[cat]
     outfile = ROOT.TFile(path +'/' + target + '/' + 'histograms_%s.root'%var,'recreate')
@@ -650,8 +417,6 @@ for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0
     bkg_yield = 0
 
     for s in samples:
-        if 'GluGlu' in s: continue # separate signal from other processes
-        #if 'QCD' in s: continue
         print(s)
         f_name = path + '/' + file_path + '/' + s + '.root'
         tree = ROOT.TChain('Events')
@@ -661,21 +426,16 @@ for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0
             h_mva = ROOT.TH1F('data_obs','data_obs',len(binning),0,len(binning))
         else:
             h_mva = ROOT.TH1F(s,s,len(binning),0,len(binning))
-
-        weight = 'totalWeight'
-
-        
-
-        
-        #    weight = 'totalWeight / (flavTagWeight * fatJetFlavTagWeight)'
-
         for i in range(1,h_mva.GetNbinsX() + 1):
 
             low,up = binning[i]
         
             h_name = s + '_histo_%d'%i
 
-            
+            weight = 'totalWeight'
+
+            #if 'GluGlu' in s:
+            #    weight = 'totalWeight / (flavTagWeight * fatJetFlavTagWeight)'
 
             tree.Draw("%s>>%s(100,0,1)"%(var,h_name),'(%s && %s > %f && %s < %f) * %s'%(cut, var,low, var,up,weight))
             try:
@@ -699,84 +459,6 @@ for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0
         outfile.cd()
         h_mva.Write()
 
-
-    for sam in samples:
-        if 'GluGlu' not in sam: continue # separate signal from other processes
-
-        for syst in systematics:
-            if 'nominal' in syst:
-                s = sam 
-                if 'JMRUP' in sam:
-                    s = sam.replace('JMRUP','') + '_JMR_Up'
-                elif 'JMRDOWN' in sam:
-                    s = sam.replace('JMRDOWN','') + '_JMR_Down'
-
-                if 'JESUP' in sam:
-                    s = sam.replace('JESUP','') + '_JES_Up'
-                elif 'JESDOWN' in sam:
-                    s = sam.replace('JESDOWN','') + '_JES_Down'
-
-                if 'JERUP' in sam:
-                    s = sam.replace('JERUP','') + '_JER_Up'
-                elif 'JERDOWN' in sam:
-                    s = sam.replace('JERDOWN','') + '_JER_Down'
-
-            else:
-                s = sam + '_' + labels[syst]
-                if 'JMR' in sam or 'JES' in sam or 'JER' in sam: continue
-            print(s)
-
-
-            f_name = path + '/' + file_path + '/' + sam + '.root'
-            tree = ROOT.TChain('Events')
-            tree.AddFile(f_name)
-
-            if 'JetHT' in s:
-                h_mva = ROOT.TH1F('data_obs','data_obs',len(binning),0,len(binning))
-            else:
-                h_mva = ROOT.TH1F(s,s,len(binning),0,len(binning))
-
-            if 'nominal' in syst:
-                weight = 'totalWeight'
-            elif 'LHE' in syst or 'PSWeight' in syst:
-                weight = 'totalWeight * %s'%syst
-
-            elif 'flavTag' in syst or 'FlavTag' in syst:
-                w = syst.split('_')[0]
-                weight = '(totalWeight / %s) * %s'%(w,syst)
-
-            
-            #    weight = 'totalWeight / (flavTagWeight * fatJetFlavTagWeight)'
-
-            for i in range(1,h_mva.GetNbinsX() + 1):
-
-                low,up = binning[i]
-            
-                h_name = sam + '_histo_%d_%s'%(i,labels[syst])
-
-                
-
-                tree.Draw("%s>>%s(100,0,1)"%(var,h_name),'(%s && %s > %f && %s < %f) * %s'%(cut, var,low, var,up,weight))
-                try:
-                    h = ROOT.gPad.GetPrimitive(h_name)
-                    integral, error = get_integral_and_error(h)
-                except: continue
-                
-                print(i,integral,error)
-                h_mva.SetBinContent(i,integral)
-                h_mva.SetBinError(i,error)
-            if 'data_obs' in s:
-                data_yield = h_mva.Integral() 
-            if 'data_obs' not in s:
-                bkg_yield += h_mva.Integral()   
-
-            
-            #h_mva.Rebin(2)
-            #if 'data_obs' not in s:
-            #if 'QCD' in s:
-            #    h_mva.Scale(0.47)
-            outfile.cd()
-            h_mva.Write()
 
     tree = ROOT.TChain('Events')
     #tree.AddFile(path + '/' + file_path + '/' + 'QCD' + '.root')

@@ -15,8 +15,8 @@ def get_integral_and_error(hist):
 ROOT.ROOT.EnableImplicitMT()
 ROOT.gROOT.SetBatch(ROOT.kTRUE)
 
-year = '2016APV'
-category = 'ProbHHH6b_3Higgs_inclusive_SR'
+year = '2016APV201620172018'
+category = 'ProbHHH6b_3bh0h_inclusive_CR'
 #category = 'ProbHH4b_0bh2h_inclusive_SR'
 
 #path = '/isilon/data/users/mstamenk/eos-triple-h/v27-spanet-boosted-classification-variables/mva-inputs-%s/inclusive_boosted-weights'%year
@@ -58,7 +58,7 @@ data = ROOT.TChain('Events')
 data.AddFile(path + '/' + 'data_obs.root')
 
 
-scale = data.GetEntries("ProbMultiH> 0.9") /  float(background.GetEntries('ProbMultiH > 0.9'))
+scale = data.GetEntries("ProbMultiH> 0.5") /  float(background.GetEntries('ProbMultiH > 0.5'))
 #scale = data.GetEntries("ProbHHH> 0.65") /  float(background.GetEntries('ProbHHH > 0.65'))
 
 cut_baseline = '(nprobejets > -1) * totalWeight'
@@ -97,7 +97,7 @@ upper_cut = 1.0
 
 
 
-for i in range(1,40):
+for i in range(1,200):
     cut_value = 1.0 - 0.0005 * i 
     print(cut_value,upper_cut)
     h_sig = 'h_signal_%.2f'%cut_value
@@ -111,7 +111,7 @@ for i in range(1,40):
     h_b = ROOT.gPad.GetPrimitive(h_bkg)
 
     h_b.Scale(scale)
-    #h_s.Scale(300)
+    h_s.Scale(500)
     
     yield_s, error_s = get_integral_and_error(h_s)
     yield_b, error_b = get_integral_and_error(h_b)

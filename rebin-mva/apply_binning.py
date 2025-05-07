@@ -194,7 +194,7 @@ binning = binnings[cat]
 cut = categories[cat]
 
 
-for s in samples:
+for s in ['GluGluToHHTo2B2Tau', 'GluGluToHHTo4B_cHHH1','GluGluToHHHTo4B2Tau_SM','DYJetsToLL', 'ZZTo4Q', 'WWTo4Q', 'ZJetsToQQ',  'WJetsToQQ', 'TTToHadronic', 'TTToSemiLeptonic', 'QCD']: #samples:
     print(s)
     f_name = path + '/' + file_path + '/' + s + '.root'
     tree = ROOT.TChain('Events')
