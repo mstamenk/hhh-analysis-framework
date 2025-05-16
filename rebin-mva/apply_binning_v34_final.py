@@ -195,7 +195,7 @@ opt_bins_probMultiH_2Higgs = {'2018': 0.977,#0.9975,
             '2017': 0.968,#0.997,
             '2016': 0.963,#0.9965,
             '2016APV': 0.964,#0.9965,
-            '2016APV201620172018': 0.977, 
+            '2016APV201620172018': 0.967, 
             '2022': 0.685,
             '2022EE': 0.75,
 
@@ -203,11 +203,21 @@ opt_bins_probMultiH_2Higgs = {'2018': 0.977,#0.9975,
 
 
 
-opt_bins_probMultiH_HH4b = {'2018': 0.9965, 
-            '2017': 0.997,
-            '2016': 0.9945,
-            '2016APV': 0.996,
-            '2016APV201620172018': 0.9985,
+opt_bins_probMultiH_HH4b = {'2018': 0.972, 
+            '2017': 0.958,
+            '2016': 0.906,
+            '2016APV': 0.922,
+            '2016APV201620172018': 0.972,
+            '2022': 0.9985, 
+            '2022EE': 0.9985, 
+}
+
+
+opt_bins_probMultiH_3Higgs_HH4b = {'2018': 0.959, 
+            '2017': 0.945,
+            '2016': 0.887,
+            '2016APV': 0.898,
+            '2016APV201620172018': 0.953,
             '2022': 0.9985, 
             '2022EE': 0.9985, 
 }
@@ -324,8 +334,8 @@ opt_bins_split_probMultiH = {'2018': {'3bh0h' : 0.953,#0.9875,
                            '2bh0h' : 0.974,
                            '1bh1h' : 0.97,
                            '0bh2h' : 0.969,
-                           '1bh0h' : 0.979, 
-                           '0bh1h' : 0.974, 
+                           '1bh0h' : 0.973, 
+                           '0bh1h' : 0.97, 
                            '0bh0h' : 0.983, 
                             },
                   '2022': {'3bh0h' : 0.565,
@@ -347,48 +357,63 @@ opt_bins_split_probMultiH = {'2018': {'3bh0h' : 0.953,#0.9875,
 }
 
 opt_bins_split_probMultiH_HH4b = {'2018': {
-                           '3bh0h' : 0.997,
-                           '2bh1h' : 0.997,
-                           '1bh2h' : 0.997,
-                           '0bh3h' : 0.997,
-                           '2bh0h' : 0.997,
-                           '1bh1h' : 0.997,
-                           '0bh2h' : 0.997,
+                           '3bh0h' : 0.938,
+                           '2bh1h' : 0.944,
+                           '1bh2h' : 0.931,
+                           '0bh3h' : 0.94,
+                           '2bh0h' : 0.971,
+                           '1bh1h' : 0.954,
+                           '0bh2h' : 0.962,
+                           '1bh0h' : 0.976,
+                           '0bh1h' : 0.963,
+                           '0bh0h' : 0.982,
                             },
                   '2017': {
-                           '3bh0h' : 0.997,
-                           '2bh1h' : 0.997,
-                           '1bh2h' : 0.997,
-                           '0bh3h' : 0.997,
-                           '2bh0h' : 0.997,
-                           '1bh1h' : 0.997,
-                           '0bh2h' : 0.997,
+                           '3bh0h' : 0.932,
+                           '2bh1h' : 0.932,
+                           '1bh2h' : 0.930,
+                           '0bh3h' : 0.934,
+                           '2bh0h' : 0.951,
+                           '1bh1h' : 0.941,
+                           '0bh2h' : 0.95,
+                           '1bh0h' : 0.973,
+                           '0bh1h' : 0.963,
+                           '0bh0h' : 0.97,
                             },
                   '2016': {
-                           '3bh0h' : 0.9865,
-                           '2bh1h' : 0.9965,
-                           '1bh2h' : 0.996,
-                           '0bh3h' : 0.997,
-                           '2bh0h' : 0.9965,
-                           '1bh1h' : 0.9965,
-                           '0bh2h' : 0.9965,
+                           '3bh0h' : 0.862,
+                           '2bh1h' : 0.831,
+                           '1bh2h' : 0.825,
+                           '0bh3h' : 0.87,
+                           '2bh0h' : 0.892,
+                           '1bh1h' : 0.874,
+                           '0bh2h' : 0.872,
+                           '1bh0h' : 0.933,
+                           '0bh1h' : 0.886,
+                           '0bh0h' : 0.936,
                             },
                   '2016APV': {
-                           '3bh0h' : 0.956,
-                           '2bh1h' : 0.9965,
-                           '1bh2h' : 0.996,
-                           '0bh3h' : 0.997,
-                           '2bh0h' : 0.9965,
-                           '1bh1h' : 0.9965,
-                           '0bh2h' : 0.9965,
+                           '3bh0h' : 0.87,
+                           '2bh1h' : 0.863,
+                           '1bh2h' : 0.854,
+                           '0bh3h' : 0.851,
+                           '2bh0h' : 0.903,
+                           '1bh1h' : 0.868,
+                           '0bh2h' : 0.89,
+                           '1bh0h' : 0.934,
+                           '0bh1h' : 0.897,
+                           '0bh0h' : 0.945,
                             },
-                  '2016APV201620172018': {'3bh0h' : 0.9865,
-                           '2bh1h' : 0.996,
-                           '1bh2h' : 0.9945,
-                           '0bh3h' : 0.9925,
-                           '2bh0h' : 0.996,
-                           '1bh1h' : 0.996,
-                           '0bh2h' : 0.9975,
+                  '2016APV201620172018': {'3bh0h' : 0.941,
+                           '2bh1h' : 0.933,
+                           '1bh2h' : 0.928,
+                           '0bh3h' : 0.933,
+                           '2bh0h' : 0.971,
+                           '1bh1h' : 0.956,
+                           '0bh2h' : 0.961,
+                           '1bh0h' : 0.976,
+                           '0bh1h' : 0.956,
+                           '0bh0h' : 0.982,
                             },
 
 
@@ -410,59 +435,64 @@ elif 'ProbMultiH' in var:
     opt_bins_2Higgs = opt_bins_probMultiH_2Higgs
     opt_bins_split = opt_bins_split_probMultiH
     if 'ProbHH4b' in args.prob:
-        opt_bins = opt_bins_probMultiH_HH4b
+        opt_bins = opt_bins_probMultiH_3Higgs_HH4b
         opt_bins_split = opt_bins_split_probMultiH_HH4b
+        opt_bins_2Higgs = opt_bins_probMultiH_HH4b
 
 #bins_ProbHH4b_2Higgs = [1.0, 0.942, 0.91, 0.901, 0.879, 0.862, 0.844, 0.8240000000000001,0.808, 0.8049999999999999, 0.7949999999999999]
 if 'ProbMultiH' in var:
-    delta = 0.01
+    delta = 0.015
 elif 'ProbHHH' in var:
     delta = 0.013
 
 if 'ProbHH4b' in args.prob:
-    delta = 0.001
+    delta = 0.015
+
+bins_ProbHH4b_3Higgs = [1.0 ] + [ opt_bins[year] - delta * i for i in range(10)] 
+bins_ProbHH4b_2Higgs = [1.0 ] + [ opt_bins_2Higgs[year] - delta /1.5 * i for i in range(10)] 
+bins_ProbHH4b_1Higgs = [1.0 ] + [ 0.97 - delta / 2 * i for i in range(10)] 
+bins_ProbHH4b_0Higgs = [1.0 ] + [ 0.97 - delta / 2 * i for i in range(10)] 
 
 
-bins_ProbHH4b_2Higgs = [1.0 ] + [ 0.997 - delta * i for i in range(10)] 
-#bins_ProbHHH6b_3Higgs = [1.0, 0.699, 0.6799999999999999, 0.6659999999999999, 0.6539999999999999, 0.6439999999999999, 0.635, 0.626, 0.618, 0.61, 0.602, 0.594, 0.586, 0.578, 0.57, 0.5619999999999999, 0.5539999999999999, 0.5449999999999999, 0.5359999999999999, 0.5269999999999999, 0.518]
+
+
 bins_ProbHHH6b_3Higgs = [1.0 ] + [ opt_bins[year]- delta * i for i in range(10)] #[1.0, 0.59] + [0.54 - 0.05 * i for i in range(10)]
 
-#bins_ProbHHH6b_3Higgs = [1.0, 0.9991, 0.9987, 0.9983, 0.9978, 0.9973, 0.9967, 0.9961, 0.9954, 0.9947, 0.9939, 0.993, 0.9921, 0.9911] 
+bins_ProbHHH6b_2Higgs = [1.0] + [opt_bins_2Higgs[year] - delta/1.5 * i for i in range(10)]
 
-#bins_ProbHHH6b_3Higgs = bins_ProbHHH6b_3Higgs[:11]
-
-
-if '2016' in args.year and '2018' not in args.year:
-    bins_ProbHHH6b_3Higgs = [1.0 ] + [ opt_bins[year] - delta * i for i in range(10)] #[1.0, 0.59] + [0.54 - 0.05 * i for i in range(10)]
-
-
-
-bins_ProbHHH6b_2Higgs = [1.0] + [opt_bins_2Higgs[year] - delta * i for i in range(10)]
-#bins_ProbHHH6b_2Higgs = [1.0, 0.9988, 0.9982, 0.9976, 0.9969, 0.9962, 0.9954, 0.9946, 0.9937, 0.9928, 0.9918, 0.9907]
-bins_ProbHHH6b_2Higgs = bins_ProbHHH6b_2Higgs[:11]
-bins_ProbHHH6b_0Higgs = [1.0] + [0.98 - delta / 4 - delta  * i for i in range(10)]
-bins_ProbHHH6b_1Higgs = [1.0] + [0.974 - delta / 2  * i for i in range(10)]
+bins_ProbHHH6b_0Higgs = [1.0] + [0.98 - delta - delta / 2 * i for i in range(10)]
+bins_ProbHHH6b_1Higgs = [1.0] + [0.974 - delta / 2.5  * i for i in range(10)]
 
 
 
 bins_ProbVV_2Higgs = [1.0] + [0.57 - delta * i for i in range(10)]
 
 bins_ProbHHH6b_3bh0h = [1.0 ] + [opt_bins_split[year]['3bh0h'] - delta * i for i in range(10)]
-bins_ProbHHH6b_2bh1h = [1.0 ] + [opt_bins_split[year]['2bh1h'] - delta * i for i in range(10)]
-bins_ProbHHH6b_1bh2h = [1.0 ] + [opt_bins_split[year]['1bh2h'] - delta / 2 * i for i in range(10)]
+bins_ProbHHH6b_2bh1h = [1.0 ] + [opt_bins_split[year]['2bh1h'] - delta / 1.5 * i for i in range(10)]
+bins_ProbHHH6b_1bh2h = [1.0 ] + [opt_bins_split[year]['1bh2h'] - delta * i for i in range(10)]
 bins_ProbHHH6b_0bh3h = [1.0 ] + [opt_bins_split[year]['0bh3h'] - delta * i for i in range(10)]
-bins_ProbHHH6b_2bh0h = [1.0 ] + [opt_bins_split[year]['2bh0h'] - delta / 2 * i for i in range(10)]
-bins_ProbHHH6b_1bh1h = [1.0 ] + [opt_bins_split[year]['1bh1h'] - delta / 2 * i for i in range(10)]
-bins_ProbHHH6b_0bh2h = [1.0 ] + [opt_bins_split[year]['0bh2h'] - delta / 2 * i for i in range(10)]
+bins_ProbHHH6b_2bh0h = [1.0 ] + [opt_bins_split[year]['2bh0h'] - delta * i for i in range(10)]
+bins_ProbHHH6b_1bh1h = [1.0 ] + [opt_bins_split[year]['1bh1h'] - delta * i for i in range(10)]
+bins_ProbHHH6b_0bh2h = [1.0 ] + [opt_bins_split[year]['0bh2h'] - delta * i for i in range(10)]
 
 bins_ProbHHH6b_1bh0h = [1.0 ] + [opt_bins_split[year]['1bh0h'] - delta * i for i in range(10)]
-bins_ProbHHH6b_0bh1h = [1.0 ] + [opt_bins_split[year]['0bh1h'] - delta * i for i in range(10)]
+bins_ProbHHH6b_0bh1h = [1.0 ] + [opt_bins_split[year]['0bh1h'] - delta / 1.5 * i for i in range(10)]
 bins_ProbHHH6b_0bh0h = [1.0 ] + [opt_bins_split[year]['0bh0h'] - delta * i for i in range(10)]
 
+## HH 4b ##
 
-bins_ProbHH4b_2bh0h = [1.0 ] + [opt_bins_split[year]['2bh0h'] - delta * i for i in range(10)]
+bins_ProbHH4b_3bh0h = [1.0 ] + [opt_bins_split[year]['3bh0h'] - delta * 1.5 * i for i in range(10)]
+bins_ProbHH4b_2bh1h = [1.0 ] + [opt_bins_split[year]['2bh1h'] - delta * i for i in range(10)]
+bins_ProbHH4b_1bh2h = [1.0 ] + [opt_bins_split[year]['1bh2h'] - delta  * 1.5 * i for i in range(10)]
+bins_ProbHH4b_0bh3h = [1.0 ] + [opt_bins_split[year]['0bh3h'] - delta * 1.5 * i for i in range(10)]
+
+bins_ProbHH4b_2bh0h = [1.0 ] + [opt_bins_split[year]['2bh0h'] - delta / 1.5 * i for i in range(10)]
 bins_ProbHH4b_1bh1h = [1.0 ] + [opt_bins_split[year]['1bh1h'] - delta * i for i in range(10)]
 bins_ProbHH4b_0bh2h = [1.0 ] + [opt_bins_split[year]['0bh2h'] - delta * i for i in range(10)]
+
+bins_ProbHH4b_1bh0h = [1.0 ] + [opt_bins_split[year]['1bh0h'] - delta / 1.5  * i for i in range(10)]
+bins_ProbHH4b_0bh1h = [1.0 ] + [opt_bins_split[year]['0bh1h'] - delta / 1.5 * i for i in range(10)]
+bins_ProbHH4b_0bh0h = [1.0 ] + [opt_bins_split[year]['0bh0h'] - delta * i for i in range(10)]
 
 categories = {            
             'ProbHH4b_3bh0h_inclusive' : '(nprobejets > -1)',
@@ -524,20 +554,20 @@ categories = {
 binnings = {
 
 
-    'ProbHH4b_3bh0h_inclusive' : convert_list_to_dict(bins_ProbHH4b_2Higgs),
-    'ProbHH4b_2bh1h_inclusive' : convert_list_to_dict(bins_ProbHH4b_2Higgs),
-    'ProbHH4b_1bh2h_inclusive' : convert_list_to_dict(bins_ProbHH4b_2Higgs),
-    'ProbHH4b_0bh3h_inclusive' : convert_list_to_dict(bins_ProbHH4b_2Higgs),
+    'ProbHH4b_3bh0h_inclusive' : convert_list_to_dict(bins_ProbHH4b_3bh0h),
+    'ProbHH4b_2bh1h_inclusive' : convert_list_to_dict(bins_ProbHH4b_2bh1h),
+    'ProbHH4b_1bh2h_inclusive' : convert_list_to_dict(bins_ProbHH4b_1bh2h),
+    'ProbHH4b_0bh3h_inclusive' : convert_list_to_dict(bins_ProbHH4b_0bh3h),
     'ProbHH4b_2bh0h_inclusive' : convert_list_to_dict(bins_ProbHH4b_2bh0h),
     'ProbHH4b_1bh1h_inclusive' : convert_list_to_dict(bins_ProbHH4b_1bh1h),
     'ProbHH4b_0bh2h_inclusive' : convert_list_to_dict(bins_ProbHH4b_0bh2h),
-    'ProbHH4b_1bh0h_inclusive' : convert_list_to_dict(bins_ProbHH4b_2Higgs),
-    'ProbHH4b_0bh1h_inclusive' : convert_list_to_dict(bins_ProbHH4b_2Higgs),
+    'ProbHH4b_1bh0h_inclusive' : convert_list_to_dict(bins_ProbHH4b_1bh0h),
+    'ProbHH4b_0bh1h_inclusive' : convert_list_to_dict(bins_ProbHH4b_0bh1h),
     
-    'ProbHH4b_3Higgs_inclusive' : convert_list_to_dict(bins_ProbHH4b_2Higgs),
+    'ProbHH4b_3Higgs_inclusive' : convert_list_to_dict(bins_ProbHH4b_3Higgs),
     'ProbHH4b_2Higgs_inclusive' : convert_list_to_dict(bins_ProbHH4b_2Higgs),
-    'ProbHH4b_1Higgs_inclusive' : convert_list_to_dict(bins_ProbHH4b_2Higgs),
-    'ProbHH4b_0bh0h_inclusive' : convert_list_to_dict(bins_ProbHH4b_2Higgs),
+    'ProbHH4b_1Higgs_inclusive' : convert_list_to_dict(bins_ProbHH4b_1Higgs),
+    'ProbHH4b_0bh0h_inclusive' : convert_list_to_dict(bins_ProbHH4b_0Higgs),
 
     'ProbHHH6b_3Higgs_inclusive' : convert_list_to_dict(bins_ProbHHH6b_3Higgs),
     'ProbHHH6b_1Higgs_inclusive' : convert_list_to_dict(bins_ProbHHH6b_1Higgs),

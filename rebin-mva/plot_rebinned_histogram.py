@@ -3,6 +3,7 @@ import ROOT
 import os
 
 from utils import hist_properties, drawText
+ROOT.gROOT.SetBatch(ROOT.kTRUE)
 
 import argparse
 parser = argparse.ArgumentParser(description='Args')
@@ -11,6 +12,7 @@ parser.add_argument('--year', default='2018')
 parser.add_argument('--prob', default='ProbHHH6b')
 parser.add_argument('--doCR', action='store_true')
 parser.add_argument('--var', default = 'ProbMultiH')
+parser.add_argument('--doLog', action='store_true')
 
 args = parser.parse_args()
 
@@ -26,6 +28,7 @@ if args.doCR:
 
 first = True
 for cat in ['%s_3bh0h_inclusive', '%s_2bh1h_inclusive', '%s_1bh2h_inclusive', '%s_0bh3h_inclusive', '%s_2bh0h_inclusive', '%s_1bh1h_inclusive', '%s_0bh2h_inclusive', '%s_1bh0h_inclusive', '%s_0bh1h_inclusive', '%s_0bh0h_inclusive','%s_3Higgs_inclusive', '%s_2Higgs_inclusive', '%s_1Higgs_inclusive']:
+#for cat in ['%s_0bh0h_inclusive','%s_3Higgs_inclusive', '%s_2Higgs_inclusive', '%s_1Higgs_inclusive']:
 #or cat in ['%s_3Higgs_inclusive']:
 
     category = cat%prob
@@ -42,17 +45,22 @@ for cat in ['%s_3bh0h_inclusive', '%s_2bh1h_inclusive', '%s_1bh2h_inclusive', '%
     #if 'ProbHHH4b2tau' in prob:
     #    n_hhh = 'GluGluToHHHTo4B2Tau_SM'
     hhh = f.Get(n_hhh)
-
+    #if 'v34-marko' in args.version or 'v34-new' in args.version:
+    #    n_hh = 'GluGluToHHTo4B_cHHH1_TuneCP5_PSWeights_13TeV-powheg-pythia8'
+    #else:
     n_hh = 'GluGluToHHTo4B_cHHH1'
     hh = f.Get(n_hh)
     hh.SetDirectory(0)
 
-    n_hhh4b2tau = 'GluGluToHHHTo4B2Tau_SM'
+    if 'v34-marko' in args.version or 'v34-new' in args.version:
+        n_hhh4b2tau = 'HHHTo4B2Tau_c3_0_d4_0_TuneCP5_13TeV-amcatnlo-pythia8'
+    else:
+        n_hhh4b2tau = 'GluGluToHHHTo4B2Tau_SM'
     hhh4b2tau = f.Get(n_hhh4b2tau)
 
     hh.Scale(15)
     hhh.Scale(1000)
-    hhh4b2tau.Scale(1000)
+    #hhh4b2tau.Scale(1000)
 
 
     rebin = 1
@@ -93,7 +101,7 @@ for cat in ['%s_3bh0h_inclusive', '%s_2bh1h_inclusive', '%s_1bh2h_inclusive', '%
     if first:
         hist_properties[n_hhh][3] += ' x 1000 SM'
         hist_properties[n_hh][3] += ' x 15 SM'
-        hist_properties[n_hhh4b2tau][3] += 'x 1000 SM'
+        #hist_properties[n_hhh4b2tau][3] += 'x 1000 SM'
         first = False
 
 
@@ -117,7 +125,8 @@ for cat in ['%s_3bh0h_inclusive', '%s_2bh1h_inclusive', '%s_1bh2h_inclusive', '%
 
 
     data.SetMaximum(data.GetMaximum()*2)
-    data.SetMinimum(1.0)
+    if not args.doLog:
+        data.SetMinimum(0.0)
 
     data.SetTitle('')
     data.GetYaxis().SetTitle('Events')
@@ -194,7 +203,7 @@ for cat in ['%s_3bh0h_inclusive', '%s_2bh1h_inclusive', '%s_1bh2h_inclusive', '%
     h_div.GetYaxis().SetMaxDigits(0)
     h_div.GetYaxis().SetNdivisions(4,8,0,ROOT.kTRUE)
 
-    h_div.GetYaxis().SetRangeUser(0.,2.0)
+    h_div.GetYaxis().SetRangeUser(0.,2.5)
 
 
     h_div_unc = h_unc.Clone('unc_error')
@@ -247,12 +256,14 @@ for cat in ['%s_3bh0h_inclusive', '%s_2bh1h_inclusive', '%s_1bh2h_inclusive', '%
     #print(Z, Z2)
 
     p2.cd()
-    #p2.SetLogy()
+    if args.doLog:
+        p2.SetLogy()
+        data.SetMaximum(data.GetMaximum()*100)
     data.Draw("e")
     h_bkg.Draw("hist e same")
     hhh.Draw("hist e same")
     hh.Draw("hist e same")
-    hhh4b2tau.Draw('hist e same')
+    #hhh4b2tau.Draw('hist e same')
     data.Draw("e same")
     legend.Draw()
     drawText(0.2,0.8,category)
@@ -263,7 +274,9 @@ for cat in ['%s_3bh0h_inclusive', '%s_2bh1h_inclusive', '%s_1bh2h_inclusive', '%
     h_div_unc.Draw('e2 same')
     
 
-
-    c.Print('%s_%s_%s%s_%s.png'%(category,version,year,option,var))
+    if args.doLog:
+        c.Print('%s_%s_%s%s_%s_log.png'%(category,version,year,option,var))
+    else:
+        c.Print('%s_%s_%s%s_%s.png'%(category,version,year,option,var))
 
 
