@@ -8,7 +8,7 @@ do
     do
 
 
-        python apply_binning_for_kappa_run2.py --year $year --prob $prob --var ProbMultiH --version v33_new  &
+        python apply_binning_for_kappa_run2.py --year $year --prob $prob --var ProbMultiH --version v34  &
         # python apply_binning_cat_2017.py --year $year --path_year 2017 --prob $prob --var ProbMultiH --doSyst --version v33  &
         # python apply_binning_cat_2016.py --year $year --path_year 2016 --prob $prob --var ProbMultiH  --doSyst --version v33_new  &
         # python apply_binning_cat_2016APV.py --year $year --path_year 2016APV --prob $prob --var ProbMultiH --doSyst  --version v33_new  &

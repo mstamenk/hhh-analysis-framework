@@ -181,7 +181,7 @@ opt_bins_probMultiH = {'2018': 0.997,
             '2017': 0.9965,
             '2016': 0.9965,
             '2016APV': 0.9965,
-            '2016APV201620172018': 0.9975 , 
+            '2016APV201620172018': 0.971 , 
             '2022' : 0.62,
             '2022EE': 0.695,
 }
@@ -197,7 +197,7 @@ opt_bins_probMultiH_2Higgs = {'2018': 0.9975,
             '2017': 0.997,
             '2016': 0.9965,
             '2016APV': 0.9965,
-            '2016APV201620172018': 0.997, 
+            '2016APV201620172018': 0.977, 
             '2022': 0.685,
             '2022EE': 0.75,
 
@@ -307,13 +307,16 @@ opt_bins_split_probMultiH = {'2018': {'3bh0h' : 0.9875,
                            '0bh2h' : 0.996,
                             },
 
-                  '2016APV201620172018': {'3bh0h' : 0.9925,
-                           '2bh1h' : 0.996,
-                           '1bh2h' : 0.9945,
-                           '0bh3h' : 0.996,
-                           '2bh0h' : 0.996,
-                           '1bh1h' : 0.9965,
-                           '0bh2h' : 0.998,
+                  '2016APV201620172018': {'3bh0h' : 0.964,
+                           '2bh1h' : 0.96,
+                           '1bh2h' : 0.961,
+                           '0bh3h' : 0.963,
+                           '2bh0h' : 0.974,
+                           '1bh1h' : 0.97,
+                           '0bh2h' : 0.969,
+                           '1bh0h' : 0.979, 
+                           '0bh1h' : 0.974, 
+                           '0bh0h' : 0.983,
                             },
                   '2022': {'3bh0h' : 0.565,
                            '2bh1h' : 0.64,
@@ -403,7 +406,7 @@ elif 'ProbMultiH' in var:
 
 #bins_ProbHH4b_2Higgs = [1.0, 0.942, 0.91, 0.901, 0.879, 0.862, 0.844, 0.8240000000000001,0.808, 0.8049999999999999, 0.7949999999999999]
 if 'ProbMultiH' in var:
-    delta = 0.0015
+    delta = 0.015
 elif 'ProbHHH' in var:
     delta = 0.013
 
@@ -421,24 +424,26 @@ if '2016' in args.year:
 
 
 bins_ProbHHH6b_2Higgs = [1.0] + [opt_bins_2Higgs[year] - delta * i for i in range(10)]
-bins_ProbHHH6b_0Higgs = [1.0] + [(opt_bins_2Higgs[year]- delta) - delta * i for i in range(10)]
-bins_ProbHHH6b_1Higgs = [1.0] + [opt_bins_2Higgs[year] - delta * 0.8 * i for i in range(10)]
+#bins_ProbHHH6b_2Higgs = [1.0, 0.9988, 0.9982, 0.9976, 0.9969, 0.9962, 0.9954, 0.9946, 0.9937, 0.9928, 0.9918, 0.9907]
+bins_ProbHHH6b_2Higgs = bins_ProbHHH6b_2Higgs[:11]
+bins_ProbHHH6b_0Higgs = [1.0] + [0.98 - delta / 4 - delta  * i for i in range(10)]
+bins_ProbHHH6b_1Higgs = [1.0] + [0.974 - delta / 2  * i for i in range(10)]
 
 
 
 bins_ProbVV_2Higgs = [1.0] + [0.57 - delta * i for i in range(10)]
 
-bins_ProbHHH6b_3bh0h = [1.0 ] + [opt_bins_split[year]['3bh0h'] - (delta*3.0) * i for i in range(10)]
+bins_ProbHHH6b_3bh0h = [1.0 ] + [opt_bins_split[year]['3bh0h'] - delta * i for i in range(10)]
 bins_ProbHHH6b_2bh1h = [1.0 ] + [opt_bins_split[year]['2bh1h'] - delta * i for i in range(10)]
-bins_ProbHHH6b_1bh2h = [1.0 ] + [opt_bins_split[year]['1bh2h'] - delta * i for i in range(10)]
+bins_ProbHHH6b_1bh2h = [1.0 ] + [opt_bins_split[year]['1bh2h'] - delta / 2 * i for i in range(10)]
 bins_ProbHHH6b_0bh3h = [1.0 ] + [opt_bins_split[year]['0bh3h'] - delta * i for i in range(10)]
-bins_ProbHHH6b_2bh0h = [1.0 ] + [opt_bins_split[year]['2bh0h'] - delta * i for i in range(10)]
-bins_ProbHHH6b_1bh1h = [1.0 ] + [opt_bins_split[year]['1bh1h'] - delta * i for i in range(10)]
-bins_ProbHHH6b_0bh2h = [1.0 ] + [opt_bins_split[year]['0bh2h'] - delta * i for i in range(10)]
+bins_ProbHHH6b_2bh0h = [1.0 ] + [opt_bins_split[year]['2bh0h'] - delta / 2 * i for i in range(10)]
+bins_ProbHHH6b_1bh1h = [1.0 ] + [opt_bins_split[year]['1bh1h'] - delta / 2 * i for i in range(10)]
+bins_ProbHHH6b_0bh2h = [1.0 ] + [opt_bins_split[year]['0bh2h'] - delta / 2 * i for i in range(10)]
 
-bins_ProbHHH6b_1bh0h = [1.0 ] + [0.996 - delta * i for i in range(10)]
-bins_ProbHHH6b_0bh1h = [1.0 ] + [0.9975 - delta * i for i in range(10)]
-bins_ProbHHH6b_0bh0h = [1.0 ] + [opt_bins[year] - delta * i for i in range(10)]
+bins_ProbHHH6b_1bh0h = [1.0 ] + [opt_bins_split[year]['1bh0h'] - delta * i for i in range(10)]
+bins_ProbHHH6b_0bh1h = [1.0 ] + [opt_bins_split[year]['0bh1h'] - delta * i for i in range(10)]
+bins_ProbHHH6b_0bh0h = [1.0 ] + [opt_bins_split[year]['0bh0h'] - delta * i for i in range(10)]
 
 
 bins_ProbHH4b_2bh0h = [1.0 ] + [opt_bins_split[year]['2bh0h'] - delta * i for i in range(10)]
@@ -617,7 +622,9 @@ def get_integral_and_error(hist):
 #path = '/isilon/data/users/mstamenk/eos-triple-h/v28-categorisation/mva-inputs-2018-categorisation-spanet-boosted-classification/'
 # path = '/isilon/data/users/mstamenk/eos-triple-h/%s/mva-inputs-%s-categorisation-spanet-boosted-classification/'%(version,year)
 # path = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/%s/%s'%(version,path_year)
-path = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/%s'%(version)
+
+path = '/eos/cms/store/group/phys_higgs/cmshhh/%s-fix-ak4-ak8'%(version)
+# path = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/%s'%(version)
 # cat = 'ProbHHH6b_1Higgs_inclusive'
 option = '_CR'
 
@@ -637,11 +644,12 @@ for cat in ['%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_3
     print(cat)
     #print(binnings[cat])
     cat_path = cat + option
+    output_path = "/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34-fix-ak4-ak8"
 
 
-    if not os.path.isdir(path + '/run2/' + cat_path):
-        os.makedirs(path+'/run2/'+cat_path)
-    hist_path = path + '/run2/' + cat_path + '/histograms'
+    if not os.path.isdir(output_path + '/run2/' + cat_path):
+        os.makedirs(output_path+'/run2/'+cat_path)
+    hist_path = output_path + '/run2/' + cat_path + '/histograms'
     if not os.path.isdir(hist_path):
         os.makedirs(hist_path)
 
@@ -654,11 +662,11 @@ for cat in ['%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_3
 
     data_yield = {}
     bkg_yield = {}
-    outfile = ROOT.TFile(path +'/run2/' + cat_path + '/histograms/' + 'histograms_kappa.root','recreate')
+    outfile = ROOT.TFile(output_path +'/run2/' + cat_path + '/histograms/' + 'histograms_kappa.root','recreate')
 
     for s in samples:
         print(s)
-        proc_list = ['%s/2016/%s/%s.root'%(path,cat_path,s),'%s/2016APV/%s/%s.root'%(path,cat_path,s),'%s/2017/%s/%s.root'%(path,cat_path,s),'%s/2018/%s/%s.root'%(path,cat_path,s)]
+        proc_list = ['%s/mva-inputs-2016-categorisation-spanet-boosted-classification/%s/%s.root'%(path,cat_path,s),'%s/mva-inputs-2016APV-categorisation-spanet-boosted-classification/%s/%s.root'%(path,cat_path,s),'%s/mva-inputs-2017-categorisation-spanet-boosted-classification/%s/%s.root'%(path,cat_path,s),'%s/mva-inputs-2018-categorisation-spanet-boosted-classification/%s/%s.root'%(path,cat_path,s)]
         tree = ROOT.TChain('Events')
         for f_name in proc_list:
             tree.AddFile(f_name)        
