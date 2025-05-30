@@ -504,18 +504,19 @@ categories = {
 # ✅ 你指定的 bin_width 和 last_bin_start（即 x_cut）配置
 # category_name : (bin_width, x_cut)
 custom_bin_config = {
-    'ProbHHH6b_3bh0h_inclusive': (0.9569, 0.04314),
-    'ProbHHH6b_1bh2h_inclusive': (0.9609, 0.03913),
+    'ProbHHH6b_3bh0h_inclusive': (0.9508, 0.04306),
+    'ProbHHH6b_1bh2h_inclusive': (0.9528, 0.04622),
     'ProbHHH6b_2bh1h_inclusive': (0.9639, 0.03612),
-    'ProbHHH6b_0bh3h_inclusive': (0.9458, 0.01844),
+    'ProbHHH6b_0bh3h_inclusive': (0.9458, 0.01178),
     'ProbHHH6b_0bh2h_inclusive': (0.9629, 0.0224),
-    'ProbHHH6b_1bh1h_inclusive': (0.9679, 0.02977),
-    'ProbHHH6b_2bh0h_inclusive': (0.9709, 0.0291),
-    'ProbHHH6b_1Higgs_inclusive': (0.9769, 0.02183),
+    'ProbHHH6b_1bh1h_inclusive': (0.9669, 0.03183),
+    'ProbHHH6b_2bh0h_inclusive': (0.9699, 0.02869),
+    'ProbHHH6b_1Higgs_inclusive': (0.9759, 0.02153),
     'ProbHHH6b_0bh1h_inclusive': (0.9699, 0.02091),
-    'ProbHHH6b_1bh0h_inclusive': (0.9739, 0.02487),
-    'ProbHHH6b_0bh0h_inclusive': (0.9799, 0.01976),
+    'ProbHHH6b_1bh0h_inclusive': (0.9739, 0.02423),
+    'ProbHHH6b_0bh0h_inclusive': (0.9789, 0.01757),
 }
+
 # ✅ 用 convert_list_to_dict 来生成每个分类的 bin 划分
 def convert_list_to_dict(ls):
     return {i + 1: [ls[i], ls[i + 1]] for i in range(len(ls) - 1)}
@@ -580,14 +581,14 @@ def get_integral_and_error(hist):
 #path = '/isilon/data/users/mstamenk/eos-triple-h/v28-categorisation/mva-inputs-2018-categorisation-spanet-boosted-classification/'
 # path = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/%s/%s'%(version,path_year)
 # path = '/eos/cms/store/group/phys_higgs/cmshhh/v34-test/add_TTHH_%s/%s'%(version,path_year)
-path = '/eos/cms/store/group/phys_higgs/cmshhh/%s-final/mva-inputs-%s-categorisation-spanet-boosted-classification'%(version,path_year)
+path = '/eos/cms/store/group/phys_higgs/cmshhh/%s-fix-ak4-ak8/mva-inputs-%s-categorisation-spanet-boosted-classification'%(version,path_year)
 cat = 'ProbHH4b_1bh1h_inclusive'
 option = '_CR'
 
 prob = args.prob#'ProbHHH6b'
 
 
-for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0bh3h_inclusive','%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_1Higgs_inclusive','%s_0bh0h_inclusive']:# variables:
+for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0bh3h_inclusive','%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_1Higgs_inclusive','%s_1bh0h_inclusive','%s_0bh1h_inclusive','%s_0bh0h_inclusive']:# variables:
 # for cat in ['%s_3bh0h_inclusive']:# variables:
 
 # for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0bh3h_inclusive']:# variables:
@@ -604,7 +605,7 @@ for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0
     print(binnings[cat])
     # break
     target = '%s%s/histograms'%(cat,option)
-    path_output = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b_new/%s'%(path_year)
+    path_output = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34-fix-ak4-ak8/%s'%(path_year)
 
     if not os.path.isdir(path_output + '/' + "%s%s"%(cat,option)):
         os.makedirs(path_output + '/' + "%s%s"%(cat,option))
