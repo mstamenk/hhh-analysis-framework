@@ -10,7 +10,7 @@ def load_data(file_list):
     for file_name in file_list:
         with uproot.open(file_name) as f:
             tree = f["Events"]
-            prob = tree["ProbMultiH"].array(library="np")
+            prob = tree["ProbMultiH_v34"].array(library="np")
             if 'data' in file_name:   
                 weight = np.ones_like(prob)
             else:   
@@ -142,13 +142,13 @@ def draw_and_save_hist(bin_edges, hist_qcd, hist_6b,hist_data,category, bin_widt
     plt.legend()
     plt.grid(True)
     plt.tight_layout(rect=[0.05, 0.05, 0.95, 0.95])
-    plt.savefig(f"{out_path}/optimized_binning_{category}.pdf")
+    plt.savefig(f"{out_path}/optimized_binning_{category}_inclusive.pdf")
     plt.close()
 
 
 years = ["2016", "2016APV", "2017", "2018"]
-base_path = "/eos/cms/store/group/phys_higgs/cmshhh/v34-final"
-category_list = ["3bh0h","1bh2h","2bh1h","0bh3h","0bh2h","1bh1h","2bh0h","1Higgs",'0bh1h','1bh0h',"0bh0h"]  # 可拓展为多类别
+base_path = "/eos/cms/store/group/phys_higgs/cmshhh/v34-test/final"
+category_list = ["3bh0h","1bh2h","2bh1h","0bh3h","0bh2h","1bh1h","2bh0h","1Higgs","0bh0h"]  # 可拓展为多类别
 
 
 custom_bin_config = {}
@@ -158,7 +158,8 @@ for cat in category_list:
     signal_files = []
     data_files = []
     for year in years:
-        year_path = f"{base_path}/mva-inputs-{year}-categorisation-spanet-boosted-classification"
+        # year_path = f"{base_path}/mva-inputs-{year}-categorisation-spanet-boosted-classification"
+        year_path = f"{base_path}/{year}"
         qcd_files.append(f"{year_path}/ProbHHH6b_{cat}_inclusive_CR/QCD_datadriven.root")
         signal_files.append(f"{year_path}/ProbHHH6b_{cat}_inclusive_CR/GluGluToHHHTo6B_SM.root")
         data_files.append(f"{year_path}/ProbHHH6b_{cat}_inclusive_CR/data_obs.root")
