@@ -525,7 +525,7 @@ for selection in category_list:
         # 定义变量名
             pnet_b_cat = f"jet{i}PNetTagCat"
             pass_btag_branch = f"jet{i}PassBtag"
-            cut_jet = wp_jet[wp]
+            cut_jet = 6
 
             # # 添加新的 branch，判断是否满足 Btag 条件
             chunk_df  = chunk_df.Define(pass_btag_branch, f"({pnet_b_cat} > {cut_jet}) ? 1 : 0")
@@ -536,7 +536,7 @@ for selection in category_list:
             # 定义变量名
             pnet_xbb_cat = f"fatJet{i}PNetXbbTagCat"
             pass_btag_branch = f"fatJet{i}PassBtag"
-            cut_fatjet = wp_fatjet[wp]
+            cut_fatjet = 0
             # 添加新的 branch，判断是否满足 Btag 条件
          
             chunk_df = chunk_df.Define(pass_btag_branch, f"({pnet_xbb_cat} > {cut_fatjet}) ? 1 : 0")
