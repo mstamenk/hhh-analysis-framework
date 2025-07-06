@@ -2,6 +2,8 @@ import os, ROOT,glob
 
 import ctypes
 
+from add_jme_syst import apply_jme_variations,samples_with_jme
+
 # Test : nAK4 >= 6 and nprobejets >= 2 [1.0, 0.9971, 0.9944, 0.9904, 0.9831, 0.9695, 0.9458] 
 # nAK4 < 6 nprobejets >= 2: [1.0, 0.9969, 0.9938, 0.9876, 0.9741, 0.9394, 0.8229]
 # nAK4 >= 6 nprobejets == 1: [1.0, 0.9988, 0.9983, 0.9979, 0.9976, 0.9973, 0.997, 0.9967, 0.9964, 0.9961, 0.9957, 0.9954, 0.9952, 0.995, 0.9948, 0.9945, 0.9942, 0.9939, 0.9936, 0.9933, 0.9931, 0.9927, 0.9923, 0.992, 0.9916, 0.9913, 0.9909, 0.9905, 0.9902, 0.9899, 0.9895, 0.989, 0.9886, 0.9882, 0.9878, 0.9874, 0.9869, 0.9863999999999999, 0.986, 0.9855, 0.9851, 0.9846, 0.9841, 0.9835, 0.983, 0.9826, 0.9822, 0.9817, 0.9812, 0.9806, 0.9801, 0.9795, 0.9791, 0.9786, 0.9781, 0.9776, 0.977, 0.9763, 0.9758, 0.975, 0.9745, 0.9738, 0.9732, 0.9726, 0.9718, 0.9712, 0.9705, 0.9701, 0.9694, 0.9687, 0.9682, 0.9676, 0.9668, 0.966, 0.9654, 0.9646, 0.9638, 0.9631, 0.9621999999999999, 0.9614, 0.9606, 0.9599, 0.9591, 0.9581999999999999, 0.9572, 0.9564, 0.9556, 0.9544, 0.9536, 0.9528, 0.9521, 0.951, 0.9501, 0.9491, 0.9478, 0.9468, 0.9458, 0.9451, 0.9440999999999999, 0.943, 0.9423, 0.9414, 0.9405, 0.9396, 0.9383, 0.9371, 0.9359, 0.935, 0.9338, 0.9323, 0.9312, 0.9301, 0.9284, 0.927, 0.9258, 0.9251, 0.9238999999999999, 0.9224, 0.9215, 0.9207, 0.9191, 0.9174, 0.9165, 0.9149, 0.9136, 0.9124, 0.9113, 0.9096, 0.9077999999999999, 0.906, 0.9045, 0.9033, 0.9015, 0.8997999999999999, 0.8984, 0.8966, 0.8946, 0.8931, 0.8916, 0.8901, 0.8887, 0.8874, 0.8855999999999999, 0.8838, 0.8819, 0.8805, 0.8783, 0.8764, 0.8748, 0.8731, 0.8713, 0.8693, 0.8675999999999999, 0.8658, 0.8633, 0.8613, 0.8599, 0.8569, 0.8547, 0.8527, 0.8506, 0.849, 0.847, 0.8447, 0.8429, 0.8406, 0.8386, 0.8368, 0.8344, 0.8329, 0.8308, 0.8285, 0.8261000000000001, 0.8243, 0.8224, 0.8199, 0.8171999999999999, 0.8153, 0.8122, 0.8089999999999999, 0.8069, 0.8042, 0.802]
@@ -163,7 +165,7 @@ def convert_list_to_dict(ls):
         if i > 0:
             upper = ls[index]
             lower = ls[index+1]
-            print(lower,upper)
+            #print(lower,upper)
             ret[i] = [lower,upper]
     return ret
 
@@ -703,6 +705,7 @@ for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0
 
     for s in samples:
         if 'GluGlu' in s: continue # separate signal from other processes
+        if 'JES'  in s or 'JER' in s or 'JMR' in s: continue
         #if 'QCD' in s: continue
         print(s)
         f_name = path + '/' + file_path + '/' + s + '.root'
@@ -720,6 +723,8 @@ for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0
 
         
         #    weight = 'totalWeight / (flavTagWeight * fatJetFlavTagWeight)'
+        #print(binning)
+
 
         for i in range(1,h_mva.GetNbinsX() + 1):
 
@@ -735,7 +740,7 @@ for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0
                 integral, error = get_integral_and_error(h)
             except: continue
             
-            print(i,integral,error)
+            #print(i,integral,error)
             h_mva.SetBinContent(i,integral)
             h_mva.SetBinError(i,error)
         if 'data_obs' in s:
@@ -754,31 +759,45 @@ for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0
         h_mva.Write()
 
 
+
+        ### Add JME uncertainties
+        if s in  samples_with_jme:
+            for jme in ["JES", "JER", "JMR"]:
+                try:
+                    h_up, h_down = apply_jme_variations(h_mva, s,cat,args.year,f"{jme}UP",binning,verbose = True)
+                    if h_up: h_up.Write()
+                    if h_down: h_down.Write()
+                except Exception as e:
+                    print(f"[Warning] Failed to apply {jme} to {s}: {e}")
+
+
     for sam in samples:
         if 'GluGlu' not in sam: continue # separate signal from other processes
+        if 'JES'  in sam or 'JER' in sam or 'JMR' in sam: continue
 
         for syst in systematics:
             if 'nominal' in syst:
                 s = sam 
-                if 'JMRUP' in sam:
-                    s = sam.replace('JMRUP','') + '_JMR_Up'
-                elif 'JMRDOWN' in sam:
-                    s = sam.replace('JMRDOWN','') + '_JMR_Down'
+                #if 'JMRUP' in sam:
+                #    s = sam.replace('JMRUP','') + '_JMR_Up'
+                #elif 'JMRDOWN' in sam:
+                #    s = sam.replace('JMRDOWN','') + '_JMR_Down'
 
-                if 'JESUP' in sam:
-                    s = sam.replace('JESUP','') + '_JES_Up'
-                elif 'JESDOWN' in sam:
-                    s = sam.replace('JESDOWN','') + '_JES_Down'
+                #if 'JESUP' in sam:
+                #    s = sam.replace('JESUP','') + '_JES_Up'
+                #elif 'JESDOWN' in sam:
+                #    s = sam.replace('JESDOWN','') + '_JES_Down'
 
-                if 'JERUP' in sam:
-                    s = sam.replace('JERUP','') + '_JER_Up'
-                elif 'JERDOWN' in sam:
-                    s = sam.replace('JERDOWN','') + '_JER_Down'
+                #if 'JERUP' in sam:
+                #    s = sam.replace('JERUP','') + '_JER_Up'
+                #elif 'JERDOWN' in sam:
+                #    s = sam.replace('JERDOWN','') + '_JER_Down'
 
             else:
                 s = sam + '_' + labels[syst]
                 if 'JMR' in sam or 'JES' in sam or 'JER' in sam: continue
             print(s)
+
 
 
             f_name = path + '/' + file_path + '/' + sam + '.root'
@@ -816,7 +835,7 @@ for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0
                     integral, error = get_integral_and_error(h)
                 except: continue
                 
-                print(i,integral,error)
+                #print(i,integral,error)
                 h_mva.SetBinContent(i,integral)
                 h_mva.SetBinError(i,error)
             if 'data_obs' in s:
@@ -836,6 +855,18 @@ for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0
             outfile.cd()
             h_mva.Write()
 
+            ### Add JME uncertainties
+            if sam in  samples_with_jme:
+                for jme in ["JES", "JER", "JMR"]:
+                    try:
+                        h_up, h_down = apply_jme_variations(h_mva, s,cat,args.year,f"{jme}UP",binning,verbose = True)
+                        outfile.cd()
+                        print("Here",h_up,h_down)
+                        if h_up: h_up.Write()
+                        if h_down: h_down.Write()
+                    except Exception as e:
+                        print(f"[Warning] Failed to apply {jme} to {s}: {e}")
+
     tree = ROOT.TChain('Events')
     #tree.AddFile(path + '/' + file_path + '/' + 'QCD' + '.root')
     #tree.AddFile(path + '/' + file_path + '/' + 'QCD_modelling' + '.root')
@@ -854,12 +885,12 @@ for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0
             integral, error = get_integral_and_error(h)
         except: continue
         
-        print(i,integral,error)
+        #print(i,integral,error)
         h_mva.SetBinContent(i,integral)
         h_mva.SetBinError(i,error)
 
 
-    print(data_yield,bkg_yield, h_mva.Integral())
+    #print(data_yield,bkg_yield, h_mva.Integral())
     #h_mva.Scale(float((data_yield-bkg_yield)) / h_mva.Integral())
     if h_mva.Integral() > 0:
         h_mva.Scale(float((data_yield)) / h_mva.Integral())
