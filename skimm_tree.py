@@ -2,7 +2,7 @@
 import ROOT
 import shutil
 import sys, os, re, shlex
-from Correction_new import Unc_Shape
+from Correction_new_symmetric import Unc_Shape
 from array import array
 #from subprocess import Popen, PIPE
 #ROOT.ROOT.EnableImplicitMT()
@@ -23,7 +23,7 @@ import gc
 ROOT.gROOT.SetBatch(ROOT.kTRUE)
 ROOT.ROOT.EnableImplicitMT()
 
-from utils import histograms_dict, ProbMultiH_cut, wps_years, wps, tags, luminosities, hlt_paths, triggersCorrections, hist_properties, init_mhhh, addMHHH, clean_variables, initialise_df, save_variables, init_get_max_prob, init_get_max_cat
+from utils_original import histograms_dict, ProbMultiH_cut, wps_years, wps, tags, luminosities, hlt_paths, triggersCorrections, hist_properties, init_mhhh, addMHHH, clean_variables, initialise_df, save_variables, init_get_max_prob, init_get_max_cat
 from machinelearning import init_bdt, add_bdt, init_bdt_boosted, add_bdt_boosted
 from calibrations import btag_init, addBTagSF, addBTagEffSF
 from hhh_variables import add_hhh_variables
@@ -44,7 +44,10 @@ parser.add_option("--do_CR", action="store_true", dest="do_CR", help="Write...",
 parser.add_option("--process ", type="string", dest="process_to_compute", help="Process to compute it. if no argument is given will do all", default='none')
 parser.add_option("--do_limit_input ", type="string", dest="do_limit_input", help="If given it will do the histograms only in that variable with all the uncertainties", default='none')
 parser.add_option("--skip_do_correct", action="store_true", dest="skip_do_correct", help="Write...", default=False)
+parser.add_option("--do_run2_bkg", action="store_true", dest="do_run2_bkg", help="Write...", default=False)
+parser.add_option("--do_kappa_bkg", action="store_true", dest="do_kappa_bkg", help="Write...", default=False)
 
+parser.add_option("--path_to_histograms", type="string", dest="path_to_histograms", help="Process to compute it. if no argument is given will do all", default='none')
 ## separate SR_CR as an option, this option would add _SR and _CR to the subfolder name
 ## add option to enter a process and if that is given to make the trees and histos only to it
 ## add option to add BDT computation here -- or not, we leave this only to MVA input variables -- the prefit plots already do data/MC
@@ -58,8 +61,11 @@ skip_do_trees      = options.skip_do_trees
 skip_do_histograms = options.skip_do_histograms
 skip_do_plots      = options.skip_do_plots
 skip_do_correct      = options.skip_do_correct
+do_run2_bkg      = options.do_run2_bkg
+do_kappa_bkg     = options.do_kappa_bkg
 input_tree         = options.base
 cat                = options.category
+path_to_histograms_folder = options.path_to_histograms
 
 if do_SR and do_CR :
     print("You should chose to signal region OR control region")
@@ -1134,14 +1140,81 @@ for selection in selections.keys() :
     # path_to_histograms = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/%s'%(year)
     # path_to_histograms = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/run2_separate'
     # path_to_histograms = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/2018'
-    path_to_histograms = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/2016'
+    path_to_histograms = '%s/run2_separate'%(path_to_histograms_folder)
     
     # Higgs_number_strings = ["3Higgs","2Higgs","3bh0h","2bh1h","1bh2h","0bh3h","2bh0h","1bh1h","0bh2h"]
-    Higgs_number_strings = ["3Higgs","2Higgs","3bh0h","2bh1h","1bh2h","0bh3h","2bh0h","1bh1h","0bh2h"]
-    # Higgs_number_strings = ["3bh0h"]
+    # Higgs_number_strings = ["3Higgs","2Higgs","3bh0h","2bh1h","1bh2h","0bh3h","2bh0h","1bh1h","0bh2h"]
+    Higgs_number_strings = ["3bh0h","2bh1h","1bh2h","0bh3h","2bh0h","1bh1h","0bh2h"]
+
     for Higgs_number in Higgs_number_strings: 
-        file_1Higgs = "{}/ProbHHH6b_1Higgs_inclusive_CR/histograms/histograms_{}_fixAsy.root".format(path_to_histograms,do_limit_input)
-        file_2Higgs = "{}/ProbHHH6b_{}_inclusive_CR/histograms/histograms_{}_fixAsy.root".format(path_to_histograms,Higgs_number,do_limit_input)
-        Unc_Shape(file_1Higgs,file_2Higgs,do_limit_input,path_to_histograms,Higgs_number,year)
+        file_1Higgs = "{}/ProbHHH6b_1Higgs_inclusive_CR/histograms/histograms_{}_fixAsy.root".format(path_to_histograms, do_limit_input)
+        file_2Higgs = "{}/ProbHHH6b_{}_inclusive_CR/histograms/histograms_{}_fixAsy.root".format(path_to_histograms, Higgs_number, do_limit_input)
+
+        # === 新增：判断两个文件是否存在
+        missing = False
+        if not os.path.exists(file_1Higgs):
+            print(f"[SKIP] Missing file: {file_1Higgs}")
+            missing = True
+        if not os.path.exists(file_2Higgs):
+            print(f"[SKIP] Missing file: {file_2Higgs}")
+            missing = True
+        
+        if missing:
+            print(f"[WARN] Skip Unc_Shape for Higgs_number {Higgs_number} due to missing input files.")
+            continue  # skip 当前 Higgs_number，进入下一个
+
+        # === 都存在再调用 Unc_Shape
+        print(f"[INFO] Running Unc_Shape for Higgs_number {Higgs_number}")
+        Unc_Shape(file_1Higgs, file_2Higgs, do_limit_input, path_to_histograms, Higgs_number, year)
+
+    if do_run2_bkg:
+
+        path_run2 = '%s/run2'%(path_to_histograms_folder)
+        
+
+        for Higgs_number in Higgs_number_strings: 
+            file_1Higgs_run2 = "{}/ProbHHH6b_1Higgs_inclusive_CR/histograms/histograms_{}.root".format(path_run2, do_limit_input)
+            file_2Higgs_run2 = "{}/ProbHHH6b_{}_inclusive_CR/histograms/histograms_{}.root".format(path_run2, Higgs_number, do_limit_input)
+
+            # === 新增：判断两个文件是否存在
+            missing = False
+            if not os.path.exists(file_1Higgs_run2):
+                print(f"[SKIP] Missing file: {file_1Higgs_run2}")
+                missing = True
+            if not os.path.exists(file_2Higgs_run2):
+                print(f"[SKIP] Missing file: {file_2Higgs_run2}")
+                missing = True
+            
+            if missing:
+                print(f"[WARN] Skip Unc_Shape for Higgs_number {Higgs_number} due to missing input files.")
+                continue  # skip 当前 Higgs_number，进入下一个
+
+            # === 都存在再调用 Unc_Shape
+            print(f"[INFO] Running Unc_Shape for Higgs_number {Higgs_number}")
+            Unc_Shape(file_1Higgs_run2, file_2Higgs_run2, do_limit_input, path_run2, Higgs_number, year)
     
-    
+    if do_kappa_bkg:
+
+        path_run2 = '%s/run2'%(path_to_histograms_folder)
+        
+
+        for Higgs_number in Higgs_number_strings: 
+            file_1Higgs_run2 = "{}/ProbHHH6b_1Higgs_inclusive_CR/histograms/histograms_kappa.root".format(path_run2)
+            file_2Higgs_run2 = "{}/ProbHHH6b_{}_inclusive_CR/histograms/histograms_kappa.root".format(path_run2, Higgs_number)
+
+            # === 新增：判断两个文件是否存在
+            missing = False
+            if not os.path.exists(file_1Higgs_run2):
+                print(f"[SKIP] Missing file: {file_1Higgs_run2}")
+                missing = True
+            if not os.path.exists(file_2Higgs_run2):
+                print(f"[SKIP] Missing file: {file_2Higgs_run2}")
+                missing = True
+            
+            if missing:
+                print(f"[WARN] Skip Unc_Shape for Higgs_number {Higgs_number} due to missing input files.")
+                continue  # skip 当前 Higgs_number，进入下一个
+
+            # === 都存在再调用 Unc_Shape
+            print(f"[INFO] Running Unc_Shape for Higgs_number {Higgs_number}")
+            Unc_Shape(file_1Higgs_run2, file_2Higgs_run2, do_limit_input, path_run2, Higgs_number, year)
