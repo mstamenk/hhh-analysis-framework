@@ -1,0 +1,58 @@
+Assuming unrestricted shared filesystem usage.
+None
+host: lxplus959.cern.ch
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Job stats:
+job                    count
+-------------------  -------
+all                        1
+apply_binning              4
+correct_asym               1
+hadd_v33_new               1
+hadd_v33_new_2Higgs        1
+hadd_v33_new_3Higgs        1
+merge_separate             1
+skimm_tree                 1
+total                     11
+
+Select jobs to execute...
+Execute 4 jobs...
+[Thu May 15 11:51:44 2025]
+localrule apply_binning:
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2017
+    log: logs/apply_binning_ProbHHH6b_2017.log
+    jobid: 3
+    reason: Missing output files: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2017; Params have changed since last execution: Union of exclusive params before and now across all output: before: 'logs/apply_binning_ProbHHH6b_2017.log' now: <nothing exclusive> 
+    wildcards: prob=ProbHHH6b, year=2017
+    resources: tmpdir=/tmp/xgeng
+
+[Thu May 15 11:51:44 2025]
+localrule apply_binning:
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016
+    log: logs/apply_binning_ProbHHH6b_2016.log
+    jobid: 2
+    reason: Missing output files: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016; Params have changed since last execution: Union of exclusive params before and now across all output: before: 'logs/apply_binning_ProbHHH6b_2016.log' now: <nothing exclusive> 
+    wildcards: prob=ProbHHH6b, year=2016
+    resources: tmpdir=/tmp/xgeng
+
+[Thu May 15 11:51:44 2025]
+localrule apply_binning:
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2018
+    log: logs/apply_binning_ProbHHH6b_2018.log
+    jobid: 4
+    reason: Missing output files: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2018; Params have changed since last execution: Union of exclusive params before and now across all output: before: 'logs/apply_binning_ProbHHH6b_2018.log' now: <nothing exclusive> 
+    wildcards: prob=ProbHHH6b, year=2018
+    resources: tmpdir=/tmp/xgeng
+
+[Thu May 15 11:51:44 2025]
+localrule apply_binning:
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016APV
+    log: logs/apply_binning_ProbHHH6b_2016APV.log
+    jobid: 1
+    reason: Missing output files: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016APV; Params have changed since last execution: Union of exclusive params before and now across all output: before: 'logs/apply_binning_ProbHHH6b_2016APV.log' now: <nothing exclusive> 
+    wildcards: prob=ProbHHH6b, year=2016APV
+    resources: tmpdir=/tmp/xgeng
+

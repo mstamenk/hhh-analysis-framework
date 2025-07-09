@@ -41,9 +41,9 @@ for cat in categories_list:
                 print("made directory %s" % output_folder_3)
 
         # process_path = "%s/%s/%s/%s.root"%(path,year,cat,pro)
-        process_path_2018 = "%s/2018/%s/%s.root"%(path,cat,pro)
-        process_path_2017 = "%s/2017/%s/%s.root"%(path,cat,pro)
-        process_path_2016 = "%s/2016/%s/%s.root"%(path,cat,pro)
+        process_path_2018    = "%s/2018/%s/%s.root"%(path,cat,pro)
+        process_path_2017    = "%s/2017/%s/%s.root"%(path,cat,pro)
+        process_path_2016    = "%s/2016/%s/%s.root"%(path,cat,pro)
         process_path_2016APV = "%s/2016APV/%s/%s.root"%(path,cat,pro)
 
         chunk_df_2018 = ROOT.RDataFrame(inputTree, process_path_2018)

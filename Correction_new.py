@@ -111,7 +111,7 @@ def Unc_Shape(higgs1_path,higgs2_path,do_limit_input,path,Higgs_number,year):
         #                     (e_norm_bkg_2Higgs / norm_bkg_2Higgs)**2
         #                   )
 
-        Corr_err_2Higgs = Corr_2Higgs - bkg_2Higgs
+        Corr_err_2Higgs = abs(Corr_2Higgs - bkg_2Higgs)
         Hist_Corr_2Higgs.SetBinContent(i, Corr_2Higgs)
         Hist_Corr_2Higgs.SetBinError(i, 1.0*Corr_err_2Higgs)
 

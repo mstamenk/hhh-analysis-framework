@@ -673,6 +673,7 @@ for selection in category_list:
 
         #chunk_df.Snapshot(inputTree, outtree, variables + ['totalWeight'])
         to_save = [str(el) for el in chunk_df.GetColumnNames() if 'mva' not in str(el) and 'HLT' not in str(el) and 'trigger' not in str(el)]
+        to_save += ['triggerSF']
 
         chunk_df.Snapshot(inputTree, outtree,to_save)
 

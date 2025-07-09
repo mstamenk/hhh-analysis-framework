@@ -164,7 +164,7 @@ def convert_list_to_dict(ls):
         if i > 0:
             upper = ls[index]
             lower = ls[index+1]
-            # print(lower,upper)
+            print(lower,upper)
             ret[i] = [lower,upper]
     return ret
 
@@ -193,7 +193,7 @@ opt_bins_probHHH_2Higgs = {'2018': 0.7225,
 }
 
 opt_bins_probMultiH_2Higgs = {'2018': 0.9975, 
-            '2017': 0.997,
+            '2017': 0.953,
             '2016': 0.9965,
             '2016APV': 0.9965,
             '2016APV201620172018': 0.997, 
@@ -202,6 +202,16 @@ opt_bins_probMultiH_2Higgs = {'2018': 0.9975,
 
 }
 
+
+opt_bins_probMultiH_0Higgs = {'2018': 0.9975, 
+            '2017': 0.893,
+            '2016': 0.9965,
+            '2016APV': 0.9965,
+            '2016APV201620172018': 0.997, 
+            '2022': 0.685,
+            '2022EE': 0.75,
+
+}
 
 
 opt_bins_probMultiH_HH4b = {'2018': 0.9965, 
@@ -281,13 +291,13 @@ opt_bins_split_probMultiH = {'2018': {'3bh0h' : 0.9875,
                            '1bh1h' : 0.9965,
                            '0bh2h' : 0.9975,
                             },
-                  '2017': {'3bh0h' : 0.9885,
-                           '2bh1h' : 0.9915,
-                           '1bh2h' : 0.9935,
-                           '0bh3h' : 0.9965,
-                           '2bh0h' : 0.9935,
-                           '1bh1h' : 0.9945,
-                           '0bh2h' : 0.997,
+                  '2017': {'3bh0h' : 0.875,
+                           '2bh1h' : 0.925,
+                           '1bh2h' : 0.9435,
+                           '0bh3h' : 0.8895,
+                           '2bh0h' : 0.9285,
+                           '1bh1h' : 0.9545,
+                           '0bh2h' : 0.9697,
                             },
                   '2016': {'3bh0h' : 0.985,
                            '2bh1h' : 0.992,
@@ -395,6 +405,7 @@ if 'ProbHHH' in var:
 elif 'ProbMultiH' in var:
     opt_bins = opt_bins_probMultiH
     opt_bins_2Higgs = opt_bins_probMultiH_2Higgs
+    opt_bins_0Higgs = opt_bins_probMultiH_0Higgs
     opt_bins_split = opt_bins_split_probMultiH
     if 'ProbHH4b' in args.prob:
         opt_bins = opt_bins_probMultiH_HH4b
@@ -420,7 +431,7 @@ if '2016' in args.year:
 
 
 bins_ProbHHH6b_2Higgs = [1.0] + [opt_bins_2Higgs[year] - delta * i for i in range(10)]
-bins_ProbHHH6b_0Higgs = [1.0] + [(opt_bins_2Higgs[year]- delta) - delta * i for i in range(10)]
+bins_ProbHHH6b_0Higgs = [1.0] + [(opt_bins_0Higgs[year]- delta) - delta * i for i in range(10)]
 bins_ProbHHH6b_1Higgs = [1.0] + [opt_bins_2Higgs[year] - delta * 0.8 * i for i in range(10)]
 
 
@@ -428,11 +439,11 @@ bins_ProbHHH6b_1Higgs = [1.0] + [opt_bins_2Higgs[year] - delta * 0.8 * i for i i
 bins_ProbVV_2Higgs = [1.0] + [0.57 - delta * i for i in range(10)]
 
 bins_ProbHHH6b_3bh0h = [1.0 ] + [opt_bins_split[year]['3bh0h'] - (delta*3.0) * i for i in range(10)]
-bins_ProbHHH6b_2bh1h = [1.0 ] + [opt_bins_split[year]['2bh1h'] - delta * i for i in range(10)]
-bins_ProbHHH6b_1bh2h = [1.0 ] + [opt_bins_split[year]['1bh2h'] - delta * i for i in range(10)]
-bins_ProbHHH6b_0bh3h = [1.0 ] + [opt_bins_split[year]['0bh3h'] - delta * i for i in range(10)]
+bins_ProbHHH6b_2bh1h = [1.0 ] + [opt_bins_split[year]['2bh1h'] - (delta*1.5) * i for i in range(10)]
+bins_ProbHHH6b_1bh2h = [1.0 ] + [opt_bins_split[year]['1bh2h'] - (delta*2) * i for i in range(10)]
+bins_ProbHHH6b_0bh3h = [1.0 ] + [opt_bins_split[year]['0bh3h'] - (delta*2.5) * i for i in range(10)]
 bins_ProbHHH6b_2bh0h = [1.0 ] + [opt_bins_split[year]['2bh0h'] - delta * i for i in range(10)]
-bins_ProbHHH6b_1bh1h = [1.0 ] + [opt_bins_split[year]['1bh1h'] - delta * i for i in range(10)]
+bins_ProbHHH6b_1bh1h = [1.0 ] + [opt_bins_split[year]['1bh1h'] - (delta*2) * i for i in range(10)]
 bins_ProbHHH6b_0bh2h = [1.0 ] + [opt_bins_split[year]['0bh2h'] - delta * i for i in range(10)]
 
 bins_ProbHHH6b_1bh0h = [1.0 ] + [0.996 - delta * i for i in range(10)]
@@ -613,7 +624,8 @@ def get_integral_and_error(hist):
 
 
 #path = '/isilon/data/users/mstamenk/eos-triple-h/v28-categorisation/mva-inputs-2018-categorisation-spanet-boosted-classification/'
-path = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/%s/%s'%(version,path_year)
+# path = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/%s/%s'%(version,path_year)
+path = '/eos/cms/store/group/phys_higgs/cmshhh/v34-test/add_TTHH_%s/%s'%(version,path_year)
 
 cat = 'ProbHH4b_1bh1h_inclusive'
 option = '_CR'
@@ -621,13 +633,15 @@ option = '_CR'
 prob = args.prob#'ProbHHH6b'
 
 
+for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0bh3h_inclusive','%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_1Higgs_inclusive','%s_0bh0h_inclusive']:# variables:
+# for cat in ['%s_0bh0h_inclusive']:# variables:
 
 # for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0bh3h_inclusive']:# variables:
 # for cat in ['%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_0bh0h_inclusive','%s_2Higgs_inclusive','%s_1Higgs_inclusive','%s_3Higgs_inclusive','%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0bh3h_inclusive']:# variables:
 # for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0bh3h_inclusive','%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_1bh0h_inclusive','%s_0bh1h_inclusive','%s_0bh0h_inclusive','%s_2Higgs_inclusive','%s_1Higgs_inclusive','%s_3Higgs_inclusive']:# variables:
 #for cat in ['%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_1bh0h_inclusive','%s_0bh1h_inclusive','%s_0bh0h_inclusive','%s_2Higgs_inclusive','%s_1Higgs_inclusive','%s_3Higgs_inclusive']:# variables:
 # for cat in ['%s_3bh0h_inclusive','%s_2bh1h_inclusive','%s_1bh2h_inclusive','%s_0bh3h_inclusive','%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive','%s_1Higgs_inclusive','%s_0bh0h_inclusive']:# variables:
-for cat in ['%s_1Higgs_inclusive']:# variables:
+# for cat in ['%s_1Higgs_inclusive']:# variables:
 
 # for cat in ['%s_2bh0h_inclusive','%s_1bh1h_inclusive','%s_0bh2h_inclusive']:# variables:
 
@@ -653,8 +667,8 @@ for cat in ['%s_1Higgs_inclusive']:# variables:
 
     binning = binnings[cat]
     cut = categories[cat]
-    # print("binning is aaaaaaaaaaaaahjbjkrgvnrkjvrjierjirjirjrvjvrkrkvmvmvlvmlkmvmvlvvlv")
-    # print(binning)
+    print("binning is aaaaaaaaaaaaahjbjkrgvnrkjvrjierjirjirjrvjvrkrkvmvmvlvmlkmvmvlvvlv")
+    print(binning)
     # break
 
     data_yield = 0
@@ -663,7 +677,7 @@ for cat in ['%s_1Higgs_inclusive']:# variables:
     for s in samples:
         if 'GluGlu' in s: continue # separate signal from other processes
         if 'QCD' in s: continue
-        # print(s)
+        print(s)
         f_name = path + '/' + file_path + '/' + s + '.root'
         tree = ROOT.TChain('Events')
         tree.AddFile(f_name)
@@ -694,7 +708,7 @@ for cat in ['%s_1Higgs_inclusive']:# variables:
                 integral, error = get_integral_and_error(h)
             except: continue
             
-            # print(i,integral,error)
+            print(i,integral,error)
             h_mva.SetBinContent(i,integral)
             h_mva.SetBinError(i,error)
         if 'data_obs' in s:
@@ -735,7 +749,7 @@ for cat in ['%s_1Higgs_inclusive']:# variables:
             else:
                 s = sam + '_' + labels[syst]
                 if 'JMR' in sam or 'JES' in sam or 'JER' in sam: continue
-            # print(s)
+            print(s)
 
 
             f_name = path + '/' + file_path + '/' + sam + '.root'
@@ -773,7 +787,7 @@ for cat in ['%s_1Higgs_inclusive']:# variables:
                     integral, error = get_integral_and_error(h)
                 except: continue
                 
-                # print(i,integral,error)
+                print(i,integral,error)
                 h_mva.SetBinContent(i,integral)
                 h_mva.SetBinError(i,error)
             if 'data_obs' in s:
@@ -807,7 +821,7 @@ for cat in ['%s_1Higgs_inclusive']:# variables:
             integral, error = get_integral_and_error(h)
         except: continue
         
-        # print(i,integral,error)
+        print(i,integral,error)
         h_mva.SetBinContent(i,integral)
         h_mva.SetBinError(i,error)
 

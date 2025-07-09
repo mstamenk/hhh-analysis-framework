@@ -135,7 +135,7 @@ sess_options.execution_mode = onnxruntime.ExecutionMode.ORT_PARALLEL
 
 
 session_class = onnxruntime.InferenceSession("/eos/user/x/xgeng/workspace/HHH/spanet_new/hhh/onnx/xinyue_run2_withTTHH.onnx",sess_options,providers=['CPUExecutionProvider'])
-session_cat   = onnxruntime.InferenceSession("/eos/home-x/xiangran/CMSSW_12_5_2/src/hhh-analysis-framework/spanet-inference/spanet_v34_categorisation_v1.onnx",sess_options,providers=['CPUExecutionProvider'])
+session_cat   = onnxruntime.InferenceSession("/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/spanet-inference/spanet_v34_categorisation_v1.onnx",sess_options,providers=['CPUExecutionProvider'])
 
 
 output_path =args.outputdir
@@ -545,9 +545,9 @@ for i in ['1','2','3']:
 lep_arrays = []
 lep_vars = ['lep%sPt', 'lep%sEta','lep%sSinPhi','lep%sCosPhi']
 for i in ['1','2']:
-    #df = df.Define('lep%sCosPhi'%i, 'TMath::Cos(lep%sPhi)'%i)
-    #df = df.Define('lep%sSinPhi'%i, 'TMath::Sin(lep%sPhi)'%i)
-    #df = df.Define('lep%sLogPt'%i, 'TMath::Log(lep%sPt + 1)'%i)
+    df = df.Define('lep%sCosPhi'%i, 'TMath::Cos(lep%sPhi)'%i)
+    df = df.Define('lep%sSinPhi'%i, 'TMath::Sin(lep%sPhi)'%i)
+    df = df.Define('lep%sLogPt'%i, 'TMath::Log(lep%sPt + 1)'%i)
     #if 'JetHT' in args.f_in or 'BTagCSV' in args.f_in or 'SingleMuon' in args.f_in:
     #    df = df.Define('fatJet%sHiggsMatchedIndex'%i,'-1')
     
@@ -560,9 +560,9 @@ for i in ['1','2']:
 tau_arrays = []
 tau_vars = ['tau%sPt', 'tau%sEta','tau%sSinPhi','tau%sCosPhi']
 for i in ['1','2']:
-    #df = df.Define('tau%sCosPhi'%i, 'TMath::Cos(tau%sPhi)'%i)
-    #df = df.Define('tau%sSinPhi'%i, 'TMath::Sin(tau%sPhi)'%i)
-    #df = df.Define('tau%sLogPt'%i, 'TMath::Log(tau%sPt + 1)'%i)
+    df = df.Define('tau%sCosPhi'%i, 'TMath::Cos(tau%sPhi)'%i)
+    df = df.Define('tau%sSinPhi'%i, 'TMath::Sin(tau%sPhi)'%i)
+    df = df.Define('tau%sLogPt'%i, 'TMath::Log(tau%sPt + 1)'%i)
     #if 'JetHT' in args.f_in or 'BTagCSV' in args.f_in or 'SingleMuon' in args.f_in:
     #    df = df.Define('fatJet%sHiggsMatchedIndex'%i,'-1')
     

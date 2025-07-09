@@ -1,0 +1,7 @@
+probs: ["ProbHHH6b"]
+years: ["2016APV", "2016", "2017", "2018"]
+version: "v34"
+variable: "ProbMultiH"
+output_dir: "/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b"
+path_base: "/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework"
+categories: ["ProbHHH6b_0bh3h_inclusive"]

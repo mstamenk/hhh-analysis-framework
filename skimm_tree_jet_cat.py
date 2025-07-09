@@ -474,7 +474,7 @@ for selection in category_list:
 
   print("Doing tree skimmed for %s_%s" % (selection, additional_label))
   print(final_selection)
-  output_tree = "/eos/cms/store/group/phys_higgs/cmshhh/v34-test/jet_couting/%s"%(year)
+  output_tree = "/eos/cms/store/group/phys_higgs/cmshhh/v34-test/jet_couting_cat/%s"%(year)
   output_folder = "{}/{}_{}".format(output_tree,selection,additional_label)
   if not path.exists(output_folder) :
       procs=subprocess.Popen(['mkdir %s' % output_folder],shell=True,stdout=subprocess.PIPE)

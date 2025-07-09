@@ -1,0 +1,211 @@
+Assuming unrestricted shared filesystem usage.
+None
+host: lxplus959.cern.ch
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Job stats:
+job                    count
+-------------------  -------
+all                        1
+apply_binning              4
+correct_asym               1
+hadd_v33_new               1
+hadd_v33_new_2Higgs        1
+hadd_v33_new_3Higgs        1
+merge_separate             1
+skimm_tree                 1
+total                     11
+
+Select jobs to execute...
+Execute 4 jobs...
+[Thu May 15 11:46:45 2025]
+localrule apply_binning:
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2017
+    jobid: 3
+    reason: Missing output files: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2017
+    wildcards: prob=ProbHHH6b, year=2017
+    resources: tmpdir=/tmp/xgeng
+
+[Thu May 15 11:46:45 2025]
+localrule apply_binning:
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016
+    jobid: 2
+    reason: Missing output files: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016
+    wildcards: prob=ProbHHH6b, year=2016
+    resources: tmpdir=/tmp/xgeng
+
+[Thu May 15 11:46:45 2025]
+localrule apply_binning:
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016APV
+    jobid: 1
+    reason: Missing output files: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016APV
+    wildcards: prob=ProbHHH6b, year=2016APV
+    resources: tmpdir=/tmp/xgeng
+
+[Thu May 15 11:46:45 2025]
+localrule apply_binning:
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2018
+    jobid: 4
+    reason: Missing output files: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2018
+    wildcards: prob=ProbHHH6b, year=2018
+    resources: tmpdir=/tmp/xgeng
+
+Traceback (most recent call last):
+
+  File "/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/lib/python3.12/site-packages/snakemake/executors/local.py", line 232, in spawn_job
+    subprocess.check_call(cmd, shell=True)
+
+  File "/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/lib/python3.12/subprocess.py", line 413, in check_call
+    raise CalledProcessError(retcode, cmd)
+
+subprocess.CalledProcessError: Command 'cd /eos/home-x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/snakemake && /afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/bin/python3.12 -m snakemake --snakefile '/eos/home-x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/snakemake/Snakefile' --target-jobs 'apply_binning:prob=ProbHHH6b,year=2017' --allowed-rules apply_binning --cores 4 --attempt 1 --force-use-threads  --force --target-files-omit-workdir-adjustment --max-inventory-time 0 --nocolor --notemp --no-hooks --nolock --ignore-incomplete --rerun-triggers input mtime code software-env params --conda-frontend 'conda' --shared-fs-usage software-deployment source-cache input-output persistence storage-local-copies sources --wrapper-prefix 'https://github.com/snakemake/snakemake-wrappers/raw/' --latency-wait 5 --scheduler 'ilp' --local-storage-prefix base64//LnNuYWtlbWFrZS9zdG9yYWdl --scheduler-solver-path '/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/bin' --default-resources base64//dG1wZGlyPXN5c3RlbV90bXBkaXI= --quiet progress rules host --mode 'subprocess' --local-groupid 'local'' returned non-zero exit status 1.
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/lib/python3.12/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/lib/python3.12/site-packages/snakemake/executors/local.py", line 247, in cached_or_run
+    run_func(*args)
+
+  File "/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/lib/python3.12/site-packages/snakemake/executors/local.py", line 234, in spawn_job
+    raise SpawnedJobError()
+
+snakemake.exceptions.SpawnedJobError
+
+[Thu May 15 11:46:47 2025]
+Error in rule apply_binning:
+    message: None
+    jobid: 3
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2017
+Traceback (most recent call last):
+
+  File "/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/lib/python3.12/site-packages/snakemake/executors/local.py", line 232, in spawn_job
+    subprocess.check_call(cmd, shell=True)
+
+  File "/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/lib/python3.12/subprocess.py", line 413, in check_call
+    raise CalledProcessError(retcode, cmd)
+
+subprocess.CalledProcessError: Command 'cd /eos/home-x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/snakemake && /afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/bin/python3.12 -m snakemake --snakefile '/eos/home-x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/snakemake/Snakefile' --target-jobs 'apply_binning:prob=ProbHHH6b,year=2016' --allowed-rules apply_binning --cores 4 --attempt 1 --force-use-threads  --force --target-files-omit-workdir-adjustment --max-inventory-time 0 --nocolor --notemp --no-hooks --nolock --ignore-incomplete --rerun-triggers input mtime code software-env params --conda-frontend 'conda' --shared-fs-usage software-deployment source-cache input-output persistence storage-local-copies sources --wrapper-prefix 'https://github.com/snakemake/snakemake-wrappers/raw/' --latency-wait 5 --scheduler 'ilp' --local-storage-prefix base64//LnNuYWtlbWFrZS9zdG9yYWdl --scheduler-solver-path '/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/bin' --default-resources base64//dG1wZGlyPXN5c3RlbV90bXBkaXI= --quiet progress rules host --mode 'subprocess' --local-groupid 'local'' returned non-zero exit status 1.
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/lib/python3.12/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/lib/python3.12/site-packages/snakemake/executors/local.py", line 247, in cached_or_run
+    run_func(*args)
+
+  File "/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/lib/python3.12/site-packages/snakemake/executors/local.py", line 234, in spawn_job
+    raise SpawnedJobError()
+
+snakemake.exceptions.SpawnedJobError
+
+[Thu May 15 11:46:47 2025]
+Error in rule apply_binning:
+    message: None
+    jobid: 2
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016
+Traceback (most recent call last):
+
+  File "/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/lib/python3.12/site-packages/snakemake/executors/local.py", line 232, in spawn_job
+    subprocess.check_call(cmd, shell=True)
+
+  File "/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/lib/python3.12/subprocess.py", line 413, in check_call
+    raise CalledProcessError(retcode, cmd)
+
+subprocess.CalledProcessError: Command 'cd /eos/home-x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/snakemake && /afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/bin/python3.12 -m snakemake --snakefile '/eos/home-x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/snakemake/Snakefile' --target-jobs 'apply_binning:prob=ProbHHH6b,year=2016APV' --allowed-rules apply_binning --cores 4 --attempt 1 --force-use-threads  --force --target-files-omit-workdir-adjustment --max-inventory-time 0 --nocolor --notemp --no-hooks --nolock --ignore-incomplete --rerun-triggers input mtime code software-env params --conda-frontend 'conda' --shared-fs-usage software-deployment source-cache input-output persistence storage-local-copies sources --wrapper-prefix 'https://github.com/snakemake/snakemake-wrappers/raw/' --latency-wait 5 --scheduler 'ilp' --local-storage-prefix base64//LnNuYWtlbWFrZS9zdG9yYWdl --scheduler-solver-path '/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/bin' --default-resources base64//dG1wZGlyPXN5c3RlbV90bXBkaXI= --quiet progress rules host --mode 'subprocess' --local-groupid 'local'' returned non-zero exit status 1.
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/lib/python3.12/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/lib/python3.12/site-packages/snakemake/executors/local.py", line 247, in cached_or_run
+    run_func(*args)
+
+  File "/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/lib/python3.12/site-packages/snakemake/executors/local.py", line 234, in spawn_job
+    raise SpawnedJobError()
+
+snakemake.exceptions.SpawnedJobError
+
+[Thu May 15 11:46:47 2025]
+Error in rule apply_binning:
+    message: None
+    jobid: 1
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016APV
+Traceback (most recent call last):
+
+  File "/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/lib/python3.12/site-packages/snakemake/executors/local.py", line 232, in spawn_job
+    subprocess.check_call(cmd, shell=True)
+
+  File "/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/lib/python3.12/subprocess.py", line 413, in check_call
+    raise CalledProcessError(retcode, cmd)
+
+subprocess.CalledProcessError: Command 'cd /eos/home-x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/snakemake && /afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/bin/python3.12 -m snakemake --snakefile '/eos/home-x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/snakemake/Snakefile' --target-jobs 'apply_binning:prob=ProbHHH6b,year=2018' --allowed-rules apply_binning --cores 4 --attempt 1 --force-use-threads  --force --target-files-omit-workdir-adjustment --max-inventory-time 0 --nocolor --notemp --no-hooks --nolock --ignore-incomplete --rerun-triggers input mtime code software-env params --conda-frontend 'conda' --shared-fs-usage software-deployment source-cache input-output persistence storage-local-copies sources --wrapper-prefix 'https://github.com/snakemake/snakemake-wrappers/raw/' --latency-wait 5 --scheduler 'ilp' --local-storage-prefix base64//LnNuYWtlbWFrZS9zdG9yYWdl --scheduler-solver-path '/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/bin' --default-resources base64//dG1wZGlyPXN5c3RlbV90bXBkaXI= --quiet progress rules host --mode 'subprocess' --local-groupid 'local'' returned non-zero exit status 1.
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/lib/python3.12/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/lib/python3.12/site-packages/snakemake/executors/local.py", line 247, in cached_or_run
+    run_func(*args)
+
+  File "/afs/cern.ch/user/x/xgeng/.conda/envs/snakemake_env/lib/python3.12/site-packages/snakemake/executors/local.py", line 234, in spawn_job
+    raise SpawnedJobError()
+
+snakemake.exceptions.SpawnedJobError
+
+[Thu May 15 11:46:47 2025]
+Error in rule apply_binning:
+    message: None
+    jobid: 4
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2018
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look below for error messages
+[Thu May 15 11:46:47 2025]
+Error in rule apply_binning:
+    message: None
+    jobid: 3
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2017
+[Thu May 15 11:46:47 2025]
+Error in rule apply_binning:
+    message: None
+    jobid: 2
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016
+[Thu May 15 11:46:47 2025]
+Error in rule apply_binning:
+    message: None
+    jobid: 1
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016APV
+[Thu May 15 11:46:47 2025]
+Error in rule apply_binning:
+    message: None
+    jobid: 4
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2018
+Complete log(s): /eos/home-x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/snakemake/.snakemake/log/2025-05-15T114645.384237.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

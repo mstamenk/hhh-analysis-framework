@@ -1,0 +1,154 @@
+# Snakemake Workflow: Rebinning and Merging for ProbMultiH
+# Author: Yuhao Wang (Chuyi)
+
+configfile: "config.yaml"
+
+
+
+
+
+probs     = config["probs"]
+years     = config["years"]
+version   = config["version"]
+variable  = config["variable"]
+outdir    = config["output_dir"]
+path_base = config["path_base"]
+# templates = ["2016", "2016APV", "2017", "2018"]
+
+cmsenv_prefix = lambda: f"""
+cd {path_base}
+cmssw-el7
+source setup.sh
+cmsenv
+"""
+
+
+rule all:
+    input:
+        # All rebin-mva outputs
+        expand("{outdir}/binning_done/{prob}_{year}",
+               outdir=outdir, prob=probs, year=years),
+        # Post-binning steps
+        f"{outdir}/hadd_v33_new_done",
+        f"{outdir}/Correction_Asymeric_done",
+        f"{outdir}/hadd_v33_new_2Higgs_done",
+        f"{outdir}/hadd_v33_new_3Higgs_done",
+        f"{outdir}/merge_separate_done",
+        f"{outdir}/skimmed_done"
+
+        # Skim step
+        # expand("{outdir}/skimmed_done", outdir=outdir)
+
+rule apply_binning:
+    output:
+        f"{outdir}/binning_done/{{prob}}_{{year}}"
+    log:
+        f"logs/apply_binning_{{prob}}_{{year}}.log"
+    params:
+        script_path = f"{path_base}/rebin-mva/apply_binning_xinyue.py",
+        wrapper_script = f"{path_base}/rebin-mva/run_apply_binning.sh",
+        version = version,
+        variable = variable,
+        # script_path = f"{path_base}/rebin-mva/apply_binning_xinyue.py"
+    run:
+        import os
+        os.makedirs("logs", exist_ok=True)
+        shell(f"""
+            bash {params.wrapper_script} {params.script_path} {wildcards.year} {wildcards.prob} {params.variable} {params.version} > {log} 2>&1
+            touch {output[0]}
+        """)
+
+rule hadd_v33_new:
+    input:
+        apply_done = expand(f"{outdir}/binning_done/{{prob}}_{{year}}", prob=probs, year=years),
+        script = f"{path_base}/output/v33_new/hadd_v33_new.sh"
+    output:
+        f"{outdir}/hadd_v33_new_done"
+    params:
+        outdir = outdir
+    log:
+        "logs/hadd_v33_new.log"
+    shell:
+        cmsenv_prefix() + """
+        bash {input.script} {params.outdir} > {log} 2>&1 && touch {output}
+        """
+
+rule correct_asym:
+    input:
+        prev_done = f"{outdir}/hadd_v33_new_done",
+        script = f"{path_base}/Correction_Asymeric_2018.py"
+    output:
+        f"{outdir}/Correction_Asymeric_done"
+    params:
+        path_hist_folder = outdir
+    log:
+        "logs/correct_asym.log"
+    shell:
+        cmsenv_prefix() + """
+        python3 {input.script} --path_hist_folder {params.path_hist_folder} > {log} 2>&1
+        touch {output}
+        """
+rule hadd_v33_new_2Higgs:
+    input:
+        prev_done = f"{outdir}/Correction_Asymeric_done",
+        script = f"{path_base}/output/v33_new/hadd_v33_new_2Higgs.sh"
+    output:
+        f"{outdir}/hadd_v33_new_2Higgs_done"
+    params:
+        outdir = outdir
+    log:
+        "logs/hadd_v33_new_2Higgs.log"
+    shell:
+        cmsenv_prefix() + """
+        bash {input.script} {params.outdir} > {log} 2>&1 && touch {output}
+        """
+
+rule hadd_v33_new_3Higgs:
+    input:
+        prev_done = f"{outdir}/hadd_v33_new_2Higgs_done",
+        script = f"{path_base}/output/v33_new/hadd_v33_new_3Higgs.sh"
+    output:
+        f"{outdir}/hadd_v33_new_3Higgs_done"
+    params:
+        outdir = outdir
+    log:
+        "logs/hadd_v33_new_3Higgs.log"
+    shell:
+        cmsenv_prefix() + """
+        bash {input.script} {params.outdir} > {log} 2>&1 && touch {output}
+        """
+
+rule merge_separate:
+    input:
+        prev_done = f"{outdir}/hadd_v33_new_3Higgs_done",
+        script = f"{path_base}/output/v33_new/merge_separate.py"
+    output:
+        f"{outdir}/merge_separate_done"
+    params:
+        path_hist = outdir
+    log:
+        "logs/merge_separate.log"
+    shell:
+        cmsenv_prefix() + """
+        python3 {input.script} --path_hist {params.path_hist} > {log} 2>&1
+        touch {output}
+        """
+
+
+rule skimm_tree:
+    input:
+        prev_done = f"{outdir}/merge_separate_done",
+        script = f"{path_base}/skimm_tree.py"
+    output:
+        f"{outdir}/skimmed_done"
+    params:
+        path_to_histograms = outdir
+    log:
+        "logs/skimm.log"
+    shell:
+        cmsenv_prefix() + """
+        python3 {input.script} --skip_do_trees --skip_do_plots --skip_do_histograms \
+               --category ProbHHH6b_1bh2h_inclusive --do_limit_input ProbMultiH --do_CR --path_to_histograms {params.path_to_histograms}  > {log} 2>&1
+        touch {output}
+        """
+

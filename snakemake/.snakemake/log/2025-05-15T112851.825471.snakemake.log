@@ -1,0 +1,191 @@
+Assuming unrestricted shared filesystem usage.
+None
+host: lxplus959.cern.ch
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Job stats:
+job                    count
+-------------------  -------
+all                        1
+apply_binning              4
+correct_asym               1
+hadd_v33_new               1
+hadd_v33_new_2Higgs        1
+hadd_v33_new_3Higgs        1
+merge_separate             1
+skimm_tree                 1
+total                     11
+
+Select jobs to execute...
+Execute 4 jobs...
+[Thu May 15 11:28:53 2025]
+localrule apply_binning:
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2017
+    jobid: 3
+    reason: Missing output files: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2017
+    wildcards: prob=ProbHHH6b, year=2017
+    resources: tmpdir=/tmp/xgeng
+
+[Thu May 15 11:28:53 2025]
+localrule apply_binning:
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016
+    jobid: 2
+    reason: Missing output files: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016
+    wildcards: prob=ProbHHH6b, year=2016
+    resources: tmpdir=/tmp/xgeng
+
+RuleException:
+CalledProcessError in file "/eos/home-x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/snakemake/Snakefile", line 53:
+Command 'set -euo pipefail;  
+cd /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework
+
+        python /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/rebin/apply_binning_xinyue.py             --year 2017 --path_year 2017             --prob ProbHHH6b --var ProbMultiH             --version v34 --doSyst > logs/apply_binning_ProbHHH6b_2017.log 2>&1
+        touch /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2017' returned non-zero exit status 1.
+[Thu May 15 11:28:53 2025]
+Error in rule apply_binning:
+    message: None
+    jobid: 3
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2017
+    shell:
+        
+cd /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework
+
+        python /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/rebin/apply_binning_xinyue.py             --year 2017 --path_year 2017             --prob ProbHHH6b --var ProbMultiH             --version v34 --doSyst > logs/apply_binning_ProbHHH6b_2017.log 2>&1
+        touch /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2017
+        
+        (command exited with non-zero exit code)
+RuleException:
+CalledProcessError in file "/eos/home-x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/snakemake/Snakefile", line 53:
+Command 'set -euo pipefail;  
+cd /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework
+
+        python /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/rebin/apply_binning_xinyue.py             --year 2016 --path_year 2016             --prob ProbHHH6b --var ProbMultiH             --version v34 --doSyst > logs/apply_binning_ProbHHH6b_2016.log 2>&1
+        touch /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016' returned non-zero exit status 1.
+[Thu May 15 11:28:53 2025]
+Error in rule apply_binning:
+    message: None
+    jobid: 2
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016
+    shell:
+        
+cd /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework
+
+        python /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/rebin/apply_binning_xinyue.py             --year 2016 --path_year 2016             --prob ProbHHH6b --var ProbMultiH             --version v34 --doSyst > logs/apply_binning_ProbHHH6b_2016.log 2>&1
+        touch /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016
+        
+        (command exited with non-zero exit code)
+[Thu May 15 11:28:53 2025]
+localrule apply_binning:
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016APV
+    jobid: 1
+    reason: Missing output files: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016APV
+    wildcards: prob=ProbHHH6b, year=2016APV
+    resources: tmpdir=/tmp/xgeng
+
+RuleException:
+CalledProcessError in file "/eos/home-x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/snakemake/Snakefile", line 53:
+Command 'set -euo pipefail;  
+cd /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework
+
+        python /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/rebin/apply_binning_xinyue.py             --year 2016APV --path_year 2016APV             --prob ProbHHH6b --var ProbMultiH             --version v34 --doSyst > logs/apply_binning_ProbHHH6b_2016APV.log 2>&1
+        touch /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016APV' returned non-zero exit status 1.
+[Thu May 15 11:28:53 2025]
+Error in rule apply_binning:
+    message: None
+    jobid: 1
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016APV
+    shell:
+        
+cd /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework
+
+        python /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/rebin/apply_binning_xinyue.py             --year 2016APV --path_year 2016APV             --prob ProbHHH6b --var ProbMultiH             --version v34 --doSyst > logs/apply_binning_ProbHHH6b_2016APV.log 2>&1
+        touch /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016APV
+        
+        (command exited with non-zero exit code)
+[Thu May 15 11:28:53 2025]
+localrule apply_binning:
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2018
+    jobid: 4
+    reason: Missing output files: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2018
+    wildcards: prob=ProbHHH6b, year=2018
+    resources: tmpdir=/tmp/xgeng
+
+RuleException:
+CalledProcessError in file "/eos/home-x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/snakemake/Snakefile", line 53:
+Command 'set -euo pipefail;  
+cd /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework
+
+        python /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/rebin/apply_binning_xinyue.py             --year 2018 --path_year 2018             --prob ProbHHH6b --var ProbMultiH             --version v34 --doSyst > logs/apply_binning_ProbHHH6b_2018.log 2>&1
+        touch /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2018' returned non-zero exit status 1.
+[Thu May 15 11:28:53 2025]
+Error in rule apply_binning:
+    message: None
+    jobid: 4
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2018
+    shell:
+        
+cd /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework
+
+        python /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/rebin/apply_binning_xinyue.py             --year 2018 --path_year 2018             --prob ProbHHH6b --var ProbMultiH             --version v34 --doSyst > logs/apply_binning_ProbHHH6b_2018.log 2>&1
+        touch /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2018
+        
+        (command exited with non-zero exit code)
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look below for error messages
+[Thu May 15 11:28:56 2025]
+Error in rule apply_binning:
+    message: None
+    jobid: 3
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2017
+    shell:
+        
+cd /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework
+
+        python /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/rebin/apply_binning_xinyue.py             --year 2017 --path_year 2017             --prob ProbHHH6b --var ProbMultiH             --version v34 --doSyst > logs/apply_binning_ProbHHH6b_2017.log 2>&1
+        touch /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2017
+        
+        (command exited with non-zero exit code)
+[Thu May 15 11:28:56 2025]
+Error in rule apply_binning:
+    message: None
+    jobid: 2
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016
+    shell:
+        
+cd /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework
+
+        python /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/rebin/apply_binning_xinyue.py             --year 2016 --path_year 2016             --prob ProbHHH6b --var ProbMultiH             --version v34 --doSyst > logs/apply_binning_ProbHHH6b_2016.log 2>&1
+        touch /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016
+        
+        (command exited with non-zero exit code)
+[Thu May 15 11:28:56 2025]
+Error in rule apply_binning:
+    message: None
+    jobid: 1
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016APV
+    shell:
+        
+cd /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework
+
+        python /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/rebin/apply_binning_xinyue.py             --year 2016APV --path_year 2016APV             --prob ProbHHH6b --var ProbMultiH             --version v34 --doSyst > logs/apply_binning_ProbHHH6b_2016APV.log 2>&1
+        touch /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2016APV
+        
+        (command exited with non-zero exit code)
+[Thu May 15 11:28:56 2025]
+Error in rule apply_binning:
+    message: None
+    jobid: 4
+    output: /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2018
+    shell:
+        
+cd /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework
+
+        python /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/rebin/apply_binning_xinyue.py             --year 2018 --path_year 2018             --prob ProbHHH6b --var ProbMultiH             --version v34 --doSyst > logs/apply_binning_ProbHHH6b_2018.log 2>&1
+        touch /eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/binning_done/ProbHHH6b_2018
+        
+        (command exited with non-zero exit code)
+Complete log(s): /eos/home-x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/snakemake/.snakemake/log/2025-05-15T112851.825471.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

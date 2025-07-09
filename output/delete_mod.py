@@ -1,17 +1,26 @@
 import os
 
 # version = 'v33_new'
-version = 'tmp_samples'
+version = 'v34_fix_ak4_ak8_JME'
 # year_list = ['2018','2017','2016_merged','run2']
 # year_list = ['run2_separate']
-year_list = ['v34_2016_test2']
-category_list = ['ProbHHH6b_2bh0h_inclusive_CR','ProbHHH6b_1bh1h_inclusive_CR','ProbHHH6b_0bh2h_inclusive_CR','ProbHHH6b_0bh3h_inclusive_CR','ProbHHH6b_1bh2h_inclusive_CR','ProbHHH6b_2bh1h_inclusive_CR','ProbHHH6b_3bh0h_inclusive_CR','ProbHHH6b_0bh0h_inclusive_CR','ProbHHH6b_1Higgs_inclusive_CR','ProbHHH6b_2Higgs_inclusive_CR','ProbHHH6b_3Higgs_inclusive_CR']
+year_list = ['run2','run2_separate']
+# year_list = ['run2']
+category_list = ['ProbHHH6b_2bh0h_inclusive_CR','ProbHHH6b_1bh1h_inclusive_CR','ProbHHH6b_0bh2h_inclusive_CR','ProbHHH6b_0bh3h_inclusive_CR','ProbHHH6b_1bh2h_inclusive_CR','ProbHHH6b_2bh1h_inclusive_CR','ProbHHH6b_3bh0h_inclusive_CR','ProbHHH6b_0bh0h_inclusive_CR','ProbHHH6b_1Higgs_inclusive_CR','ProbHHH6b_1bh0h_inclusive_CR','ProbHHH6b_0bh1h_inclusive_CR','ProbHHH6b_2Higgs_inclusive_CR','ProbHHH6b_3Higgs_inclusive_CR']
 # category_list = ['ProbHH4b_2bh0h_inclusive_CR','ProbHH4b_1bh1h_inclusive_CR','ProbHH4b_0bh2h_inclusive_CR','ProbHH4b_0bh3h_inclusive_CR','ProbHH4b_1bh2h_inclusive_CR','ProbHH4b_2bh1h_inclusive_CR','ProbHH4b_3bh0h_inclusive_CR','ProbHH4b_0bh0h_inclusive_CR','ProbHH4b_1Higgs_inclusive_CR','ProbHH4b_2Higgs_inclusive_CR','ProbHH4b_3Higgs_inclusive_CR']
 var = 'ProbMultiH'
 for year in year_list:
     for cat in category_list:
+        if year == 'run2_separate':
+            file_path = "%s/%s/%s/histograms/histograms_%s_fixAsy_mod.root"%(version,year,cat,var)
+
+        if year == 'run2':
+            file_path = "%s/%s/%s/histograms/histograms_%s_mod.root"%(version,year,cat,var)
+            # file_path = "%s/%s/%s/histograms/histograms_kappa_mod.root"%(version,year,cat)
         # file_path = "%s/%s/%s/histograms_%s_sepa_era_mod.root"%(version,year,cat,var)
-        file_path = "%s/%s/%s/histograms/histograms_%s_fixAsy_mod.root"%(version,year,cat,var)
+        # file_path = "%s/%s/%s/histograms/histograms_%s_fixAsy_mod.root"%(version,year,cat,var)
+        # file_path = "%s/%s/%s/histograms/histograms_%s_mod.root"%(version,year,cat,var)
+
 
         if os.path.exists(file_path):
             os.remove(file_path)

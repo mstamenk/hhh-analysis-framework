@@ -1,11 +1,13 @@
 import ROOT
+import os
 
 # 打开 ROOT 文件
 ROOT.gROOT.SetBatch(True)
+
 cat = '''
-int cat_reco_function(int nFatJetsPassed, int nJetsPassed, float hhh_mass2) {
+int cat_reco_function(int nFatJetsPassed, int nJetsPassed, float hhh_mass) {
     
-    if (hhh_mass2 > 700) {
+    if (hhh_mass > 750) {
         if (nFatJetsPassed == 3) return 1;
         else if (nFatJetsPassed == 2 && nJetsPassed >= 2) return 2;
         else if (nFatJetsPassed == 2 && nJetsPassed < 2) return 5;
@@ -17,7 +19,7 @@ int cat_reco_function(int nFatJetsPassed, int nJetsPassed, float hhh_mass2) {
         else if (nFatJetsPassed == 0 && nJetsPassed < 4 && nJetsPassed >= 2) return 9;
         else if (nFatJetsPassed == 0 && nJetsPassed < 2) return 0;
         }
-    else if (hhh_mass2 <= 700) {
+    else if (hhh_mass <= 750) {
         if (nJetsPassed == 6) return 4;
         else if (nJetsPassed < 6 && nJetsPassed >= 4 && nFatJetsPassed >= 1) return 3;
         else if (nJetsPassed < 6 && nJetsPassed >= 4 && nFatJetsPassed < 1) return 7;
@@ -35,11 +37,19 @@ int cat_reco_function(int nFatJetsPassed, int nJetsPassed, float hhh_mass2) {
 '''
 ROOT.gInterpreter.Declare(cat)
 # working_points = ['loose', 'medium', 'tight']
-working_points = ['loose']
+working_points = ['loose','medium', 'tight']
+# wp_jet = {
+#     'loose': 0.40,
+#     'medium': 0.70,
+#     'tight': 0.96,
+#     'try' : 0.80
+
+# }
+#WP for PNetB
 wp_jet = {
-    'loose': 0.40,
-    'medium': 0.70,
-    'tight': 0.96,
+    'loose': 0.047,
+    'medium':0.245,
+    'tight': 0.6734,
     'try' : 0.80
 
 }
@@ -52,26 +62,45 @@ wp_fatjet = {
 }
 for wp in working_points:
 
+    years = ["2016", "2016APV", "2017", "2018"]
+    base_path = "/eos/cms/store/group/phys_higgs/cmshhh/v34-fix-ak4-ak8/mva-inputs-{}-categorisation-spanet-boosted-classification/inclusive-weights"
+    file_name = "TTToHadronic_TuneCP5_13TeV-powheg-pythia8.root"
+    
 
-    path = "/eos/cms/store/group/phys_higgs/cmshhh/v34_ak8_option4_2017/mva-inputs-2017/inclusive-weights"
-    file = ROOT.TFile("%s/HHHTo6B_c3_0_d4_0.root" % path)
+    # 读取所有年份的文件
+    files = []
+    for year in years:
+        path = base_path.format(year)
+        file_path = os.path.join(path, file_name)
+        files.append(file_path)
 
 
     # 创建 RDataFrame
-    df = ROOT.RDataFrame("Events", file)
+
+    # 创建 RDataFrame，支持多个文件
+    df = ROOT.RDataFrame("Events", files)
+
 
     for i in range(1, 11):  # 遍历 jet1 到 jet10
         # 定义变量名
-        pnet_b_plus_c = f"jet{i}PNetBPlusC"
-        pnet_b_vs_c = f"jet{i}PNetBVsC"
+        # pnet_b_plus_c = f"jet{i}PNetBPlusC"
+        # pnet_b_vs_c = f"jet{i}PNetBVsC"
+        # pass_btag_branch = f"jet{i}PassBtag"
+        # cut_jet = wp_jet[wp]
+
+        # # 添加新的 branch，判断是否满足 Btag 条件
+        # df = df.Define(pass_btag_branch, f"({pnet_b_plus_c} > 0.5 && {pnet_b_vs_c} > {cut_jet}) ? 1 : 0")
+
+        pnet_b = f"jet{i}PNetB"
         pass_btag_branch = f"jet{i}PassBtag"
         cut_jet = wp_jet[wp]
 
         # 添加新的 branch，判断是否满足 Btag 条件
-        df = df.Define(pass_btag_branch, f"({pnet_b_plus_c} > 0.5 && {pnet_b_vs_c} > {cut_jet}) ? 1 : 0")
+        df = df.Define(pass_btag_branch, f"({pnet_b} > {cut_jet}) ? 1 : 0")
+
     
 
-    for i in range(1, 5):  # 遍历 fatJet1 到 fatJet3
+    for i in range(1, 4):  # 遍历 fatJet1 到 fatJet3
         pnet_xbb = f"fatJet{i}PNetXbb"
         pass_btag_branch = f"fatJet{i}PassBtag"
         cut_fatjet = wp_fatjet[wp]
@@ -79,7 +108,8 @@ for wp in working_points:
 
     # 计算通过条件的 jet 和 fatJet 数量
     df = df.Define('nJetsPassed', 'jet1PassBtag + jet2PassBtag + jet3PassBtag + jet4PassBtag + jet5PassBtag + jet6PassBtag + jet7PassBtag + jet8PassBtag + jet9PassBtag + jet10PassBtag')
-    df = df.Define('nFatJetsPassed', 'fatJet1PassBtag + fatJet2PassBtag + fatJet3PassBtag + fatJet4PassBtag')
+    # df = df.Define('nFatJetsPassed', 'fatJet1PassBtag + fatJet2PassBtag + fatJet3PassBtag + fatJet4PassBtag')
+    df = df.Define('nFatJetsPassed', 'fatJet1PassBtag + fatJet2PassBtag + fatJet3PassBtag ')
 
     # 根据给定的函数为数据定义类别
     df = df.Define('category_reco', 'cat_reco_function(nFatJetsPassed, nJetsPassed, hhh_mass)')
@@ -146,4 +176,4 @@ for wp in working_points:
         text.Draw()
 
     canvas.Update()
-    canvas.SaveAs("output_2d_loose_color_right_2017new.pdf")
+    canvas.SaveAs(f"output_2d_{wp}_color_right_QCD_PNetB_run2.pdf")

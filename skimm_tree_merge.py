@@ -168,12 +168,13 @@ wp_tight = wps_years['tight'][year]
 
 init_mhhh()
 getmax = '''
-int get_max_prob(float ProbHHH, float ProbQCD, float ProbTT, float ProbHH4b){
+int get_max_prob(float ProbHHH, float ProbQCD, float ProbTT, float ProbHH4b, float ProbTTHH){
     std::vector<float> probs;
     probs.push_back(ProbHHH); // 1
     probs.push_back(ProbQCD); // 2
     probs.push_back(ProbTT); // 3
     probs.push_back(ProbHH4b); // 4
+    probs.push_back(ProbTTHH); // 5
     auto it = std::max_element(probs.begin(), probs.end());
     int index = std::distance(probs.begin(), it);
     return index + 1;
@@ -248,7 +249,7 @@ for selection in category_list:
         chunk_df = ROOT.RDataFrame(inputTree, proc)
         chunk_df = chunk_df.Define('ProbMultiH','ProbHHH + ProbHH4b')
         
-        chunk_df = chunk_df.Define('IndexMaxProb', 'get_max_prob(ProbHHH, ProbQCD, ProbTT, ProbHH4b)')
+        chunk_df = chunk_df.Define('IndexMaxProb', 'get_max_prob(ProbHHH, ProbQCD, ProbTT, ProbHH4b, ProbTTHH)')
         chunk_df = chunk_df.Define('IndexMaxCat', 'get_max_cat(Prob3bh0h, Prob2bh1h, Prob1bh2h, Prob0bh3h, Prob2bh0h, Prob1bh1h, Prob0bh2h, Prob1bh0h, Prob0bh1h, Prob0bh0h)')
         chunk_df = chunk_df.Define('Prob3Higgs','Prob3bh0h+Prob2bh1h+Prob1bh2h+Prob0bh3h')
         chunk_df = chunk_df.Define('Prob2Higgs','Prob2bh0h+Prob1bh1h+Prob0bh2h')

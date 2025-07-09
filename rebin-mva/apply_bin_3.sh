@@ -8,7 +8,11 @@ do
     do
 
 
-        python apply_binning_for_kappa_run2.py --year $year --prob $prob --var ProbMultiH --version v34  &
+        python3 apply_binning_xinyue_mass_kappa_1.py --doSyst --year $year --prob $prob --var ProbMultiH --version v34  &
+        python3 apply_binning_xinyue_mass_kappa_2.py --doSyst --year $year --prob $prob --var ProbMultiH --version v34  &
+        python3 apply_binning_xinyue_mass_kappa_3.py --doSyst --year $year --prob $prob --var ProbMultiH --version v34  &
+        python3 apply_binning_xinyue_mass_kappa_4.py --doSyst --year $year --prob $prob --var ProbMultiH --version v34  &
+        python3 apply_binning_xinyue_mass_kappa_5.py --doSyst --year $year --prob $prob --var ProbMultiH --version v34  &
         # python apply_binning_cat_2017.py --year $year --path_year 2017 --prob $prob --var ProbMultiH --doSyst --version v33  &
         # python apply_binning_cat_2016.py --year $year --path_year 2016 --prob $prob --var ProbMultiH  --doSyst --version v33_new  &
         # python apply_binning_cat_2016APV.py --year $year --path_year 2016APV --prob $prob --var ProbMultiH --doSyst  --version v33_new  &
