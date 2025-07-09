@@ -12,6 +12,13 @@ from ROOT import TCanvas, TGraphErrors,TGraphAsymmErrors,TGraph
 from ROOT import gROOT
 from ROOT import Form
 import subprocess
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--path_hist_folder', type=str, required=True)
+args = parser.parse_args()
+
+path_hist_folder = args.path_hist_folder
 
 
 def code_for_plot(Hist_up,Hist_down,Hist_nom,pro,syst,path_for_plot):
@@ -69,17 +76,25 @@ def code_for_plot(Hist_up,Hist_down,Hist_nom,pro,syst,path_for_plot):
 # path_hist = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33/Marko_sample_1Higgs'
 # cat_list=  ["ProbHHH6b_2bh0h_inclusive_CR","ProbHHH6b_1bh1h_inclusive_CR","ProbHHH6b_0bh2h_inclusive_CR","ProbHHH6b_0bh0h_inclusive_CR","ProbHHH6b_1Higgs_inclusive_CR","ProbHHH6b_3bh0h_inclusive_CR","ProbHHH6b_2bh1h_inclusive_CR","ProbHHH6b_1bh2h_inclusive_CR","ProbHHH6b_0bh3h_inclusive_CR"]
 # cat_list=  ["ProbHH4b_2bh0h_inclusive_CR","ProbHH4b_1bh1h_inclusive_CR","ProbHH4b_0bh2h_inclusive_CR","ProbHH4b_0bh0h_inclusive_CR","ProbHH4b_1Higgs_inclusive_CR","ProbHH4b_3bh0h_inclusive_CR","ProbHH4b_2bh1h_inclusive_CR","ProbHH4b_1bh2h_inclusive_CR","ProbHH4b_0bh3h_inclusive_CR","ProbHHH6b_2bh0h_inclusive_CR","ProbHHH6b_1bh1h_inclusive_CR","ProbHHH6b_0bh2h_inclusive_CR","ProbHHH6b_0bh0h_inclusive_CR","ProbHHH6b_1Higgs_inclusive_CR","ProbHHH6b_3bh0h_inclusive_CR","ProbHHH6b_2bh1h_inclusive_CR","ProbHHH6b_1bh2h_inclusive_CR","ProbHHH6b_0bh3h_inclusive_CR"]
+
+
 cat_list=  ["ProbHHH6b_2bh0h_inclusive_CR","ProbHHH6b_1bh1h_inclusive_CR","ProbHHH6b_0bh2h_inclusive_CR","ProbHHH6b_0bh0h_inclusive_CR","ProbHHH6b_1Higgs_inclusive_CR","ProbHHH6b_3bh0h_inclusive_CR","ProbHHH6b_2bh1h_inclusive_CR","ProbHHH6b_1bh2h_inclusive_CR","ProbHHH6b_0bh3h_inclusive_CR"]
+# cat_list=  ["ProbHHH6b_0bh1h_inclusive_CR","ProbHHH6b_1bh0h_inclusive_CR"]
+
+# cat_list=  ["ProbHH4b_2bh0h_inclusive_CR","ProbHH4b_1bh1h_inclusive_CR","ProbHH4b_0bh2h_inclusive_CR","ProbHH4b_0bh0h_inclusive_CR","ProbHH4b_1Higgs_inclusive_CR","ProbHH4b_3bh0h_inclusive_CR","ProbHH4b_2bh1h_inclusive_CR","ProbHH4b_1bh2h_inclusive_CR","ProbHH4b_0bh3h_inclusive_CR"]
 # cat_list=  ["ProbHHH6b_2bh0h_inclusive_CR","ProbHHH6b_1bh1h_inclusive_CR","ProbHHH6b_0bh2h_inclusive_CR"]
 pro_list = ["GluGluToHHHTo6B_SM","GluGluToHHTo4B_cHHH1"]
-syst_list = ["PNetAK4_Stat","PNetAK4_FSR","PNetAK4_zjets_muF","PNetAK4_ISR","PNetAK4_ttbar_muR","PNetAK4_ttbar_muF","JES","PNetAK4_wjets_muR","PNetAK4_wjets_muF","JER","JMR","PileUp","l1Prefiring","PNetAK4_zjets_muR","PNetAK4_jetID","PNetAK4_wjets_c_xsec","PNetAK4_zjets_c_xsec"]
+syst_list = ["PNetAK4_Stat","PNetAK4_FSR","PNetAK4_zjets_muF","PNetAK4_ISR","PNetAK4_ttbar_muR","PNetAK4_ttbar_muF","PNetAK4_wjets_muR","PNetAK4_wjets_muF","PileUp","l1Prefiring","PNetAK4_zjets_muR","PNetAK4_jetID","PNetAK4_wjets_c_xsec","PNetAK4_zjets_c_xsec","JES","JER","JMR"]
 other_syst = ["MUR","MUF","PNetAK8","PNetAK4_zjets_b_xsec","FSR","ISR","PNetAK4_pileup","PNetAK4_wjets_b_xsec"]
-# year_list = ["2018","2017","2016_all"]
-year_list = ["2018"]
+year_list = ["2018","2017","2016_all"]
+# year_list = ["2018"]
 for year in year_list:
 
     # path_hist = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/%s'%(year)
-    path_hist = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/cat_new_boosted_prio/%s'%(year)
+    # path_hist = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/cat_new_boosted_prio/%s'%(year)
+    # path_hist = '/eos/home-x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v34_AN_HHH6b/%s'%(year)
+    path_hist = '%s/%s'%(path_hist_folder,year)
+    
 
     # path_hist = '/eos/user/x/xgeng/workspace/HHH/CMSSW_12_5_2/src/hhh-analysis-framework/output/v33_new/run2'
 
@@ -90,6 +105,10 @@ for year in year_list:
     for cat in cat_list:
 
         hist_path = path_hist + '/' + cat + '/' + 'histograms/' +'histograms_ProbMultiH.root' 
+        if not path.exists(hist_path):
+            print(f"[SKIP] Missing input file: {hist_path}, skipping category {cat} for year {year}")
+            continue  # skip 当前cat，进入下一个cat循环
+        # hist_path = path_hist + '/' + cat + '/' + 'histograms/' +'histograms_ProbMultiH_v34.root' 
         hist_path_corr = path_hist + '/' + cat + '/' + 'histograms/' +'histograms_ProbMultiH_fixAsy.root'
 
         path_for_plot = path_hist + '/' + cat + '/' + 'plots/'
@@ -100,6 +119,10 @@ for year in year_list:
 
 
         file_o = ROOT.TFile(hist_path)
+        Hist_Data_ptr = file_o.Get("data_obs")
+        if not Hist_Data_ptr or not isinstance(Hist_Data_ptr, ROOT.TH1):
+            print(f"[WARN] Missing 'data_obs' in {hist_path}, skipping category {cat}, year {year}")
+            continue
         Hist_Data_o = file_o.Get("data_obs").Clone()
         Hist_Data_o.SetName("data_obs")
         Hist_Data = file_o.Get("data_obs").Clone()
@@ -137,10 +160,11 @@ for year in year_list:
                     print("no %s"%pro)
                     continue
 
-                Hist_up    = Hist_nom.Clone(Hist_nom.GetName() + "_" + year + '_' + syst + '_Up') # clone the histogram from nominal
+                Hist_up    = Hist_nom.Clone(Hist_nom.GetName() + "_" + year + '_' + syst + '_Up') 
                 Hist_delta = Hist_nom.Clone(Hist_nom.GetName() + '_delta') # get the delta between nom and down
                 # Hist_down  = file_o.Get("%s_%s_Down"%(pro,syst))
                 Hist_down  = file_o.Get("%s_%s_Down"%(pro,syst))
+                print(f"Processing {pro}, {syst}, {year},{cat}")
                 Hist_down.SetName(pro + "_" + year + '_' + syst + '_Down')
                 if pro == "GluGluToHHHTo6B_SM" or pro == "GluGluToHHTo4B_cHHH1":
                     if syst in ["JES","JER","JMR"]:
@@ -165,9 +189,16 @@ for year in year_list:
                     continue
 
                 Hist_up    = file_o.Get("%s_%s_Up"%(pro,syst))
+                Hist_down  = file_o.Get("%s_%s_Down"%(pro,syst))
+
+                if not Hist_up or not isinstance(Hist_up, ROOT.TH1):
+                    print(f"[WARN] Missing Up variation: {pro}_{syst}_Up in {cat}, {year}")
+                    continue
+                if not Hist_down or not isinstance(Hist_down, ROOT.TH1):
+                    print(f"[WARN] Missing Down variation: {pro}_{syst}_Down in {cat}, {year}")
+                    continue
                 Hist_up.SetName(pro + "_" + year + '_' + syst + '_Up')
                  # clone the histogram from nominal
-                Hist_down  = file_o.Get("%s_%s_Down"%(pro,syst))
                 Hist_down.SetName(pro + "_" + year + '_' + syst + '_Down')
 
                 Hist_up.Write()
